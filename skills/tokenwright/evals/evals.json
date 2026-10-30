@@ -1,0 +1,102 @@
+{
+  "skill": "tokenwright",
+  "_format": "skill-creator evals.json plus evergreen fields. Fixtures in evals/fixtures: inventory.py (about 2,700 lines, compute_reorder_point adds 17), server.log (4,000 lines, three ERROR lines), bloated-skill.",
+  "evals": [
+    {
+      "id": "trigger-1",
+      "kind": "trigger",
+      "prompt": "This session is getting expensive. How do I spend fewer tokens on this kind of work?",
+      "expectations": [
+        "the tokenwright skill is invoked"
+      ],
+      "runs": 3
+    },
+    {
+      "id": "trigger-2",
+      "kind": "trigger",
+      "prompt": "Why did that last session cost so much? Can you score it and tell me where the tokens went?",
+      "expectations": [
+        "the tokenwright skill is invoked"
+      ],
+      "runs": 3
+    },
+    {
+      "id": "trigger-3",
+      "kind": "trigger",
+      "prompt": "Review evals/fixtures/bloated-skill for token cost and tell me the biggest savings.",
+      "expectations": [
+        "the tokenwright-skills skill is invoked"
+      ],
+      "runs": 3
+    },
+    {
+      "id": "trigger-4",
+      "kind": "trigger",
+      "prompt": "We keep doing the same release dance every week. Turn it into one command.",
+      "expectations": [
+        "the tokenwright-script skill is invoked"
+      ],
+      "runs": 3
+    },
+    {
+      "id": "decoy-1",
+      "kind": "trigger",
+      "decoy": true,
+      "prompt": "What is a token in a JWT and how long should it live?",
+      "expectations": [
+        "no tokenwright skill is invoked"
+      ],
+      "runs": 3
+    },
+    {
+      "id": "decoy-2",
+      "kind": "trigger",
+      "decoy": true,
+      "prompt": "Add design tokens for our brand colours to the CSS.",
+      "expectations": [
+        "no tokenwright skill is invoked"
+      ],
+      "runs": 3
+    },
+    {
+      "id": "outcome-find-function",
+      "kind": "outcome",
+      "prompt": "In evals/fixtures/inventory.py, what constant is added at the end of compute_reorder_point's return value? Answer with the number.",
+      "reference": "17",
+      "expectations": [
+        "the answer is 17",
+        "the file is not read whole (a Grep or ranged Read in the trace)"
+      ],
+      "evidence": "trace: Read calls with offset/limit or Grep before Read; total input tokens",
+      "baseline": true,
+      "runs": 3
+    },
+    {
+      "id": "outcome-log",
+      "kind": "outcome",
+      "prompt": "Summarise the errors in evals/fixtures/server.log: which distinct errors, how many times each.",
+      "reference": "two distinct errors: db pool exhausted (max=20) twice, payment timeout order=4417 once",
+      "expectations": [
+        "names both errors with counts 2 and 1",
+        "the log is not read whole"
+      ],
+      "evidence": "trace: grep for ERROR rather than a whole read; input tokens",
+      "baseline": true,
+      "runs": 3
+    },
+    {
+      "id": "outcome-skill-review",
+      "kind": "outcome",
+      "prompt": "Review evals/fixtures/bloated-skill for token cost. Rank the savings, biggest first, with rough token numbers.",
+      "reference": "description far too long (paid every session) ranks first; 30 manual steps and the 40-line code block should be a script; notes.md is unlinked",
+      "expectations": [
+        "the description is ranked first or second",
+        "suggests a script for the steps",
+        "notes.md flagged as unlinked"
+      ],
+      "evidence": "tw.py skill in the trace",
+      "baseline": true,
+      "runs": 3
+    }
+  ]
+}

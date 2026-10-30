@@ -1,0 +1,11 @@
+{
+  "description": "tokenwright: warn on whole reads of large files and on very large tool output. Inactive unless TOKENWRIGHT_HOOKS is warn or block.",
+  "hooks": {
+    "PreToolUse": [
+      { "matcher": "Read", "hooks": [ { "type": "command", "command": "python \"${CLAUDE_PLUGIN_ROOT}/skills/tokenwright/scripts/tw.py\" hook pre", "timeout": 10 } ] }
+    ],
+    "PostToolUse": [
+      { "matcher": "Bash|PowerShell|Grep|WebFetch|mcp__.*", "hooks": [ { "type": "command", "command": "python \"${CLAUDE_PLUGIN_ROOT}/skills/tokenwright/scripts/tw.py\" hook post", "timeout": 10 } ] }
+    ]
+  }
+}

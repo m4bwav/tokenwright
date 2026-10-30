@@ -1,0 +1,4 @@
+seed: 33
+model: Z-Image Turbo, ComfyUI (Windows host), 1536x640, 9 steps cfg 1.0
+prompt:
+A craftsman's workbench in warm lamp light, low angle: a brass precision scale weighing a small neat stack of copper tokens against a large spilled heap of them, a magnifying loupe, a pair of fine scissors trimming a long paper ribbon of tiny printed lines into a short neat strip, a small hourglass, rich wood tones, cinematic photo, shallow depth of field, no text, no logos

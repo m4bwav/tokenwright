@@ -1,0 +1,73 @@
+{
+  "evergreen": "1.0",
+  "name": "tokenwright",
+  "kind": "skill",
+  "main": "SKILL.md",
+  "files": {
+    "research": "RESEARCH.md",
+    "changelog": "CHANGELOG.md",
+    "learnings": "LEARNINGS.md",
+    "tests": "TESTS.md"
+  },
+  "protocol": "plugin",
+  "source": null,
+  "topic": "ways an AI agent spends fewer tokens on the same result: Claude Code and API cost levers, context habits, scripting repeated work, skill token cost",
+  "tier": "fast",
+  "interval_days": 14,
+  "last_checked": "2026-10-30",
+  "next_due": "2026-11-13",
+  "verify_at_use": true,
+  "volatile_claims": [
+    {
+      "claim": "Skill descriptions are cut at 1,536 characters",
+      "checked": "2026-10-30"
+    },
+    {
+      "claim": "Main-conversation cache TTL is 1 hour on a subscription, 5 minutes for subagents",
+      "checked": "2026-10-30"
+    },
+    {
+      "claim": "Bash output cap 30,000 characters; MCP output 25k tokens",
+      "checked": "2026-10-30"
+    }
+  ],
+  "contradiction": null,
+  "events": [],
+  "streak": {
+    "quiet": 0,
+    "pinned_min": 0,
+    "pinned_max": 0,
+    "vau_quiet": 0
+  },
+  "history": [
+    {
+      "date": "2026-10-30",
+      "m": null,
+      "interval_after": 14,
+      "note": "created"
+    }
+  ],
+  "counts": {
+    "learnings": 2,
+    "changes": 1,
+    "research": 5,
+    "tests": 0
+  },
+  "consolidate_every": 25,
+  "tests": {
+    "last_run": null,
+    "harness": "claude plugin eval",
+    "env": "owner-pc",
+    "cases": 0,
+    "passed": 0,
+    "failed": 0,
+    "failing": [],
+    "last_failure": null,
+    "research_after_days": null
+  },
+  "scout": {
+    "beat": "token-saving",
+    "status": "linked",
+    "date": "2026-10-30"
+  }
+}
