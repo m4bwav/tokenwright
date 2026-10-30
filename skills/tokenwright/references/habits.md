@@ -46,3 +46,17 @@ The first run of a fiddly job (a release, a migration, a data fix) is exploratio
 
 - `tw.py score` on the session that felt expensive. The carried column shows how much each early sink cost later.
 - Compare two runs of the same task with and without a habit; see `evals/` for the method.
+
+## Reported in the field (community reports, not verified here)
+
+From the everscout `token-saving` beat's first scan, 2026-10-30. Single-author figures; treat as leads, not measurements.
+
+| Habit | Reported result | Source |
+|---|---|---|
+| Route mechanical code writing to a cheap model behind a test gate; the strong model plans | 55 to 63% fewer strong-model tokens; one fewer hard bug solved of 9 | reddit.com/r/ClaudeCode/comments/1xjqoi0 |
+| Effort per task: low for routine, high for hard, never max by default | max changed a median 664 lines vs 140 at high and solved less; Sonnet low solved 88% at $0.31 a run vs Opus default 88% at $1.07 | reddit.com/r/ClaudeCode/comments/1xjl3dv |
+| Lean headless `claude -p`: `--tools ""`, `--strict-mcp-config`, `--setting-sources ""`, `--no-session-persistence`, a temp working dir, a small model, results cached by input hash | Faster and smaller; no token numbers | reddit.com/r/ClaudeAI/comments/1xjg504 |
+| Let a script or template produce deterministic output instead of the model writing it | 80 to 115x fewer output tokens ($0.16 vs $6.60 to $9.20) | reddit.com/r/ClaudeCode/comments/1xjcmdd |
+| Turn off MCP servers the task does not need; a skill costs 100 to 200 tokens listed, an MCP server tens of thousands | Poster's figures | reddit.com/r/ChatGPTCoding/comments/1xexygi |
+| A hook that denies a repeated identical call or a call past a spend cap | Stops loops early | reddit.com/r/cursor/comments/1xjdzwa |
+| Check usage after an upgrade: a vendor change tripled per-request context in one tool | 3 calls of about 150k tokens for a two-file question | forum.cursor.com/t/176786 |

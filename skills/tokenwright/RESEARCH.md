@@ -30,6 +30,9 @@ Independent test of caveman, rtk and Ponytail (secondary write-up of a JetBrains
 ### R-20261030-5 · testing · magnitude n/a
 No published measurements for the basic read habits.
 
+### R-20261030-6 · practice · magnitude 0.3
+First scan of the everscout beat token-saving (16 sources, 194 items, 9 notes): model routing with a test gate, effort per task, lean headless runs, templates for deterministic output, MCP vs skill cost, loop-guard hooks. Single-author reports. Links in references/habits.md.
+
 ## Open questions
 
 - Batch API request cap: sources disagree (10k vs 100k).

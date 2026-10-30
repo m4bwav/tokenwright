@@ -39,3 +39,9 @@ Checked 2026-10-30 against code.claude.com/docs and docs.claude.com. Sources and
 ## Popular add-ons, measured by others
 
 An independent test reported "caveman" style output compression saving about 8.5% (claimed 65%), and another found it no better than asking for brief answers. Treat claims of large savings from output-style tools with suspicion; measure with `tw.py score` on your own sessions.
+
+## Recent changes (from the beat)
+
+- Claude Code 2.1.311: sessions past 200k tokens compact and continue instead of stopping; CLAUDE.md is re-read after auto-compaction (github.com/anthropics/claude-code/releases/tag/v2.1.311).
+- Read shows only about the first 37k characters of a very long single-line tool result (community report): don't rely on a huge one-line JSON reaching the model whole.
+- Unconfirmed: a report of session caches invalidating about every 10 minutes. Watch `cache_creation_input_tokens` in `tw.py score --json` if a session feels expensive.
