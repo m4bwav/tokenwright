@@ -15,3 +15,9 @@
 - Scrubbed the local start path from the continue prompt (public-repo rule).
 - evergreen PR #14 merged after fixing its red check (ubuntu-latest now 26.04 without Python 3.9; 3.9 moved to ubuntu-24.04) and adding tokenwright pointers to evergreen-wrapup (fixes for T/W candidates) and evergreen-new (tokenwright-skills review), as Mark asked.
 - Mark switched to manual mode; repo created public and pushed, CI green, topics set, v0.1.0 tagged and released. Wiki waits for the first page in the web UI; social preview upload is manual.
+
+## 2026-10-30 session 3
+
+- Social preview uploaded through the browser (repo Settings).
+- Wiki written with wikiwright and pushed: 8 pages, every output verified against tw.py at v0.1.0 (ai-docs/notes/2026-10-30-wiki-verify.py and .out.txt); live check 0 failures. Note: ai-docs/notes/2026-10-30-github-wiki.md.
+- Found two tw.py bugs for 0.1.1: score double counts a second whole read (whole-read + repeat read); changed reports one line too many.

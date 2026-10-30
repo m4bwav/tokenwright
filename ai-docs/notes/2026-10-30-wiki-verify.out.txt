@@ -1,0 +1,74 @@
+=== version
+0.1.0
+[exit 0]
+=== changed first
+new       notes.md (4 lines, ~5 tokens): no snapshot yet; read it once
+[exit 0]
+=== changed again
+unchanged notes.md
+all unchanged: skip the re-read
+[exit 0]
+=== changed edited
+changed   notes.md (2 changed lines; diff ~15 tokens vs whole file ~5)
+  @@ -1,3 +1,3 @@
+   one
+  -two
+  +TWO
+   three
+[exit 0]
+=== changed missing
+missing   nope.md
+[exit 0]
+=== estimate
+   10500  big.log
+       5  notes.md
+   10505  total (~tokens)
+[exit 0]
+=== estimate total
+   10505  total (~tokens)
+[exit 0]
+=== score
+transcript session.jsonl
+turns 5, tool calls 2; input 50, cache read 5000, cache write 500, output 100 tokens
+estimated avoidable ~3294 tokens entered context; carried on later turns as ~8784 cache-read tokens (billed at about a tenth of input)
+  whole-read             ~2196
+  repeat read            ~1098
+top sinks:
+  ~  1098  #1    whole-read             Read src/app.py whole (500 lines)
+          fix: search first (Grep -n with -C), then Read offset/limit; or readwright outline
+  ~  1098  #2    whole-read             Read src/app.py whole (500 lines)
+          fix: search first (Grep -n with -C), then Read offset/limit; or readwright outline
+  ~  1098  #2    repeat read            Read src/app.py again (2 reads)
+          fix: keep the facts from the first read, or `tw.py changed` to skip unchanged files
+[exit 0]
+=== repeats
+3 transcripts scanned; 1 sequences repeat in >= 3 sessions
+
+3 sessions, 3 steps -> script candidate (see tokenwright-script):
+    git status
+    python -m unittest discover -s tests
+    git push
+[exit 0]
+=== skill
+skill                          always on-trigger  on-demand
+demo                               10        29       1003
+always = name + description, paid by every session where the skill is listed
+
+savings, largest first:
+  ~    0  demo: references/orphan.md (~1000 tokens) is never named in SKILL.md, so the agent cannot find it on demand: link it with when to read it, or delete it
+[exit 0]
+=== hook off
+
+[exit 0]
+=== hook warn
+{"hookSpecificOutput": {"hookEventName": "PreToolUse", "additionalContext": "tokenwright: huge.txt is ~7500 tokens. If you need a few lines, Grep -n for them and Read with offset/limit instead."}}
+[exit 0]
+=== hook block
+{"hookSpecificOutput": {"hookEventName": "PreToolUse", "permissionDecision": "deny", "permissionDecisionReason": "tokenwright: huge.txt is ~7500 tokens. If you need a few lines, Grep -n for them and Read with offset/limit instead."}}
+[exit 0]
+=== hook on
+{"hookSpecificOutput": {"hookEventName": "PreToolUse", "additionalContext": "tokenwright: huge.txt is ~7500 tokens. If you need a few lines, Grep -n for them and Read with offset/limit instead."}}
+[exit 0]
+=== hook post
+{"hookSpecificOutput": {"hookEventName": "PostToolUse", "additionalContext": "tokenwright: that Bash output was ~6254 tokens. Next time trim at the source (head, --stat, -q, head_limit) or hand the sweep to a subagent."}}
+[exit 0]

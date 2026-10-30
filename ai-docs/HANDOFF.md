@@ -1,6 +1,6 @@
 # Handoff: tokenwright
 
-Updated 2026-10-30 (session 2). Continue with `ai-docs/plans/2026-10-30-tokenwright-continue-prompt.md`.
+Updated 2026-10-30 (session 3). Continue with `ai-docs/plans/2026-10-30-tokenwright-continue-prompt.md`.
 
 ## State
 
@@ -14,14 +14,15 @@ Updated 2026-10-30 (session 2). Continue with `ai-docs/plans/2026-10-30-tokenwri
 
 ## Waits on Mark
 
-1. Wiki: GitHub has no wiki repo until the first page is made in the web UI. Mark: open https://github.com/m4bwav/tokenwright/wiki and save a placeholder Home page; then the next session writes it with wikiwright.
-2. Social preview: upload `.github/images/social-preview.*` in repo Settings (no API).
-3. Name: kept tokenwright. Skill-tidy: stays separate for now; fold in or not?
+1. Skill-tidy: stays separate for now; fold in or not? (Name kept tokenwright.)
+
+## Done session 3
+
+- Social preview uploaded. Wiki live (https://github.com/m4bwav/tokenwright/wiki), note in ai-docs/notes/2026-10-30-github-wiki.md.
 
 ## Next
 
-1. Wiki via wikiwright once the wiki repo exists (see Waits on Mark).
+1. Fix the two tw.py bugs the wiki found (score double count of a second whole read; changed line count off by one), with tests; release 0.1.1 and run the wiki's update mode.
 2. Multi-turn evals where the habits should matter: a re-read after an external change (`tw.py changed`), a repeated job that should become a script, a long session scored by tw.py.
-3. Fold the beat's first findings into habits.md and levers.md.
-4. Next books: Pragmatic Programmer, Algorithms to Live By.
-5. Calibrate tw.py thresholds (400 lines, 20k chars) across many transcripts.
+3. Next books: Pragmatic Programmer, Algorithms to Live By.
+4. Calibrate tw.py thresholds (400 lines, 20k chars) across many transcripts.
