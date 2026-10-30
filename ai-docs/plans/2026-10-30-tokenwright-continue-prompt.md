@@ -1,6 +1,6 @@
 # Continue prompt: tokenwright
 
-Start a session in `D:\m4bwa\Claude\Projects\Ai\tokenwright` with:
+Start a session in the tokenwright clone (`Ai/tokenwright` in the maintainer's projects folder) with:
 
 ```
 Execute ai-docs/plans/2026-10-30-tokenwright-continue-prompt.md
@@ -39,4 +39,4 @@ This file does not change between sessions. State lives in `ai-docs/HANDOFF.md`.
 Execute ai-docs/plans/2026-10-30-tokenwright-continue-prompt.md
 ```
 
-and the folder to start in (`D:\m4bwa\Claude\Projects\Ai\tokenwright`).
+and the folder to start in (the tokenwright clone (`Ai/tokenwright` in the maintainer's projects folder)).
