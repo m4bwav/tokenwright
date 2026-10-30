@@ -13,3 +13,8 @@ Write an entry the moment a real signal happens: a user correction, the same err
 ### L-002 · 2026-10-30 · Carried cost, not size, ranks sinks
 - Trigger: in a 187-turn session, 28k avoidable tokens became about 3.3M cache-read tokens because most entered early.
 - Hypothesis: every loaded token is re-read each later turn until compaction; rank by tokens times later turns.
+
+### L-003 · 2026-10-30 · Single-step read tasks show no saving; the value is in long sessions
+- Trigger: T-20261030-1: the find-function and log cases cost the same with and without the plugin; the model already searched.
+- Hypothesis: current models apply the basic read habits on short prompts. Savings come from habits that matter over many turns (repeat reads, early big outputs, cache breaks, scripting repeats) and from tw.py measuring them. Next evals should be multi-turn: a re-read after an external change (tw.py changed), a repeated job.
+

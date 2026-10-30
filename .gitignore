@@ -3,3 +3,4 @@ __pycache__/
 .tokenwright/
 dist/
 evals/results/
+evals-*.txt
