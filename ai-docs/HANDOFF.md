@@ -4,7 +4,7 @@ Updated 2026-10-30 (session 2). Continue with `ai-docs/plans/2026-10-30-tokenwri
 
 ## State
 
-- 0.1.0 built and committed locally on `main` (no remote yet). Installed as `tokenwright@mark-local` (entry added to the Ai marketplace.json).
+- PUBLIC: https://github.com/m4bwav/tokenwright, CI green (6 jobs), topics set, v0.1.0 tagged and released (https://github.com/m4bwav/tokenwright/releases/tag/v0.1.0) on 2026-10-30, session 2 (Mark switched to manual mode and approved the create). Installed as `tokenwright@mark-local` (entry added to the Ai marketplace.json).
 - Skills: tokenwright (hub + references habits, levers, waste-vocabulary), tokenwright-script (+ templates), tokenwright-skills. tw.py: changed, score, repeats, skill, estimate, hook. Hooks inert unless `TOKENWRIGHT_HOOKS` is warn or block.
 - Tests: 11 unit tests pass; budget GREEN. Evals T-20261030-1: 7/7 pass (triggers +1.00 over baseline, decoys quiet), but the two outcome cases showed no cost saving (L-003).
 - Banner and social preview in `.github/images` (Z-Image Turbo, seed 33).
@@ -14,12 +14,13 @@ Updated 2026-10-30 (session 2). Continue with `ai-docs/plans/2026-10-30-tokenwri
 
 ## Waits on Mark
 
-1. Creating the public repo `m4bwav/tokenwright` was refused by the auto-mode permission classifier again in session 2, even with Mark's go-ahead for a full release in the prompt. Mark: run `gh repo create m4bwav/tokenwright --public --source . --push` in the clone yourself (or add a Bash allow rule); the next session then checks CI, writes the wiki and tags v0.1.0. Local paths already scrubbed from tracked files.
-2. Name: kept tokenwright. Skill-tidy: stays separate for now; fold in or not?
+1. Wiki: GitHub has no wiki repo until the first page is made in the web UI. Mark: open https://github.com/m4bwav/tokenwright/wiki and save a placeholder Home page; then the next session writes it with wikiwright.
+2. Social preview: upload `.github/images/social-preview.*` in repo Settings (no API).
+3. Name: kept tokenwright. Skill-tidy: stays separate for now; fold in or not?
 
 ## Next
 
-1. Publish (above), CI green, wiki (wikiwright), tag v0.1.0 and release.
+1. Wiki via wikiwright once the wiki repo exists (see Waits on Mark).
 2. Multi-turn evals where the habits should matter: a re-read after an external change (`tw.py changed`), a repeated job that should become a script, a long session scored by tw.py.
 3. Fold the beat's first findings into habits.md and levers.md.
 4. Next books: Pragmatic Programmer, Algorithms to Live By.

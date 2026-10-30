@@ -14,3 +14,4 @@
 - Mark gave permission for a full release; `gh repo create --public` still refused by the auto-mode classifier (Create Public Surface). Stopped there per the denial rules; repo stays local.
 - Scrubbed the local start path from the continue prompt (public-repo rule).
 - evergreen PR #14 merged after fixing its red check (ubuntu-latest now 26.04 without Python 3.9; 3.9 moved to ubuntu-24.04) and adding tokenwright pointers to evergreen-wrapup (fixes for T/W candidates) and evergreen-new (tokenwright-skills review), as Mark asked.
+- Mark switched to manual mode; repo created public and pushed, CI green, topics set, v0.1.0 tagged and released. Wiki waits for the first page in the web UI; social preview upload is manual.
