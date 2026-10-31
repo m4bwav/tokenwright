@@ -185,6 +185,24 @@ class TestConflictsAndRewrite(Base):
         self.assertIn('description: "New text. Use when asked."\nlicense: MIT\n', t)
         self.assertNotIn("Old text", t)
 
+    def test_backup_beside_file_when_state_dir_is_not_writable(self):
+        p = os.path.join(self.user, "rohome", "SKILL.md")
+        write(p, "---\nname: rohome\ndescription: Old text.\n---\nbody\n")
+        blocker = os.path.join(self.home, "not-a-dir")
+        write(blocker, "x")
+        old = os.environ.get("SKILLTIDY_STATE")
+        os.environ["SKILLTIDY_STATE"] = os.path.join(blocker, "state")
+        try:
+            b = tidy.set_description(p, "New text. Use when asked.")
+        finally:
+            if old is None:
+                os.environ.pop("SKILLTIDY_STATE")
+            else:
+                os.environ["SKILLTIDY_STATE"] = old
+        self.assertTrue(b.startswith(p + ".bak-"))
+        self.assertIn("Old text", open(b, encoding="utf-8").read())
+        self.assertIn("New text", open(p, encoding="utf-8").read())
+
 
 class TestUsageBudgetOffload(Base):
     def transcript(self):

@@ -1306,9 +1306,13 @@ def set_description(path, new_desc):
             while j < end and (not lines[j].strip() or lines[j][:1].isspace()):
                 j += 1
         lines[idx:j] = [new_line]
-    bdir = os.path.join(state_dir(), "backups", time.strftime("%Y%m%d-%H%M%S"))
-    os.makedirs(bdir, exist_ok=True)
-    backup = os.path.join(bdir, os.path.basename(os.path.dirname(os.path.abspath(path))) + ".SKILL.md")
+    stamp = time.strftime("%Y%m%d-%H%M%S")
+    bdir = os.path.join(state_dir(), "backups", stamp)
+    try:
+        os.makedirs(bdir, exist_ok=True)
+        backup = os.path.join(bdir, os.path.basename(os.path.dirname(os.path.abspath(path))) + ".SKILL.md")
+    except OSError:  # read-only home (sandboxes): keep the backup beside the file instead
+        backup = path + ".bak-" + stamp
     shutil.copy2(path, backup)
     out = "\n".join(lines)
     if crlf:
