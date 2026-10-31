@@ -25,7 +25,7 @@ import tempfile
 from collections import Counter, defaultdict
 from pathlib import Path
 
-VERSION = "0.2.7"
+VERSION = "0.2.8"
 CHARS_PER_TOKEN = 4
 BIG_FILE_LINES = 400        # a whole read of a file this long, used for a few lines, is a sink
 BIG_OUTPUT_CHARS = 20000    # a tool result this long is a sink unless it was the point
@@ -124,7 +124,7 @@ def _content_text(c):
 
 def load_events(path):
     """Yield (kind, data) in order: ('use', {id,name,input}), ('result', {id,text,error}), ('usage', usage)."""
-    seen_req = set()
+    seen_req, seen_block = set(), set()
     with open(path, encoding="utf-8", errors="replace") as f:
         for line in f:
             try:
@@ -144,9 +144,15 @@ def load_events(path):
             for c in content:
                 if not isinstance(c, dict):
                     continue
-                if c.get("type") == "tool_use":
+                kind = c.get("type")
+                key = (kind, c.get("id") or c.get("tool_use_id"))
+                if kind in ("tool_use", "tool_result") and key[1]:
+                    if key in seen_block:   # transcripts sometimes repeat a record
+                        continue
+                    seen_block.add(key)
+                if kind == "tool_use":
                     yield "use", {"id": c.get("id"), "name": c.get("name", "?"), "input": c.get("input") or {}}
-                elif c.get("type") == "tool_result":
+                elif kind == "tool_result":
                     yield "result", {"id": c.get("tool_use_id"), "text": _content_text(c.get("content")),
                                      "error": bool(c.get("is_error"))}
 
