@@ -42,6 +42,9 @@ Meadows, *Thinking in Systems* (ch. 2, 4, 5, 6): delays and oscillation, bounded
 ### R-20261030-9 · testing · magnitude 0.1
 Baseline across 300 recent Claude Code transcripts (12,928 tool results, 256 whole-file reads), measured 2026-10-30. Text tool results: median 311 chars, p95 7,763, p99 18,067, p99.9 40,337; 0.8% are 20k or more, and 68 of 300 sessions have at least one. Whole reads: median 66 lines, p90 288, p95 392, p99 591; 4.7% are 400 lines or more, in 12 sessions. Both lines sit near the tail (p99 and p95), so `BIG_OUTPUT_CHARS = 20000` and `BIG_FILE_LINES = 400` stay. Counting image blocks as text inflates output sizes about sevenfold; measure text only. Source: local transcripts, one maintainer's work, not a population.
 
+### R-20261030-10 · testing · magnitude 0.1
+Exact repeats of a shell command across the same 300 local transcripts, measured 2026-10-30: 9,088 commands ran once, 351 twice, 5 three times, 2 four times; none more. The most repeated command per session has median 1, p95 2, p99 3; 7 sessions reach 3. So `POLL_RUNS = 3` flags about the top 2% of sessions. Polling here mostly runs through background loops and Monitor, which do not repeat the command in the transcript, so the kind catches hand polling only. Source: local transcripts, one maintainer's work.
+
 ## Open questions
 
 - Batch API request cap: sources disagree (10k vs 100k).

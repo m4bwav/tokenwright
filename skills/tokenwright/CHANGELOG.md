@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261030-7 · 2026-10-30 · tw.py score kind poll (0.2.4)
+- because: R-20261030-10
+- files: scripts/tw.py (`poll`, POLL_RUNS = 3), references/waste-vocabulary.md (Waiting row), tests/test_tw.py
+- The third and later run of one exact shell command in a session is a `poll` sink. Plateau, stale, debug-loop and the others still wait for thresholds.
+
 ### C-20261030-6 · 2026-10-30 · Thinking in Systems (0.2.3)
 - because: R-20261030-8 (book-learnings pass)
 - files: references/habits.md (Family 1 one row, Family 2 two rows), references/levers.md (Rank the fix), ../tokenwright-skills/SKILL.md (Shouted rules)

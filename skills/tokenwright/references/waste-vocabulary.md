@@ -9,7 +9,7 @@ Lean manufacturing names seven kinds of waste. Each has a token form. Ideas para
 | Defects | A failed call sent again unchanged | `retry` | Stop at the first error, read it, bisect, prove the fix |
 | Overproduction | Output nobody reads: recaps, dumps in replies, a report when one line was wanted | (reply length; not scored yet) | Output side |
 | Inventory | Loaded but never used: skill descriptions, MCP schemas, files read "just in case" | `tw.py skill` | 1 and skill review |
-| Waiting | Serial turns that could have been one batched turn; polling loops with no backoff or deadline | (not scored yet) | 2 Shortcut |
+| Waiting | Serial turns that could have been one batched turn; polling loops with no backoff or deadline | `poll` (same shell command three or more times) | 2 Shortcut |
 | Overprocessing | Work past what the answer needs: re-verifying settled facts, gold-plating | (not scored) | 2 Shortcut |
 
 Overproduction is the worst, because it hides the others: a long dump makes the next turn's real need hard to see.
