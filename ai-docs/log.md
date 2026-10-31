@@ -69,3 +69,7 @@
 ## 2026-10-31 session 13
 
 - Scanned denied calls for a `workaround-after-deny` score kind: 26 denials in 300 sessions, the follow-up is almost always the same tool with a split or narrowed command; workarounds cannot be told from fixes. Kind not added, no release (R-20261031-2).
+
+## 2026-10-31 session 14
+
+- Scanned 300 transcripts for `plateau` (same failing shell command after an edit: max run 2, never 3) and `many-similar-edits` (same Edit in several files: never). Both kinds ruled out, no code change, no release (R-20261031-3, R-20261031-4). Scan scripts were throwaway, same shape as the debug-loop scan.
