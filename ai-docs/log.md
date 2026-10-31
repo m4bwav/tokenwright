@@ -61,3 +61,7 @@
 ## 2026-10-30 session 11
 
 - Calibrated and added the `poll` score kind: exact repeats of a shell command in 300 transcripts top out at 4; 3 runs is about p99 of sessions (R-20261030-10). PR #12 merged, v0.2.4 tagged and released, installed 0.2.4, wiki at 0.2.4 (Commands kinds table, Versions).
+
+## 2026-10-31 session 12
+
+- Calibrated and added the `debug-loop` score kind: longest same-tool failure streak per session in 300 transcripts is 0 or 1 in 95%, 3 or more in 3 sessions (R-20261031-1). PR #14 merged, v0.2.5 tagged and released, installed 0.2.5, wiki at 0.2.5 (Commands kinds table, Versions, Getting-Started, footer). Budget yellow now also on tracked repository size (1,076 KB).
