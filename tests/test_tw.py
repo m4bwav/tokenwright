@@ -119,6 +119,14 @@ class Score(unittest.TestCase):
             sinks, _, _ = tw.score(p)
             self.assertEqual([s[0] for s in sinks], ["re-read after own edit"])
 
+    def test_poll_from_third_run(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d, "s.jsonl")
+            p.write_text("".join(use(i, "Bash", {"command": "git status"}) + result(i, "clean")
+                                 for i in range(1, 5)))
+            sinks, _, _ = tw.score(p)
+            self.assertEqual([(s[0], s[2]) for s in sinks], [("poll", 3), ("poll", 4)])
+
     def test_json_output(self):
         with tempfile.TemporaryDirectory() as d:
             data = json.loads(run("score", str(self.transcript(d)), "--json"))

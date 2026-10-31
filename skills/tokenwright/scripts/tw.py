@@ -23,10 +23,11 @@ import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
-VERSION = "0.2.3"
+VERSION = "0.2.4"
 CHARS_PER_TOKEN = 4
 BIG_FILE_LINES = 400        # a whole read of a file this long, used for a few lines, is a sink
 BIG_OUTPUT_CHARS = 20000    # a tool result this long is a sink unless it was the point
+POLL_RUNS = 3               # the same shell command run this often is polling
 SNAP_DIR_DEFAULT = ".tokenwright/snapshots"
 SNAP_MAX_BYTES = 2_000_000
 IMAGE_TOKENS = 1600         # a full-size image costs roughly this much; resize to cut it
@@ -168,6 +169,7 @@ def score(path):
     reads = defaultdict(list)     # path -> [turn index of read]
     edits = defaultdict(list)     # path -> [turn index of edit]
     last_fail = {}
+    shell_runs = Counter()        # exact shell command -> runs
     n = turn = 0
     at_turn = {}
     for kind, d in load_events(path):
@@ -216,6 +218,13 @@ def score(path):
             sinks.append(("big-output", tokens(size), i, "%s output %d chars: %s" % (name, size, what),
                           "trim at the source: head, --stat, -q, Grep head_limit, files_with_matches; "
                           "or a subagent/local-delegate that returns only the answer"))
+        cmd = (inp.get("command") or "").strip() if name in ("Bash", "PowerShell") else ""
+        if cmd and not d["error"]:
+            shell_runs[cmd] += 1
+            if shell_runs[cmd] >= POLL_RUNS:   # about p99 of sessions (R-20261030-10)
+                sinks.append(("poll", tokens(size), i, "%s ran the same command %d times: %s" % (
+                    name, shell_runs[cmd], cmd[:60]), "wait with a background until-loop or Monitor "
+                    "that prints only the change; or `tw.py changed`"))
         key = (name, json.dumps(inp, sort_keys=True)[:300])
         if d["error"]:
             if key in last_fail:
