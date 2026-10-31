@@ -33,6 +33,9 @@ No published measurements for the basic read habits.
 ### R-20261030-6 · practice · magnitude 0.3
 First scan of the everscout beat token-saving (16 sources, 194 items, 9 notes): model routing with a test gate, effort per task, lean headless runs, templates for deterministic output, MCP vs skill cost, loop-guard hooks. Single-author reports. Links in references/habits.md.
 
+### R-20261030-7 · practice · magnitude 0.2
+Hunt and Thomas, *The Pragmatic Programmer* 20th anniversary ed. (Topics 12, 20, 27, 38) and Christian and Griffiths, *Algorithms to Live By* (ch. 1, 2, 4, 9, 10): stopping rules, bisection, debugging discipline, backoff, local peaks. Paraphrased in the book-learnings notes, not in this repository.
+
 ## Open questions
 
 - Batch API request cap: sources disagree (10k vs 100k).

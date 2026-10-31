@@ -1,6 +1,6 @@
 {
   "name": "tokenwright",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Spend fewer tokens on the same result in any AI agent work: a habits catalogue in four families (don't load or reload data, shortcut the process, script what repeats, script what you solved once) with measured savings, a skill-cost review, a catalog tool (formerly skill-tidy) that lints and de-conflicts descriptions and parks rarely used skills, and a standard-library CLI that skips unchanged re-reads with a diff, ranks a transcript's token sinks by carried cache cost, finds repeated command runs and costs a skill. Optional hooks, off by default. Evergreen.",
   "author": { "name": "Mark Rogers" },
   "license": "MIT",

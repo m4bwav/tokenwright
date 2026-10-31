@@ -3,7 +3,7 @@ name: tokenwright-script
 description: Turn a repeating or already-solved agent process into a script, so the next run costs one command instead of a session. Spots candidates (tw.py repeats across transcripts, or the commands that just worked), then writes the script with inputs, outputs, a dry run, idempotence and a short judged result. Use on 'script this', 'we keep doing this', 'make this one command', 'automate what you just did', 'next time this should be quick', or when tokenwright names a repeat.
 license: MIT
 metadata:
-  version: 0.2.1
+  version: 0.2.2
 ---
 
 # tokenwright-script
