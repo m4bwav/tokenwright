@@ -321,7 +321,7 @@ def pairs(skills, threshold=0.45, override=None):
                 continue
             c = cosine(vs[i], vs[j])
             if c >= threshold:
-                shared = sorted(set(vs[i]) & set(vs[j]), key=lambda w: -(vs[i][w] * vs[j][w]))[:8]
+                shared = sorted(set(vs[i]) & set(vs[j]), key=lambda w: (-(vs[i][w] * vs[j][w]), w))[:8]
                 out.append({"score": round(c, 2), "a": skills[i]["id"], "b": skills[j]["id"], "shared_terms": shared})
     out.sort(key=lambda p: (-p["score"], p["a"], p["b"]))
     return out

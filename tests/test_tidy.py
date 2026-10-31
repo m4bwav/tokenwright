@@ -4,6 +4,7 @@ import io
 import json
 import os
 import shutil
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -139,6 +140,13 @@ class TestConflictsAndRewrite(Base):
         self.assertEqual(len(ps), 1)
         self.assertEqual((ps[0]["a"], ps[0]["b"]), ("feed-scan", "radar-sweep"))
         self.assertIn("scan the feeds", ps[0]["shared_triggers"])
+        outs = set()
+        for seed in ("1", "2", "3"):
+            env = dict(os.environ, PYTHONHASHSEED=seed)
+            r = subprocess.run([sys.executable, tidy.__file__, "conflicts", "--project", self.proj, "--json"],
+                               env=env, capture_output=True, text=True, encoding="utf-8")
+            outs.add(json.dumps(json.loads(r.stdout)[0]["shared_terms"]))
+        self.assertEqual(len(outs), 1)
         self.assertTrue(ps[0]["suggest_a"].startswith("To collect articles from news feeds"))
         self.assertTrue(ps[0]["suggest_a"].endswith("use radar-sweep."))
 

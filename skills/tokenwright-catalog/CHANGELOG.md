@@ -6,6 +6,11 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 
 Entries before C-20261030-1 were written in the skill-tidy repository (m4bwav/skill-tidy); their paths are relative to that layout (the skill folder was `skills/skill-tidy`).
 
+### C-20261030-3 · 2026-10-30 · conflicts lists shared words in a stable order
+- because: user request (handoff item: output changed with the hash seed)
+- files: scripts/tidy.py (similar pairs), ../../tests/test_tidy.py (test_conflicts_report_shared_words_triggers_and_boundaries)
+- Words of equal weight now sort alphabetically, so `conflicts` prints the same list on every run.
+
 ### C-20261030-2 · 2026-10-30 · Backups survive a read-only home; Edit fallback named
 - because: T-20261030-1
 - files: scripts/tidy.py (set_description), ../../tests/test_tidy.py (test_backup_beside_file_when_state_dir_is_not_writable), SKILL.md (Step 2 item 5), ../tokenwright/evals/cases/outcome-catalog/graders/checked-with-tidy.md

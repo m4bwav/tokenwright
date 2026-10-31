@@ -40,3 +40,7 @@
 - Wiki updated for 0.2.1 (Commands, FAQ, Getting-Started, Versions-and-Upgrading, _Footer); outputs 14 checked 0 missing, live 0 failures.
 - tidy.py's `conflicts` prints shared words in set order, which changes per run; the wiki verify script now sets PYTHONHASHSEED=0.
 - First multi-turn eval, multiturn-reread: `claude plugin eval` has no multi-turn cases, so `context.history_file` seeds a recorded first turn and the scaffold changes the file before the new prompt. 1.00 in both arms, no saving (T-20261030-3). The Bash-dependent cases wait for a macOS or Linux run.
+
+## 2026-10-30 session 7
+
+- tidy.py `conflicts` shared words now break ties alphabetically; the test checks three hash seeds give one answer (catalog C-20261030-3). The wiki verify script no longer needs PYTHONHASHSEED=0.
