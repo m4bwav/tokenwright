@@ -9,6 +9,12 @@ Checked 2026-10-30 against code.claude.com/docs and docs.claude.com. Sources and
 - TTL: a subscription within plan usage gets 1 hour for the main conversation; subagents, forks, compaction, API keys and usage credits get 5 minutes. Settable with `CLAUDE_CODE_PROMPT_CACHE_TTL` and `CLAUDE_CODE_SUBAGENT_PROMPT_CACHE_TTL`.
 - Habit: settle model, tools and plugins before a long task; don't switch mid-task.
 
+## Rank the fix (leverage)
+
+- Weakest to strongest (after Meadows ch. 6): a setting or cap; a shorter delay; what the agent can see (a meter, `/context`, a short output); a rule (a hook, a script); the goal (what counts as done).
+- A cap stops a disaster and changes no habit. Prefer the highest rung the task allows.
+- A hook that only blocks gets worked around at the same cost (a blocked Read becomes `cat` through Bash). A hook should name the cheap route.
+
 ## Context commands
 
 - `/clear` between unrelated tasks: free, and the biggest single saving.

@@ -14,6 +14,7 @@ Each habit: when it applies, how, and the saving. "Measured" numbers come from `
 | Small images | Reading screenshots, renders, contact sheets | Resize to the size you need; crop to the region | About 1,600 tokens per full image |
 | Delegate big reads | Logs, long diffs, many-file sweeps where you need a conclusion | A subagent (Explore, or a Haiku one) or local-delegate | The sweep's tokens stay out of the main context |
 | Don't paste what a file already holds | Writing a report or handing work over | Name the path | Output and later input |
+| Cut the load, not lean on the fix | A project needs compaction, raised caps or a subagent just to fit its always-loaded files | Trim CLAUDE.md, AGENTS.md and skill descriptions first; the fix keeps the load (Meadows ch. 5, shifting the burden) | Every turn's fixed cost (estimate) |
 
 ## Family 2: shortcut the whole process
 
@@ -33,6 +34,8 @@ Each habit: when it applies, how, and the saving. "Measured" numbers come from `
 | Change approach after two misses | The same test still fails after two variations of one fix | Step back to a different hypothesis; more tweaks climb a local peak (estimate; Christian and Griffiths ch. 9) |
 | Sample before a sweep | A large set of files, logs or results | Look at three to five first; the sample often answers or narrows the sweep (estimate) |
 | Wait with a deadline | Waiting on a build, render or remote job | One blocking wait or polling with a growing interval, a deadline and a cap on retries; a 20-turn poll re-sends the context 20 times (estimate; Christian and Griffiths ch. 10) |
+| Let the check finish before the next edit | A build or test is still running, or only part of its output is in | Wait for the whole result, then make one change; editing on a partial reading makes fix and counter-fix swings (Meadows ch. 2, delays and oscillation) | The extra edit-test rounds (estimate) |
+| Brief a subagent with the purpose and a size | Delegating a search or a review | Give the goal, what is ruled out and how long the answer should be; it acts only on what it can see (Meadows ch. 4, bounded rationality) | A wandering sweep and a long report (estimate) |
 
 ## Family 3: script a process that repeats
 

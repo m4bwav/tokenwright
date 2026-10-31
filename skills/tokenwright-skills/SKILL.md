@@ -3,7 +3,7 @@ name: tokenwright-skills
 description: Review a skill or plugin for token cost and rank the savings: description length (paid in every session), always-loaded text, references that should load on demand, instructions that should be a script, sweeps a subagent should own, files nothing links to. Runs tw.py skill. Use when writing or reviewing one skill ('is this skill too big', 'make this skill cheaper', 'token cost of my plugin', 'review this SKILL.md for tokens'), and from evergreen-new and evergreen-tune. The whole catalog: tokenwright-catalog.
 license: MIT
 metadata:
-  version: 0.2.2
+  version: 0.2.3
 ---
 
 # tokenwright-skills
@@ -32,6 +32,7 @@ A skill costs in three tiers. Fix the most-paid tier first.
 - **Sweeps**: steps that read many files to produce one answer belong in a subagent or `context: fork`, so the reads never reach the main context.
 - **Findable files**: every reference should be named in SKILL.md or an index it names. An unlinked file is either dead (delete) or unreachable (link it).
 - **Duplication**: text copied from a neighbour skill. Link instead.
+- **Shouted rules**: a rule repeated in louder words (MUST, NEVER, IMPORTANT) after each miss, or two always-loaded rules that conflict. Fix the cause once; each repeat costs every turn (Meadows ch. 5, escalation).
 - **Model pinning**: a frontmatter model different from the session's breaks the prompt cache for that turn. Pin only when the saving is clear.
 
 See [../tokenwright/references/levers.md](../tokenwright/references/levers.md) for what loads when.

@@ -36,6 +36,9 @@ First scan of the everscout beat token-saving (16 sources, 194 items, 9 notes): 
 ### R-20261030-7 · practice · magnitude 0.2
 Hunt and Thomas, *The Pragmatic Programmer* 20th anniversary ed. (Topics 12, 20, 27, 38) and Christian and Griffiths, *Algorithms to Live By* (ch. 1, 2, 4, 9, 10): stopping rules, bisection, debugging discipline, backoff, local peaks. Paraphrased in the book-learnings notes, not in this repository.
 
+### R-20261030-8 · practice · magnitude 0.2
+Meadows, *Thinking in Systems* (ch. 2, 4, 5, 6): delays and oscillation, bounded rationality, system traps, leverage points. Paraphrased in the book-learnings notes, not in this repository.
+
 ## Open questions
 
 - Batch API request cap: sources disagree (10k vs 100k).
