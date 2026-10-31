@@ -57,3 +57,7 @@
 ## 2026-10-30 session 10
 
 - Calibrated tw.py score thresholds on 300 local transcripts (R-20261030-9): 20k chars is about the 99th percentile of text tool results, 400 lines about the 95th percentile of whole reads; both kept, no code change, no release. Measure text only: image blocks inflate sizes about sevenfold.
+
+## 2026-10-30 session 11
+
+- Calibrated and added the `poll` score kind: exact repeats of a shell command in 300 transcripts top out at 4; 3 runs is about p99 of sessions (R-20261030-10). PR #12 merged, v0.2.4 tagged and released, installed 0.2.4, wiki at 0.2.4 (Commands kinds table, Versions).
