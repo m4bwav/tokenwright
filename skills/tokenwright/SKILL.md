@@ -1,9 +1,9 @@
 ---
 name: tokenwright
-description: Spend fewer tokens on the same result in any agent work. Habits by family (don't load or reload data, shortcut the process, script repeats) and tw.py (skip unchanged re-reads with a diff, rank a session's token sinks, cost a skill). Use on 'save tokens', 'this is expensive', 'context is filling', 'why did that cost so much', 'score this session', 'did the file change'. Skill reviews: tokenwright-skills; scripting a process: tokenwright-script.
+description: Spend fewer tokens on the same result in any agent work. Habits by family (don't load or reload data, shortcut the process, script repeats) and tw.py (skip unchanged re-reads with a diff, rank a session's token sinks, cost a skill). Use on 'save tokens', 'this is expensive', 'context is filling', 'why did that cost so much', 'score this session', 'did the file change'. One skill's cost: tokenwright-skills; the catalog: tokenwright-catalog; scripting: tokenwright-script.
 license: MIT
 metadata:
-  version: 0.1.0
+  version: 0.2.0
 ---
 
 # tokenwright
@@ -62,6 +62,7 @@ The report names each sink by its kind of waste, after lean manufacturing ([refe
 | `repeats [transcripts] [--last N]` | Find command sequences repeated across sessions: script candidates |
 | `skill <dir>` | Cost of a skill or plugin: always loaded, on trigger, on demand |
 | `estimate <paths>` | Rough tokens of files before loading them |
+| `catalog <tidy args>` | The whole skill catalog: forwards to tokenwright-catalog's tidy.py |
 
 Token counts are estimates (characters / 4). Use them to rank, not to bill. For exact counts use the API's token counting endpoint.
 
@@ -75,4 +76,4 @@ See [references/levers.md](references/levers.md): prompt cache and its TTL, `/co
 
 ## Neighbours
 
-skill-tidy trims and parks skill descriptions; context-health watches a session's context; local-delegate sends mechanical reads to a local model; readwright reads documents by outline; evergreen-wrapup calls `tw.py score` for its token sinks. Link to them, don't copy them.
+tokenwright-catalog (formerly skill-tidy) lints, de-conflicts and parks the skill catalog (`tw.py catalog`); context-health watches a session's context; local-delegate sends mechanical reads to a local model; readwright reads documents by outline; evergreen-wrapup calls `tw.py score` for its token sinks. Link to them, don't copy them.

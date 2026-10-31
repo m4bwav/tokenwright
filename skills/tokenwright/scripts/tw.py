@@ -7,6 +7,7 @@ Commands
   repeats <transcripts..> find command sequences repeated across sessions: script candidates
   skill <dir>             token cost of a skill or plugin: what loads always, on trigger, on demand
   estimate <paths...>     rough token count of files (chars / 4)
+  catalog <args...>       the whole skill catalog: forwards to tokenwright-catalog's tidy.py (lint, conflicts, park...)
   hook <pre|post>         hook entry point (reads the hook JSON on stdin); off unless TOKENWRIGHT_HOOKS is set
 
 Token counts are estimates (about 4 characters per token for English and code). Use them to rank, not to bill.
@@ -17,11 +18,12 @@ import hashlib
 import json
 import os
 import re
+import subprocess
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
-VERSION = "0.1.0"
+VERSION = "0.2.0"
 CHARS_PER_TOKEN = 4
 BIG_FILE_LINES = 400        # a whole read of a file this long, used for a few lines, is a sink
 BIG_OUTPUT_CHARS = 20000    # a tool result this long is a sink unless it was the point
@@ -435,6 +437,16 @@ def cmd_hook(a):
     return 0
 
 
+TIDY = Path(__file__).resolve().parent.parent.parent / "tokenwright-catalog" / "scripts" / "tidy.py"
+
+
+def cmd_catalog(a):
+    if not TIDY.is_file():
+        print("tokenwright: tidy.py not found at %s" % TIDY, file=sys.stderr)
+        return 2
+    return subprocess.run([sys.executable, str(TIDY)] + (a.args or ["--help"])).returncode
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(prog="tw.py", description=__doc__.split("\n")[0])
     p.add_argument("--version", action="version", version=VERSION)
@@ -467,6 +479,9 @@ def main(argv=None):
     s.add_argument("paths", nargs="+")
     s.add_argument("--total-only", action="store_true")
     s.set_defaults(fn=cmd_estimate)
+    s = sub.add_parser("catalog", help="skill catalog commands (tidy.py): lint, conflicts, budget, park...")
+    s.add_argument("args", nargs=argparse.REMAINDER)
+    s.set_defaults(fn=cmd_catalog)
     s = sub.add_parser("hook", help="hook entry point (stdin JSON)")
     s.add_argument("when", choices=("pre", "post"))
     s.set_defaults(fn=cmd_hook)

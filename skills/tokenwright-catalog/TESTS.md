@@ -1,0 +1,42 @@
+# Tests: tokenwright-catalog
+
+Test runs for [SKILL.md](SKILL.md). Cases live in `evals/evals.json`. A failure that taught something is a lesson in [LEARNINGS.md](LEARNINGS.md); a fix it caused is logged in [CHANGELOG.md](CHANGELOG.md) with `because: T-...`; research it triggered is in [RESEARCH.md](RESEARCH.md); counts and the failing list are in `evergreen.json` under `tests`. Rules: MAINTENANCE.md (testing section) and the plugin's `protocol/TESTING.md`.
+
+A test passes on evidence (a tool call in the trace, a file, a marker, a log line), never on the transcript's claim that something was done.
+
+Entry shape: `### T-YYYYMMDD-n · date · harness · env · passed/total`, then one line per failing case (`id · kind · class · what the evidence showed`), then `led to:` (L-, C-, R- ids or none). Newest first. Budget 150 lines; archive older runs to `TESTS-ARCHIVE.md`.
+
+## Runs
+
+### T-20261030-1 · 2026-10-30 · claude plugin eval 2.1.307 (--ablation none) · Windows 11 native + WSL2 · 5/6
+- Why: the move into tokenwright (new name, new description, case ids renamed). trigger-4, trigger-5, decoy-3, decoy-4 pass natively (1 run; trigger-4 and -5 hit max_turns 3 after the Skill call, as before). action-catalog passes in WSL2 (3 runs).
+- outcome-catalog · outcome · env · the WSL2 eval sandbox now makes the home folder, $TMPDIR and the workspace read-only for the agent, so neither `tidy.py apply` nor the Edit fallback could write feed-scan's SKILL.md; `tidy.py check` printed OK each time and the agent reported the read-only error. Three tuning iterations: tidy.py backs up beside the file when the state folder is read-only (unit test added), the grader now checks the `check` gate, and SKILL.md names the Edit fallback. Still 0.80 (`changed` fails) over 3 runs. Re-run when the harness allows workspace writes, or on macOS or Linux.
+- led to: L-003, C-20261030-2. About $4.30 in all.
+
+### T-20261023-1 · 2026-10-23 · claude plugin eval 2.1.281 (default model, 1 run per case, --ablation none) · Windows 11 native · 4/4
+- Why: the 2026-10-23 refresh edited SKILL.md's body (intro, Step 1, Step 2) and tidy.py's Cursor roots; the description did not change. `claude plugin eval . --ablation none --no-publish -j 4 --tag trigger --trust-plugin`, 4/4, 0.77 USD, 61 s. Unit tests 26/26 (new cursor-roots test).
+- trigger-1, trigger-2 · trigger · pass · `Skill` called once each, then the 3-turn cap.
+- decoy-1, decoy-2 · trigger · pass · skill-tidy not called.
+- action-1 and outcome-1 (WSL2) not rerun: the scripts they drive did not change.
+- led to: none
+
+### T-20261011-1 · 2026-10-11 · claude plugin eval 2.1.281 (default model, 1 run per case, --ablation none) · Windows 11 native · 4/4
+- Why: the description changed in the 2026-10-11 refresh (PR #5); trigger and decoy cases only. Command as in T-20260926-2: `claude plugin eval . --ablation none --no-publish -j 4 --tag trigger --trust-plugin`, 4/4, 0.61 USD, 40 s.
+- trigger-1 (wrong skill fires, clean up descriptions), trigger-2 (token cost of skills) · trigger · pass · `Skill` called once each, then the 3-turn cap (the case's limit).
+- decoy-1 (session size), decoy-2 (new git-log skill) · trigger · pass · skill-tidy not called.
+- One run per case, as in earlier entries; action-1 and outcome-1 (WSL2 cases) not rerun because the body's scripts did not change.
+- led to: none
+
+### T-20260926-2 · 2026-09-26 · claude plugin eval 2.1.281 (default model, 1 run per case, --ablation none) · Windows 11 native for trigger and decoy, WSL2 Ubuntu (bwrap, socat) for the Bash cases · 6/6
+- Suite: the root `evals/` folder, cases converted from `evals/evals.json`. Trigger and decoy graders are `tool_used` on Skill with a regex on the skill name (max 0 for a decoy). Native: `claude plugin eval . --ablation none --no-publish -j 4 --tag trigger --trust-plugin`, 4/4, 0.78 USD, 72 s. WSL2: `--tag bash --scaffold --allow-tools Bash Write Edit`, 2/2, 0.36 USD, 31 s.
+- trigger-1, trigger-2 · trigger · pass · `Skill(skill-tidy:skill-tidy)` called once each (both then hit the 3-turn cap, which is the case's limit, not a failure).
+- decoy-1 (session size), decoy-2 (new git-log skill) · trigger · pass · skill-tidy not called.
+- action-1 · action · pass · Skill first, then `tidy.py conflicts` in the trace. Finding: it reported 0 listed skills, because the run keeps its config in `CLAUDE_CONFIG_DIR` and `tidy.py` only scans `~/.claude`; the model noticed and worked around it.
+- outcome-1 · outcome · pass · fixture `fixture/.claude/skills/feed-scan` and `radar-sweep` (cosine 0.60). Trace: `tidy.py check` printed OK twice, then `tidy.py apply` wrote the file with a backup under the run's `~/.skill-tidy/backups/`; similarity 0.60 to 0.30; new description 409 chars, keeps 'scan the feeds' and 'what is new in databases', ends with one sentence pointing the daily digest to radar-sweep (judge expectation checked by reading the trace, not graded).
+- Not runnable on native Windows: action-1 and outcome-1 need a Bash grant, and the run is refused there ("Windows sandbox is not active on this session (feature gate off)"). They run under WSL2.
+- Caveats: the eval config is throwaway, so the catalog held only this plugin and built-ins; decoy-1 proves skill-tidy does not take session-size prompts, not that context-health wins them. An earlier WSL attempt failed only the two Bash graders because their regex required `tidy.py apply` literally and the model called it through `$T apply`; the graders (and the evidence regex in `evals.json`) now allow text between `tidy.py` and the subcommand.
+- led to: none (the CLAUDE_CONFIG_DIR gap is in ai-docs/HANDOFF.md as the next action)
+
+### T-20260926-1 · 2026-09-26 · not yet run · skill · 0/0
+- Suite scaffolded; no run recorded. Write the cases in `evals/evals.json` (at least two trigger prompts, two decoys, one action case with evidence, one outcome case), run the baseline without the skill, then run with it (`evergreen-test`).
+- led to: none
