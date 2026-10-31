@@ -44,3 +44,4 @@
 ## 2026-10-30 session 7
 
 - tidy.py `conflicts` shared words now break ties alphabetically; the test checks three hash seeds give one answer (catalog C-20261030-3). The wiki verify script no longer needs PYTHONHASHSEED=0.
+- Mark withdrew skill-tidy's Claude directory submission himself. Nothing waits on him now.
