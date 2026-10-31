@@ -12,7 +12,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-TAG = os.environ.get("WIKI_TAG", "v0.2.0")
+TAG = os.environ.get("WIKI_TAG", "v0.2.1")
 REPO = Path(__file__).resolve().parents[2]
 work = Path(tempfile.mkdtemp(prefix="tw-wiki-"))
 # The plugin's layout, so `tw.py catalog` finds tidy.py beside it (v0.2.0+).
@@ -27,7 +27,7 @@ TW = str(work / "skills" / "tokenwright" / "scripts" / "tw.py")
 
 def run(label, args, stdin=None, env=None):
     print("=== " + label)
-    e = dict(os.environ, **(env or {}))
+    e = dict(os.environ, PYTHONHASHSEED="0", **(env or {}))  # stable set order
     e.pop("TOKENWRIGHT_SNAPSHOTS", None)
     r = subprocess.run([sys.executable, TW] + args, cwd=work, input=stdin, capture_output=True,
                        text=True, env=e)

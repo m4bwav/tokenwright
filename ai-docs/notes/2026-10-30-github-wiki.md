@@ -14,6 +14,10 @@ Home, Getting-Started, Commands, Hooks, Skills, FAQ, Versions-and-Upgrading, Dev
 
 The script now lays tw.py and tidy.py out as in the plugin (so `tw.py catalog` finds tidy.py). It adds catalog cases (version, conflicts, lint) with two overlapping skills in a throwaway home (`SKILLTIDY_HOME`). diffout against the 0.1.0 output: 1 changed (version), 3 added. Pages changed: Home, Skills, Commands (catalog section), Versions-and-Upgrading, Getting-Started, FAQ, Development, _Footer. check 0 errors (Home has no version: a warning, as before), outputs 14 checked 0 missing, tells 0 strong, live 8 pages 0 failures. The catalog commands that write (apply, park, split) are described from the source and tests, not run by the script.
 
+## Update for 0.2.1 (2026-10-30)
+
+WIKI_TAG v0.2.1. diffout: version, the `changed` line count (4 to 3) and the `score` example (one sink fewer, totals 2196/6588). Pages changed: Commands, FAQ, Getting-Started, Versions-and-Upgrading, _Footer. The verify script now runs commands with PYTHONHASHSEED=0 because tidy.py's shared-words list follows set order. check 0 errors, outputs 14 checked 0 missing, live 8 pages 0 failures. Bugs 1 and 2 above are fixed.
+
 ## Facts the README lacks
 
 - `TOKENWRIGHT_HOOKS=1` or `on` act as `warn`.

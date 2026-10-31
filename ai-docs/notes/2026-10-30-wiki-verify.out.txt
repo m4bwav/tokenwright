@@ -1,8 +1,8 @@
 === version
-0.2.0
+0.2.1
 [exit 0]
 === changed first
-new       notes.md (4 lines, ~5 tokens): no snapshot yet; read it once
+new       notes.md (3 lines, ~5 tokens): no snapshot yet; read it once
 [exit 0]
 === changed again
 unchanged notes.md
@@ -30,13 +30,11 @@ missing   nope.md
 === score
 transcript session.jsonl
 turns 5, tool calls 2; input 50, cache read 5000, cache write 500, output 100 tokens
-estimated avoidable ~3294 tokens entered context; carried on later turns as ~8784 cache-read tokens (billed at about a tenth of input)
-  whole-read             ~2196
+estimated avoidable ~2196 tokens entered context; carried on later turns as ~6588 cache-read tokens (billed at about a tenth of input)
+  whole-read             ~1098
   repeat read            ~1098
 top sinks:
   ~  1098  #1    whole-read             Read src/app.py whole (500 lines)
-          fix: search first (Grep -n with -C), then Read offset/limit; or readwright outline
-  ~  1098  #2    whole-read             Read src/app.py whole (500 lines)
           fix: search first (Grep -n with -C), then Read offset/limit; or readwright outline
   ~  1098  #2    repeat read            Read src/app.py again (2 reads)
           fix: keep the facts from the first read, or `tw.py changed` to skip unchanged files
@@ -73,12 +71,12 @@ savings, largest first:
 {"hookSpecificOutput": {"hookEventName": "PostToolUse", "additionalContext": "tokenwright: that Bash output was ~6254 tokens. Next time trim at the source (head, --stat, -q, head_limit) or hand the sweep to a subagent."}}
 [exit 0]
 === catalog version
-0.2.0
+0.2.1
 [exit 0]
 === catalog conflicts
 1 pairs at TF-IDF cosine >= 0.45 among 2 listed skills (0.65+ near-duplicate)
 0.63 feed-scan ~ radar-sweep
-     shared words: feed, articl, databas, trend, note, news, summarise, track
+     shared words: feed, track, news, articl, databas, note, summarise, trend
      boundary for feed-scan: To sweep news feeds every morning for articles about databases, use radar-sweep.
      boundary for radar-sweep: To collect articles from news feeds about databases, use feed-scan.
 [exit 0]

@@ -33,3 +33,9 @@
 ## 2026-10-30 session 5
 
 - Mark approved archiving and withdrawing skill-tidy. m4bwav/skill-tidy description set to a moved notice and archived. Directory withdrawal blocked by the finwright guard hook (false positive on the word "withdraw"); left for Mark.
+
+## 2026-10-30 session 6
+
+- Fixed the two tw.py bugs the wiki found: `score` counts a second whole read once (as a repeat read); `changed` line count no longer adds one for a final newline. Two tests (41 pass). PR #3 merged, v0.2.1 tagged and released, tokenwright@mark-local updated to 0.2.1.
+- Wiki updated for 0.2.1 (Commands, FAQ, Getting-Started, Versions-and-Upgrading, _Footer); outputs 14 checked 0 missing, live 0 failures.
+- tidy.py's `conflicts` prints shared words in set order, which changes per run; the wiki verify script now sets PYTHONHASHSEED=0.
