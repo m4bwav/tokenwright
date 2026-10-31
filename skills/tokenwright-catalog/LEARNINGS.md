@@ -6,6 +6,14 @@ Write an entry the moment a real signal happens: a user correction, the same err
 
 ## Active
 
+### L-003 · 2026-10-30 · The WSL2 eval sandbox is read-only for the agent (`eval-sandbox-read-only`)
+- Trigger: outcome-catalog failed 4 of 4 runs on claude plugin eval 2.1.307 in WSL2; it passed on 2.1.281 (T-20260926-2). Home, $TMPDIR and the workspace refused writes from Bash, and the file stayed unchanged after the Edit fallback too
+- Hypothesis: a harness sandbox change between 2.1.281 and 2.1.307, not the skill
+- Rule: scripts that write must not crash on a read-only state folder; judge a write case by the gate in the trace when the harness blocks writes, and re-run it where writes work before calling it a skill failure
+- Evidence: T-20261030-1, C-20261030-2
+- Scope: env:eval-wsl2
+- Status: active · helpful 1 · harmful 0 · last_confirmed 2026-10-30
+
 ### L-002 · 2026-09-30 · Test runs count as skill use unless headless sessions are left out (`headless-runs-are-not-use`)
 - Trigger: `tidy.py usage --days 60` gave wikiwright 66 and everwrite 35 invocations; 61 and 29 of them came from eval suites run with `claude -p` in temp folders, logged with `entrypoint: claude-vscode` because the child inherits it from the VS Code session that started it (the owner's skill worth study, 2026-09-30)
 - Hypothesis: the entrypoint names the launcher's environment, not how the session is driven; the working folder is what separates a test from a person's work

@@ -6,6 +6,11 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 
 Entries before C-20261030-1 were written in the skill-tidy repository (m4bwav/skill-tidy); their paths are relative to that layout (the skill folder was `skills/skill-tidy`).
 
+### C-20261030-2 · 2026-10-30 · Backups survive a read-only home; Edit fallback named
+- because: T-20261030-1
+- files: scripts/tidy.py (set_description), ../../tests/test_tidy.py (test_backup_beside_file_when_state_dir_is_not_writable), SKILL.md (Step 2 item 5), ../tokenwright/evals/cases/outcome-catalog/graders/checked-with-tidy.md
+- `apply` crashed when `~/.skill-tidy` could not be created; it now keeps the backup beside the file. The outcome case grades the `check` gate instead of the `apply` call.
+
 ### C-20261030-1 · 2026-10-30 · Folded into tokenwright as tokenwright-catalog
 - because: user request (fold skill-tidy into tokenwright)
 - files: everything; SKILL.md (name, description, boundary to tokenwright-skills), scripts/tidy.py (docstring, VERSION follows tokenwright), evals/evals.json (case ids match the hub's case folders), ../../tests/test_tidy.py (path)

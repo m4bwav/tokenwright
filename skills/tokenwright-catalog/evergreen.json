@@ -65,18 +65,23 @@
     "learnings": 0,
     "changes": 4,
     "research": 8,
-    "tests": 4
+    "tests": 5
   },
   "consolidate_every": 25,
   "tests": {
-    "last_run": "2026-10-23T21:28",
-    "harness": "claude plugin eval 2.1.281",
-    "env": "dev-machine",
-    "cases": 4,
-    "passed": 4,
-    "failed": 0,
-    "failing": [],
-    "last_failure": null,
+    "last_run": "2026-10-30T19:13",
+    "harness": "claude plugin eval 2.1.307",
+    "env": "Windows 11 native + WSL2",
+    "cases": 6,
+    "passed": 5,
+    "failed": 1,
+    "failing": [
+      "outcome-catalog"
+    ],
+    "last_failure": {
+      "date": "2026-10-30",
+      "note": "after the fold; outcome-catalog blocked by a read-only eval sandbox"
+    },
     "research_after_days": null
   },
   "version": "0.2.0"

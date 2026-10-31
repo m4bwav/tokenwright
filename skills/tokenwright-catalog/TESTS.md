@@ -8,6 +8,11 @@ Entry shape: `### T-YYYYMMDD-n · date · harness · env · passed/total`, then 
 
 ## Runs
 
+### T-20261030-1 · 2026-10-30 · claude plugin eval 2.1.307 (--ablation none) · Windows 11 native + WSL2 · 5/6
+- Why: the move into tokenwright (new name, new description, case ids renamed). trigger-4, trigger-5, decoy-3, decoy-4 pass natively (1 run; trigger-4 and -5 hit max_turns 3 after the Skill call, as before). action-catalog passes in WSL2 (3 runs).
+- outcome-catalog · outcome · env · the WSL2 eval sandbox now makes the home folder, $TMPDIR and the workspace read-only for the agent, so neither `tidy.py apply` nor the Edit fallback could write feed-scan's SKILL.md; `tidy.py check` printed OK each time and the agent reported the read-only error. Three tuning iterations: tidy.py backs up beside the file when the state folder is read-only (unit test added), the grader now checks the `check` gate, and SKILL.md names the Edit fallback. Still 0.80 (`changed` fails) over 3 runs. Re-run when the harness allows workspace writes, or on macOS or Linux.
+- led to: L-003, C-20261030-2. About $4.30 in all.
+
 ### T-20261023-1 · 2026-10-23 · claude plugin eval 2.1.281 (default model, 1 run per case, --ablation none) · Windows 11 native · 4/4
 - Why: the 2026-10-23 refresh edited SKILL.md's body (intro, Step 1, Step 2) and tidy.py's Cursor roots; the description did not change. `claude plugin eval . --ablation none --no-publish -j 4 --tag trigger --trust-plugin`, 4/4, 0.77 USD, 61 s. Unit tests 26/26 (new cursor-roots test).
 - trigger-1, trigger-2 · trigger · pass · `Skill` called once each, then the 3-turn cap.
