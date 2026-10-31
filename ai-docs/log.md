@@ -39,3 +39,4 @@
 - Fixed the two tw.py bugs the wiki found: `score` counts a second whole read once (as a repeat read); `changed` line count no longer adds one for a final newline. Two tests (41 pass). PR #3 merged, v0.2.1 tagged and released, tokenwright@mark-local updated to 0.2.1.
 - Wiki updated for 0.2.1 (Commands, FAQ, Getting-Started, Versions-and-Upgrading, _Footer); outputs 14 checked 0 missing, live 0 failures.
 - tidy.py's `conflicts` prints shared words in set order, which changes per run; the wiki verify script now sets PYTHONHASHSEED=0.
+- First multi-turn eval, multiturn-reread: `claude plugin eval` has no multi-turn cases, so `context.history_file` seeds a recorded first turn and the scaffold changes the file before the new prompt. 1.00 in both arms, no saving (T-20261030-3). The Bash-dependent cases wait for a macOS or Linux run.

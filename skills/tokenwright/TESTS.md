@@ -4,6 +4,12 @@ Test runs for [SKILL.md](SKILL.md). Cases live in `evals/evals.json`. Unit tests
 
 ## Runs
 
+### T-20261030-3 · 2026-10-30 · claude plugin eval 2.1.281 (1 run each arm, --scaffold) · Windows 11 native · 1/1
+- Why: first multi-turn case. The harness has no multi-turn cases; `context.history_file` seeds a recorded first turn (`turn1.jsonl`, built by the case's `make_history.py`: settings.py read whole, answer 30) and the scaffold swaps in the edited file before the new prompt.
+- multiturn-reread: 1.00 both arms, 2 turns, $0.31 with vs $0.30 without. Neither arm re-read settings.py whole; both answered 45 and RETRY_LIMIT unchanged. No saving: bare Claude already searches a file it read earlier.
+- Not built: the repeated-job and long-session cases need Bash (scripts, `tw.py changed`, `tw.py score`), which cannot be granted to eval runs on Windows (T-20261030-1). Run them on macOS or Linux.
+- led to: none.
+
 ### T-20261030-2 · 2026-10-30 · claude plugin eval 2.1.307 (1 run each, --ablation none) · Windows 11 native · 5/5
 - Why: the fold of skill-tidy changed the hub's and tokenwright-skills' descriptions and added a fourth skill. trigger-1..3 and decoy-1..2 pass; the catalog cases are recorded in ../tokenwright-catalog/TESTS.md (T-20261030-1). About $0.40.
 - led to: none.
