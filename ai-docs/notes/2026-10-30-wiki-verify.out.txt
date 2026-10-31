@@ -1,5 +1,5 @@
 === version
-0.1.0
+0.2.0
 [exit 0]
 === changed first
 new       notes.md (4 lines, ~5 tokens): no snapshot yet; read it once
@@ -71,4 +71,19 @@ savings, largest first:
 [exit 0]
 === hook post
 {"hookSpecificOutput": {"hookEventName": "PostToolUse", "additionalContext": "tokenwright: that Bash output was ~6254 tokens. Next time trim at the source (head, --stat, -q, head_limit) or hand the sweep to a subagent."}}
+[exit 0]
+=== catalog version
+0.2.0
+[exit 0]
+=== catalog conflicts
+1 pairs at TF-IDF cosine >= 0.45 among 2 listed skills (0.65+ near-duplicate)
+0.63 feed-scan ~ radar-sweep
+     shared words: feed, articl, databas, trend, note, news, summarise, track
+     boundary for feed-scan: To sweep news feeds every morning for articles about databases, use radar-sweep.
+     boundary for radar-sweep: To collect articles from news feeds about databases, use feed-scan.
+[exit 0]
+=== catalog lint
+WARN  ST019 feed-scan: description is 0.63 similar to radar-sweep and has no boundary clause; end with one short 'Not for <their job> (that is radar-sweep)'
+WARN  ST019 radar-sweep: description is 0.63 similar to feed-scan and has no boundary clause; end with one short 'Not for <their job> (that is feed-scan)'
+2 skills checked; 2 findings at warn or above
 [exit 0]

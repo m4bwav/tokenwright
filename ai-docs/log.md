@@ -21,3 +21,11 @@
 - Social preview uploaded through the browser (repo Settings).
 - Wiki written with wikiwright and pushed: 8 pages, every output verified against tw.py at v0.1.0 (ai-docs/notes/2026-10-30-wiki-verify.py and .out.txt); live check 0 failures. Note: ai-docs/notes/2026-10-30-github-wiki.md.
 - Found two tw.py bugs for 0.1.1: score double counts a second whole read (whole-read + repeat read); changed reports one line too many.
+
+## 2026-10-30 session 4
+
+- Mark approved folding skill-tidy in. tokenwright 0.2.0: fourth skill tokenwright-catalog (tidy.py moved whole, `tw.py catalog` forwards), PR #1 merged, tagged and released. Decision: ai-docs/decisions/2026-10-30-fold-skill-tidy.md.
+- tidy.py `apply` backs up beside the file when the state folder cannot be written (found by the eval run: the WSL2 eval sandbox is read-only).
+- Evals: hub T-20261030-2 5/5; catalog T-20261030-1 5/6, outcome-catalog blocked by the sandbox after three tuning iterations (L-003 in the catalog unit).
+- skill-tidy 0.2.5 released with a moved notice (PR #10 merged). Local: skill-tidy@mark-local uninstalled and removed from the Ai marketplace; tokenwright@mark-local updated to 0.2.0; the parked index in the user CLAUDE.md now points at tokenwright-catalog's tidy.py (`tw.py catalog parked index`).
+- Wiki updated for 0.2.0, live check 0 failures.

@@ -12,19 +12,24 @@ import sys
 import tempfile
 from pathlib import Path
 
-TAG = os.environ.get("WIKI_TAG", "v0.1.0")
+TAG = os.environ.get("WIKI_TAG", "v0.2.0")
 REPO = Path(__file__).resolve().parents[2]
 work = Path(tempfile.mkdtemp(prefix="tw-wiki-"))
-tw = work / "tw.py"
-tw.write_bytes(subprocess.run(["git", "-C", str(REPO), "show", TAG + ":skills/tokenwright/scripts/tw.py"],
-                              capture_output=True, check=True).stdout)
+# The plugin's layout, so `tw.py catalog` finds tidy.py beside it (v0.2.0+).
+for rel in ("skills/tokenwright/scripts/tw.py", "skills/tokenwright-catalog/scripts/tidy.py"):
+    dst = work / rel
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    got = subprocess.run(["git", "-C", str(REPO), "show", TAG + ":" + rel], capture_output=True)
+    if got.returncode == 0:
+        dst.write_bytes(got.stdout)
+TW = str(work / "skills" / "tokenwright" / "scripts" / "tw.py")
 
 
 def run(label, args, stdin=None, env=None):
     print("=== " + label)
     e = dict(os.environ, **(env or {}))
     e.pop("TOKENWRIGHT_SNAPSHOTS", None)
-    r = subprocess.run([sys.executable, "tw.py"] + args, cwd=work, input=stdin, capture_output=True,
+    r = subprocess.run([sys.executable, TW] + args, cwd=work, input=stdin, capture_output=True,
                        text=True, env=e)
     print((r.stdout + r.stderr).replace(str(work), "<work>").replace("\\", "/").rstrip())
     print("[exit %d]" % r.returncode)
@@ -99,3 +104,15 @@ run("hook block", ["hook", "pre"], stdin=pre, env={"TOKENWRIGHT_HOOKS": "block"}
 run("hook on", ["hook", "pre"], stdin=pre, env={"TOKENWRIGHT_HOOKS": "on"})
 post = json.dumps({"tool_name": "Bash", "tool_response": {"stdout": "a" * 25000}})
 run("hook post", ["hook", "post"], stdin=post, env={"TOKENWRIGHT_HOOKS": "warn"})
+
+# catalog (v0.2.0+): two overlapping skills in a throwaway home, never the real one
+home = work / "home"
+for name, desc in (("feed-scan", "Collect articles from news feeds about databases, summarise each into notes and track trends. Use when the user says 'scan the feeds'."),
+                   ("radar-sweep", "Sweep news feeds every morning for articles about databases, summarise each into notes and track trends in a daily digest. Use when the user says 'run the radar'.")):
+    d = home / ".claude" / "skills" / name
+    d.mkdir(parents=True, exist_ok=True)
+    (d / "SKILL.md").write_text("---\nname: %s\ndescription: %s\n---\n\n# %s\n" % (name, desc, name), encoding="utf-8")
+cat_env = {"SKILLTIDY_HOME": str(home), "SKILLTIDY_STATE": str(home / ".skill-tidy")}
+run("catalog version", ["catalog", "version"], env=cat_env)
+run("catalog conflicts", ["catalog", "conflicts", "--project", str(work)], env=cat_env)
+run("catalog lint", ["catalog", "lint", "--project", str(work)], env=cat_env)
