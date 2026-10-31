@@ -45,6 +45,9 @@ Baseline across 300 recent Claude Code transcripts (12,928 tool results, 256 who
 ### R-20261030-10 · testing · magnitude 0.1
 Exact repeats of a shell command across the same 300 local transcripts, measured 2026-10-30: 9,088 commands ran once, 351 twice, 5 three times, 2 four times; none more. The most repeated command per session has median 1, p95 2, p99 3; 7 sessions reach 3. So `POLL_RUNS = 3` flags about the top 2% of sessions. Polling here mostly runs through background loops and Monitor, which do not repeat the command in the transcript, so the kind catches hand polling only. Source: local transcripts, one maintainer's work.
 
+### R-20261031-1 · testing · magnitude 0.1
+Failed tool calls across the same 300 local transcripts, measured 2026-10-31: errors per session median 0, p95 6, p99 12, max 16. The longest run of failed calls in a row to one tool per session: 0 in 162 sessions, 1 in 124, 2 in 11, 3, 4 and 6 in one each. So `DEBUG_LOOP_ERRORS = 3` flags about the top 1% of sessions. Errors are mostly isolated; a streak of three is rare enough to be worth a look. Source: local transcripts, one maintainer's work.
+
 ## Open questions
 
 - Batch API request cap: sources disagree (10k vs 100k).

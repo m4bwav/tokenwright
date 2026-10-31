@@ -6,7 +6,7 @@ Lean manufacturing names seven kinds of waste. Each has a token form. Ideas para
 |---|---|---|---|
 | Transport | Data moved into context and barely used: whole files for three lines, raw logs, full JSON | `whole-read`, `shell-cat`, `big-output` | 1 Don't load |
 | Motion | Reading the same thing twice; a duplicate search | `repeat read`, `re-read after own edit` | 1 Don't reload |
-| Defects | A failed call sent again unchanged | `retry` | Stop at the first error, read it, bisect, prove the fix |
+| Defects | A failed call sent again unchanged | `retry` (same input again); `debug-loop` (three failed calls in a row to one tool) | Stop at the first error, read it, bisect, prove the fix |
 | Overproduction | Output nobody reads: recaps, dumps in replies, a report when one line was wanted | (reply length; not scored yet) | Output side |
 | Inventory | Loaded but never used: skill descriptions, MCP schemas, files read "just in case" | `tw.py skill` | 1 and skill review |
 | Waiting | Serial turns that could have been one batched turn; polling loops with no backoff or deadline | `poll` (same shell command three or more times) | 2 Shortcut |

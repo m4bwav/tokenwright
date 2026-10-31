@@ -3,7 +3,7 @@ name: tokenwright-catalog
 description: "Cut what the whole skill catalog costs and fix skills that fire on each other's prompts. Lints descriptions, explains clashes, checks a rewrite keeps every trigger, splits long bodies into references, parks rarely used skills, audits startup files. Use on 'why did the wrong skill fire', 'skills overlap', 'shorten my skill descriptions', 'how many tokens do my skills cost', 'park or unpark a skill', 'trim startup context'. One skill's cost: tokenwright-skills."
 license: MIT
 metadata:
-  version: "0.2.4"
+  version: "0.2.5"
 ---
 
 # tokenwright-catalog
