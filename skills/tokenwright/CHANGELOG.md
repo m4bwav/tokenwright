@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261031-4 · 2026-10-31 · score counts a repeated record once (0.2.8)
+- because: HANDOFF known bug (session 20): `score` listed one call's sink twice when a transcript repeated the tool_result record
+- files: scripts/tw.py (`load_events` drops a tool_use or tool_result whose id it has already seen), tests/test_tw.py
+
 ### C-20261031-3 · 2026-10-31 · meter, compare, budget back to green (0.2.7)
 - because: book-note items held back while the budget was yellow (HANDOFF session 18); Mark asked for them 2026-10-31
 - files: scripts/tw.py (`meter`, hook meter, `score --compare`), hooks/hooks.json (post hook also on Read and Glob), evals/fixtures/make_server_log.py replaces the 250 KB server.log, all four descriptions trimmed (1,920 to 1,467 characters; tidy.py check OK on each)

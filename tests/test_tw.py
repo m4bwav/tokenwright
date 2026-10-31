@@ -137,6 +137,13 @@ class Score(unittest.TestCase):
             sinks, _, _ = tw.score(p)
             self.assertEqual([(s[0], s[2]) for s in sinks], [("debug-loop", 3)])
 
+    def test_repeated_result_record_counted_once(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d, "s.jsonl")
+            p.write_text(use(1, "Grep", {"pattern": "x"}) + result(1, "y" * 30000) * 2)
+            sinks, _, _ = tw.score(p)
+            self.assertEqual([s[0] for s in sinks], ["big-output"])
+
     def test_json_output(self):
         with tempfile.TemporaryDirectory() as d:
             data = json.loads(run("score", str(self.transcript(d)), "--json"))
