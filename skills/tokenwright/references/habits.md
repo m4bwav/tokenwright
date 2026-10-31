@@ -27,6 +27,12 @@ Each habit: when it applies, how, and the saving. "Measured" numbers come from `
 | Keep the cache warm | Long task | Don't switch model, fast mode or plugins mid-task |
 | Right-size the model | Mechanical steps | Haiku, a local model, or lower effort |
 | Check cheaply before an expensive step | Before a long render, a big generation, a slow test suite | A dry run or a probe that can fail fast |
+| Set the stop rule first | Any search, hunt or comparison of options | Decide in advance what ends it (the first option that passes a test, or N tries), then hold to it (estimate; Christian and Griffiths ch. 1) |
+| Bisect, don't scan | A regression, or a bad item in a long input | `git bisect run <test>`, or halve the input: about log2(n) probes instead of n (estimate; Hunt and Thomas, Topic 20) |
+| Read the error you have | A failure printed a message | Read it whole before searching or editing; suspect your own code before the library (Hunt and Thomas, Topic 20) |
+| Change approach after two misses | The same test still fails after two variations of one fix | Step back to a different hypothesis; more tweaks climb a local peak (estimate; Christian and Griffiths ch. 9) |
+| Sample before a sweep | A large set of files, logs or results | Look at three to five first; the sample often answers or narrows the sweep (estimate) |
+| Wait with a deadline | Waiting on a build, render or remote job | One blocking wait or polling with a growing interval, a deadline and a cap on retries; a 20-turn poll re-sends the context 20 times (estimate; Christian and Griffiths ch. 10) |
 
 ## Family 3: script a process that repeats
 

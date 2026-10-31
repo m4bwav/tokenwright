@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261030-5 · 2026-10-30 · Two books: Pragmatic Programmer, Algorithms to Live By (0.2.2)
+- because: R-20261030-7 (book-learnings pass)
+- files: references/habits.md (Family 2, six rows), references/waste-vocabulary.md (Defects, Waiting)
+- Stop rule before a search, bisect instead of scan, read the error first, change approach after two misses, sample before a sweep, wait with a deadline. All savings are estimates. New tw.py score kinds (poll, plateau, stale, debug-loop) wait for thresholds from real transcripts.
+
 ### C-20261030-4 · 2026-10-30 · tw.py score and changed fixes (0.2.1)
 - because: wiki verification (ai-docs/notes/2026-10-30-github-wiki.md, bugs 1 and 2)
 - files: scripts/tw.py (score, changed), ../../tests/test_tw.py
