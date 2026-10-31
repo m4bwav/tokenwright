@@ -23,7 +23,7 @@ import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
-VERSION = "0.2.2"
+VERSION = "0.2.3"
 CHARS_PER_TOKEN = 4
 BIG_FILE_LINES = 400        # a whole read of a file this long, used for a few lines, is a sink
 BIG_OUTPUT_CHARS = 20000    # a tool result this long is a sink unless it was the point

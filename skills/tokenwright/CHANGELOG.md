@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261030-6 · 2026-10-30 · Thinking in Systems (0.2.3)
+- because: R-20261030-8 (book-learnings pass)
+- files: references/habits.md (Family 1 one row, Family 2 two rows), references/levers.md (Rank the fix), ../tokenwright-skills/SKILL.md (Shouted rules)
+- All savings are estimates. A visible meter in hook mode, scoring against a best past session, and a workaround-after-deny score kind wait for real-transcript thresholds.
+
 ### C-20261030-5 · 2026-10-30 · Two books: Pragmatic Programmer, Algorithms to Live By (0.2.2)
 - because: R-20261030-7 (book-learnings pass)
 - files: references/habits.md (Family 2, six rows), references/waste-vocabulary.md (Defects, Waiting)
