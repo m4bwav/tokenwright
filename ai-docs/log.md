@@ -73,3 +73,7 @@
 ## 2026-10-31 session 14
 
 - Scanned 300 transcripts for `plateau` (same failing shell command after an edit: max run 2, never 3) and `many-similar-edits` (same Edit in several files: never). Both kinds ruled out, no code change, no release (R-20261031-3, R-20261031-4). Scan scripts were throwaway, same shape as the debug-loop scan.
+
+## 2026-10-31 session 15
+
+- Scanned 279 transcripts for `stale` (big result never referred to again: 11 of 97, at most one per session, all already `big-output`) and an exploration-share line (median 0.06, p95 0.50; marks research, not waste). Both ruled out, no code change, no release (R-20261031-5, R-20261031-6). Score-kind backlog from the books is closed.

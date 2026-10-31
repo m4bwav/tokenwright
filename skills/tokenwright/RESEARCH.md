@@ -57,6 +57,12 @@ A `plateau` scan across the same 300 local transcripts, measured 2026-10-31: the
 ### R-20261031-4 · testing · magnitude 0.1
 A `many-similar-edits` scan across the same 300 transcripts, measured 2026-10-31: Edit calls with the same old and new text grouped by file. No session has the same edit in two files (109 sessions edit at all). Bulk changes already go through scripts, so the kind was not added. Source: local transcripts, one maintainer's work.
 
+### R-20261031-5 · testing · magnitude 0.1
+A `stale` scan across the latest 279 transcripts with tool calls, measured 2026-10-31: 97 text tool results of 20k characters or more; a result counts as stale when no word of 8+ characters that first appears in it shows up again in a later tool input or reply. 11 are stale, at most one per session, and every one is already flagged by `big-output`. The kind was not added. Source: local transcripts, one maintainer's work.
+
+### R-20261031-6 · testing · magnitude 0.1
+An exploration-share line (Read, Grep and Glob as a share of tool calls) across the same 279 transcripts: median 0.06, p90 0.33, p95 0.50, and short sessions reach 1.00. A high share marks research sessions, not waste, so no line was added. Source: local transcripts, one maintainer's work.
+
 ## Open questions
 
 - Batch API request cap: sources disagree (10k vs 100k).
