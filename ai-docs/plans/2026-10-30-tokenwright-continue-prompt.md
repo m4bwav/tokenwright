@@ -27,7 +27,7 @@ This file does not change between sessions. State lives in `ai-docs/HANDOFF.md`.
 
 ## Stop points (ask Mark)
 
-- Plugin name change; whether skill-tidy folds into tokenwright; any evergreen change that removes the wrap-up's own token checks (open the PR, don't merge); any forum posting; publishing to a package registry.
+- Plugin name change; archiving the skill-tidy repository or withdrawing its Claude directory listing; any evergreen change that removes the wrap-up's own token checks (open the PR, don't merge); any forum posting; publishing to a package registry.
 
 ## Hand-over rules
 

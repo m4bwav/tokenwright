@@ -1,4 +1,4 @@
-# GitHub wiki (2026-10-30, tokenwright 0.1.0)
+# GitHub wiki (2026-10-30, tokenwright 0.2.0)
 
 Wiki: https://github.com/m4bwav/tokenwright/wiki. Working copy: sibling clone `tokenwright.wiki` (branch master). Made with wikiwright.
 
@@ -9,6 +9,10 @@ Home, Getting-Started, Commands, Hooks, Skills, FAQ, Versions-and-Upgrading, Dev
 ## How the examples were verified
 
 `2026-10-30-wiki-verify.py` copies tw.py from tag v0.1.0 (`git show`) into a scratch folder, builds synthetic files, transcripts and a skill, and runs every command the pages show. Output saved in `2026-10-30-wiki-verify.out.txt`. Checks: `wikiwright.py check` 0 errors, `outputs` 12 checked 0 missing, `snippets` 0 missing, `live` 8 pages 0 failures, everwrite tells 0 strong after the fix. Unit tests: 11 pass. Not tested: other agents, hook latency.
+
+## Update for 0.2.0 (2026-10-30)
+
+The script now lays tw.py and tidy.py out as in the plugin (so `tw.py catalog` finds tidy.py). It adds catalog cases (version, conflicts, lint) with two overlapping skills in a throwaway home (`SKILLTIDY_HOME`). diffout against the 0.1.0 output: 1 changed (version), 3 added. Pages changed: Home, Skills, Commands (catalog section), Versions-and-Upgrading, Getting-Started, FAQ, Development, _Footer. check 0 errors (Home has no version: a warning, as before), outputs 14 checked 0 missing, tells 0 strong, live 8 pages 0 failures. The catalog commands that write (apply, park, split) are described from the source and tests, not run by the script.
 
 ## Facts the README lacks
 
