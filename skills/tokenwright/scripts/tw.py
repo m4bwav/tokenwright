@@ -23,11 +23,12 @@ import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
-VERSION = "0.2.4"
+VERSION = "0.2.5"
 CHARS_PER_TOKEN = 4
 BIG_FILE_LINES = 400        # a whole read of a file this long, used for a few lines, is a sink
 BIG_OUTPUT_CHARS = 20000    # a tool result this long is a sink unless it was the point
 POLL_RUNS = 3               # the same shell command run this often is polling
+DEBUG_LOOP_ERRORS = 3       # this many failed calls in a row to one tool is a debug loop
 SNAP_DIR_DEFAULT = ".tokenwright/snapshots"
 SNAP_MAX_BYTES = 2_000_000
 IMAGE_TOKENS = 1600         # a full-size image costs roughly this much; resize to cut it
@@ -170,6 +171,7 @@ def score(path):
     edits = defaultdict(list)     # path -> [turn index of edit]
     last_fail = {}
     shell_runs = Counter()        # exact shell command -> runs
+    fail_streak = [None, 0]       # tool name, failed calls in a row
     n = turn = 0
     at_turn = {}
     for kind, d in load_events(path):
@@ -226,6 +228,13 @@ def score(path):
                     name, shell_runs[cmd], cmd[:60]), "wait with a background until-loop or Monitor "
                     "that prints only the change; or `tw.py changed`"))
         key = (name, json.dumps(inp, sort_keys=True)[:300])
+        if d["error"]:
+            fail_streak = [name, fail_streak[1] + 1 if fail_streak[0] == name else 1]
+            if fail_streak[1] == DEBUG_LOOP_ERRORS:   # about p99 of sessions (R-20261031-1)
+                sinks.append(("debug-loop", tokens(size), i, "%s failed %d times in a row" % (name, fail_streak[1]),
+                              "stop and read the errors together; test the cause in isolation before the next try"))
+        else:
+            fail_streak = [None, 0]
         if d["error"]:
             if key in last_fail:
                 sinks.append(("retry", tokens(size + len(key[1])), i, "%s failed again with the same input" % name,

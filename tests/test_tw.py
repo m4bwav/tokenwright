@@ -127,6 +127,16 @@ class Score(unittest.TestCase):
             sinks, _, _ = tw.score(p)
             self.assertEqual([(s[0], s[2]) for s in sinks], [("poll", 3), ("poll", 4)])
 
+    def test_debug_loop_on_third_failure_in_a_row(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d, "s.jsonl")
+            calls = [use(i, "Bash", {"command": "build %d" % i}) + result(i, "boom", error=True) for i in range(1, 5)]
+            calls.append(use(5, "Bash", {"command": "build ok"}) + result(5, "ok"))
+            calls += [use(i, "Bash", {"command": "x %d" % i}) + result(i, "boom", error=True) for i in (6, 7)]
+            p.write_text("".join(calls))
+            sinks, _, _ = tw.score(p)
+            self.assertEqual([(s[0], s[2]) for s in sinks], [("debug-loop", 3)])
+
     def test_json_output(self):
         with tempfile.TemporaryDirectory() as d:
             data = json.loads(run("score", str(self.transcript(d)), "--json"))

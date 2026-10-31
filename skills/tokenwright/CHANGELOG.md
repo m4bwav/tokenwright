@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261031-1 · 2026-10-31 · tw.py score kind debug-loop (0.2.5)
+- because: R-20261031-1
+- files: scripts/tw.py (`debug-loop`, DEBUG_LOOP_ERRORS = 3), references/waste-vocabulary.md (Defects row), tests/test_tw.py
+- The third failed call in a row to one tool is a `debug-loop` sink, once per streak. `retry` still covers an unchanged resend. Plateau, stale and workaround-after-deny still wait for thresholds.
+
 ### C-20261030-7 · 2026-10-30 · tw.py score kind poll (0.2.4)
 - because: R-20261030-10
 - files: scripts/tw.py (`poll`, POLL_RUNS = 3), references/waste-vocabulary.md (Waiting row), tests/test_tw.py
