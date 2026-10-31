@@ -29,6 +29,8 @@ Standard-library Python 3.9+, one file: `skills/tokenwright/scripts/tw.py`.
 ```sh
 python tw.py changed src/app.py docs/plan.md   # before a re-read: "unchanged" or just the diff
 python tw.py score                             # rank the newest session's token sinks by carried cost
+python tw.py score --compare 20                # ...and set it against the best of the last 20 sessions here
+python tw.py meter                             # tool output so far this session (hooks on), for a status line
 python tw.py repeats --last 50                 # command sequences repeated across sessions
 python tw.py skill path/to/plugin              # what each skill costs: always, on trigger, on demand
 python tw.py estimate big.log                  # rough tokens before you load something
@@ -47,7 +49,7 @@ Token counts are estimates (characters / 4). They rank sinks; they do not bill.
 
 The plugin installs two hooks that do nothing until you set `TOKENWRIGHT_HOOKS`:
 
-- `warn`: a note to the agent when it reads a large file whole, or a tool returns very large output.
+- `warn`: a note to the agent when it reads a large file whole, or a tool returns very large output, and a meter note each time the session's tool output passes another 25k tokens.
 - `block`: also denies whole reads of large files, so the agent searches and reads a range instead.
 
 ## Install

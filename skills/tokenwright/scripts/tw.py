@@ -9,6 +9,7 @@ Commands
   estimate <paths...>     rough token count of files (chars / 4)
   catalog <args...>       the whole skill catalog: forwards to tokenwright-catalog's tidy.py (lint, conflicts, park...)
   hook <pre|post>         hook entry point (reads the hook JSON on stdin); off unless TOKENWRIGHT_HOOKS is set
+  meter [session]         tool output so far in a session, as counted by the hook (for a status line)
 
 Token counts are estimates (about 4 characters per token for English and code). Use them to rank, not to bill.
 """
@@ -20,10 +21,11 @@ import os
 import re
 import subprocess
 import sys
+import tempfile
 from collections import Counter, defaultdict
 from pathlib import Path
 
-VERSION = "0.2.5"
+VERSION = "0.2.7"
 CHARS_PER_TOKEN = 4
 BIG_FILE_LINES = 400        # a whole read of a file this long, used for a few lines, is a sink
 BIG_OUTPUT_CHARS = 20000    # a tool result this long is a sink unless it was the point
@@ -33,6 +35,8 @@ SNAP_DIR_DEFAULT = ".tokenwright/snapshots"
 SNAP_MAX_BYTES = 2_000_000
 IMAGE_TOKENS = 1600         # a full-size image costs roughly this much; resize to cut it
 IMAGE_EXT = (".png", ".jpg", ".jpeg", ".gif", ".webp", ".bmp")
+METER_STEP_TOKENS = 25000   # the hook meter speaks once per this many tokens of tool output
+COMPARE_MIN_CALLS = 10      # past sessions shorter than this are not compared
 
 
 def tokens(n_chars):
@@ -254,12 +258,14 @@ def cmd_score(a):
     total_waste = sum(by_kind.values())
     carried = sum(s[5] for s in sinks)
     if a.json:
-        out(json.dumps({"transcript": str(path), "tool_calls": n, "usage": usage, "waste_by_kind": by_kind,
+        out(json.dumps({"transcript": str(path), "tool_calls": n, "waste_per_100_calls": _rate(total_waste, n), "usage": usage, "waste_by_kind": by_kind,
                         "carried_cache_read_tokens": carried,
                         "sinks": [dict(zip(("kind", "tokens", "call", "what", "fix", "carried"), s)) for s in
                                   sorted(sinks, key=lambda s: -s[1])[:a.top]]}, indent=1))
         return 0
     out("transcript %s" % path)
+    if a.compare:
+        compare_line(path, total_waste, n, a.compare)
     if usage:
         out("turns %d, tool calls %d; input %d, cache read %d, cache write %d, output %d tokens" % (
             usage["turns"], n, usage["input_tokens"], usage["cache_read_input_tokens"],
@@ -275,6 +281,26 @@ def cmd_score(a):
     for k, t, i, what, fix, _c in sorted(sinks, key=lambda s: -s[5])[:a.top]:
         out("  ~%6d  #%-4d %-22s %s\n          fix: %s" % (t, i, k, what, fix))
     return 0
+
+
+def _rate(waste, calls):
+    return round(100.0 * waste / calls) if calls else 0
+
+
+def compare_line(path, waste, calls, last):
+    """Waste per 100 tool calls against the best and median of the newest past sessions in the same project."""
+    past = sorted((p for p in path.parent.glob("*.jsonl") if p != path), key=lambda p: -p.stat().st_mtime)[:last]
+    rates = []
+    for p in past:
+        sinks, _u, n = score(p)
+        if n >= COMPARE_MIN_CALLS:
+            rates.append((_rate(sum(s[1] for s in sinks), n), p.name))
+    if not rates:
+        out("compare: no past session in %s with %d+ tool calls" % (path.parent.name, COMPARE_MIN_CALLS))
+        return
+    rates.sort()
+    out("compare: ~%d waste tokens per 100 calls; best of %d past sessions here ~%d (%s), median ~%d" % (
+        _rate(waste, calls), len(rates), rates[0][0], rates[0][1], rates[len(rates) // 2][0]))
 
 
 # ---------------------------------------------------------------- repeats
@@ -451,12 +477,64 @@ def cmd_hook(a):
     elif a.when == "post":
         resp = ev.get("tool_response")
         size = len(json.dumps(resp)) if resp is not None else 0
-        if size >= BIG_OUTPUT_CHARS:
+        if size >= BIG_OUTPUT_CHARS and name != "Read":
             msg = ("tokenwright: that %s output was ~%d tokens. Next time trim at the source (head, --stat, -q, "
                    "head_limit) or hand the sweep to a subagent." % (name, tokens(size)))
+        note = meter_add(ev.get("session_id"), name, size)
+        if note:
+            msg = msg + " " + note if msg else note
     if msg:
         json.dump({"hookSpecificOutput": {"hookEventName": "PreToolUse" if a.when == "pre" else "PostToolUse",
                                           "additionalContext": msg}}, sys.stdout)
+    return 0
+
+
+def _meter_file(session):
+    root = Path(os.environ.get("TOKENWRIGHT_METER_DIR") or Path(tempfile.gettempdir()) / "tokenwright-meter")
+    return root / ("%s.json" % re.sub(r"[^A-Za-z0-9_.-]", "_", str(session)))
+
+
+def _meter_load(session):
+    try:
+        return json.loads(_meter_file(session).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {"chars": 0, "said": 0, "by_tool": {}}
+
+
+def meter_add(session, name, size):
+    """Add one tool result to the session meter; return a note when it crosses the next step."""
+    if not session:
+        return None
+    m = _meter_load(session)
+    m["chars"] += size
+    m["by_tool"][name] = m["by_tool"].get(name, 0) + size
+    step = tokens(m["chars"]) // METER_STEP_TOKENS
+    note = None
+    if step > m["said"]:
+        m["said"] = step
+        top = max(m["by_tool"].items(), key=lambda kv: kv[1])
+        note = ("tokenwright meter: ~%dk tokens of tool output so far this session (most from %s, ~%dk). "
+                "Every later turn carries it until /compact or /clear." % (
+                    tokens(m["chars"]) // 1000, top[0], tokens(top[1]) // 1000))
+    try:
+        f = _meter_file(session)
+        f.parent.mkdir(parents=True, exist_ok=True)
+        f.write_text(json.dumps(m), encoding="utf-8")
+    except OSError:
+        pass
+    return note
+
+
+def cmd_meter(a):
+    session = a.session
+    if not session:
+        files = list(_meter_file("x").parent.glob("*.json"))
+        if not files:
+            out("tw ~0k")
+            return 0
+        session = max(files, key=lambda p: p.stat().st_mtime).stem
+    m = _meter_load(session)
+    out("tw ~%dk" % (tokens(m["chars"]) // 1000))
     return 0
 
 
@@ -485,6 +563,8 @@ def main(argv=None):
     s.add_argument("transcript", nargs="?", help="JSONL path (default: newest under ~/.claude/projects)")
     s.add_argument("--top", type=int, default=10)
     s.add_argument("--json", action="store_true")
+    s.add_argument("--compare", type=int, default=0, metavar="N",
+                   help="compare with the best of the newest N past sessions in the same project")
     s.set_defaults(fn=cmd_score)
     s = sub.add_parser("repeats", help="command sequences repeated across sessions")
     s.add_argument("transcripts", nargs="*")
@@ -508,6 +588,9 @@ def main(argv=None):
     s = sub.add_parser("hook", help="hook entry point (stdin JSON)")
     s.add_argument("when", choices=("pre", "post"))
     s.set_defaults(fn=cmd_hook)
+    s = sub.add_parser("meter", help="tool output so far in a session, counted by the hook")
+    s.add_argument("session", nargs="?", help="session id (default: the most recent)")
+    s.set_defaults(fn=cmd_meter)
     a = p.parse_args(argv)
     return a.fn(a)
 

@@ -204,6 +204,34 @@ class Hook(unittest.TestCase):
             finally:
                 os.environ.pop("TOKENWRIGHT_HOOKS", None)
 
+    def test_meter_speaks_once_per_step(self):
+        with tempfile.TemporaryDirectory() as d:
+            os.environ["TOKENWRIGHT_HOOKS"] = "warn"
+            os.environ["TOKENWRIGHT_METER_DIR"] = d
+            try:
+                ev = {"session_id": "s1", "tool_name": "Read", "tool_response": "x" * 60000}
+                sys.stdin = io.StringIO(json.dumps(ev))
+                self.assertEqual(run("hook", "post"), "")   # ~15k tokens, below the first step
+                sys.stdin = io.StringIO(json.dumps(ev))
+                out = json.loads(run("hook", "post"))       # ~30k, crosses 25k
+                self.assertIn("meter: ~30k", out["hookSpecificOutput"]["additionalContext"])
+                self.assertEqual(run("meter", "s1").strip(), "tw ~30k")
+            finally:
+                os.environ.pop("TOKENWRIGHT_HOOKS", None)
+                os.environ.pop("TOKENWRIGHT_METER_DIR", None)
+
+
+class Compare(unittest.TestCase):
+    def test_best_past_session(self):
+        with tempfile.TemporaryDirectory() as d:
+            clean = "".join(use(i, "Grep", {"pattern": "p%d" % i}) + result(i, "ok") for i in range(12))
+            Path(d, "old.jsonl").write_text(clean)
+            now = Path(d, "now.jsonl")
+            now.write_text(clean + use(99, "Bash", {"command": "cat big.txt"}) + result(99, "y" * 8000))
+            os.utime(Path(d, "old.jsonl"), (1, 1))
+            out = run("score", str(now), "--compare", "5")
+            self.assertIn("best of 1 past sessions here ~0 (old.jsonl)", out)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -4,6 +4,10 @@ Test runs for [SKILL.md](SKILL.md). Cases live in `evals/evals.json`. Unit tests
 
 ## Runs
 
+### T-20261031-1 · 2026-10-31 · claude plugin eval (1 run each, --ablation none) · Windows 11 native · 9/9
+- Why: all four descriptions trimmed to bring the budget back to green (C-20261031-3). trigger-1..5 and decoy-1..4 pass. About $1.03.
+- led to: none.
+
 ### T-20261030-3 · 2026-10-30 · claude plugin eval 2.1.281 (1 run each arm, --scaffold) · Windows 11 native · 1/1
 - Why: first multi-turn case. The harness has no multi-turn cases; `context.history_file` seeds a recorded first turn (`turn1.jsonl`, built by the case's `make_history.py`: settings.py read whole, answer 30) and the scaffold swaps in the edited file before the new prompt.
 - multiturn-reread: 1.00 both arms, 2 turns, $0.31 with vs $0.30 without. Neither arm re-read settings.py whole; both answered 45 and RETRY_LIMIT unchanged. No saving: bare Claude already searches a file it read earlier.
