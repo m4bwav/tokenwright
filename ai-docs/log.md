@@ -45,3 +45,7 @@
 
 - tidy.py `conflicts` shared words now break ties alphabetically; the test checks three hash seeds give one answer (catalog C-20261030-3). The wiki verify script no longer needs PYTHONHASHSEED=0.
 - Mark withdrew skill-tidy's Claude directory submission himself. Nothing waits on him now.
+
+## 2026-10-30 session 8
+
+- Two books read by reading agents (notes outside the repo, in the book-learnings folder). Six Family 2 habit rows and two waste-vocabulary fixes folded in, all estimates (R-20261030-7, C-20261030-5). PR #7 merged, v0.2.2 tagged and released, installed 0.2.2, wiki at 0.2.2. tw.py score kind ideas deferred until real-transcript thresholds.
