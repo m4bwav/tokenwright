@@ -1,0 +1,83 @@
+{
+  "evergreen": "1.0",
+  "name": "tokenwright-catalog",
+  "kind": "skill",
+  "main": "SKILL.md",
+  "files": {
+    "research": "RESEARCH.md",
+    "changelog": "CHANGELOG.md",
+    "learnings": "LEARNINGS.md",
+    "tests": "TESTS.md"
+  },
+  "protocol": "plugin",
+  "source": null,
+  "topic": "Agent Skills description quality and selection conflicts, skill catalog listing budgets and token cost per host (Claude Code, Codex, Copilot, Cursor), and startup-context trimming",
+  "tier": "fast",
+  "interval_days": 6.22,
+  "last_checked": "2026-10-30",
+  "next_due": "2026-11-05",
+  "verify_at_use": false,
+  "volatile_claims": [
+    "Parking-lot design (inline index in always-read instruction files, groups of 8 or fewer) rests on one vendor eval (Vercel 2026-01-27) and routing research; no study tests an index line format",
+    "Body-offload heuristics (supplementary vs core sections, 250/1,000-token thresholds) are inference from Anthropic's authoring guide and SkillReducer"
+  ],
+  "contradiction": null,
+  "events": [],
+  "streak": {
+    "quiet": 0,
+    "pinned_min": 0,
+    "pinned_max": 0,
+    "vau_quiet": 0
+  },
+  "history": [
+    {
+      "date": "2026-09-26",
+      "m": null,
+      "interval_after": 14,
+      "note": "created"
+    },
+    {
+      "date": "2026-10-11",
+      "m": 0.45,
+      "interval_after": 9.33,
+      "note": "refresh 2026-10-11: /doctor prompt-audit named in boundary, first-read conflict study 2610.11647, char budget confirmed; cost: searches 8 · fetches 21 · tool calls 37"
+    },
+    {
+      "date": "2026-10-23",
+      "m": 0.45,
+      "interval_after": 6.22,
+      "note": "refresh 2026-10-23: Cursor roots fixed in tidy.py, routing collapse 2610.18522, google/skill-reach pointed, Codex skills.max_context_tokens; T-20261023-1 4/4; cost: searches 8 · fetches 23 · tool calls 37 (+ about 20 inline)"
+    },
+    {
+      "date": "2026-10-30",
+      "m": 0.15,
+      "interval_after": 6.22,
+      "note": "quiet 2026-10-30: CC 2.1.309 <folder>:<name> for add-dir clashes, no budget change; cost: searches 1 · fetches 1 · tool calls 3"
+    },
+    {
+      "date": "2026-10-30",
+      "m": null,
+      "interval_after": 6.22,
+      "note": "moved into tokenwright as tokenwright-catalog (from m4bwav/skill-tidy 0.2.4); schedule kept"
+    }
+  ],
+  "counts": {
+    "learnings": 0,
+    "changes": 4,
+    "research": 8,
+    "tests": 4
+  },
+  "consolidate_every": 25,
+  "tests": {
+    "last_run": "2026-10-23T21:28",
+    "harness": "claude plugin eval 2.1.281",
+    "env": "dev-machine",
+    "cases": 4,
+    "passed": 4,
+    "failed": 0,
+    "failing": [],
+    "last_failure": null,
+    "research_after_days": null
+  },
+  "version": "0.2.0"
+}

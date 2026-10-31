@@ -146,6 +146,12 @@ class Skill(unittest.TestCase):
             self.assertNotIn("linked.md (", text)
 
 
+class Catalog(unittest.TestCase):
+    def test_forwards_to_tidy(self):
+        self.assertTrue(tw.TIDY.is_file())
+        self.assertEqual(tw.main(["catalog", "version"]), 0)
+
+
 class Hook(unittest.TestCase):
     def test_off_by_default(self):
         os.environ.pop("TOKENWRIGHT_HOOKS", None)

@@ -12,7 +12,8 @@ Every token in an agent's context is re-sent on each later turn. A 3,000-token f
 |---|---|
 | `tokenwright` | "this is expensive", "context is filling", "why did that cost so much". Habits in four families with measured savings, Claude Code and API levers, a waste vocabulary |
 | `tokenwright-script` | A job keeps coming back, or you just solved something fiddly. Turns it into a script with a dry run and a short result |
-| `tokenwright-skills` | Writing or reviewing a skill or plugin. Ranks its token savings by where they are paid |
+| `tokenwright-skills` | Writing or reviewing one skill or plugin. Ranks its token savings by where they are paid |
+| `tokenwright-catalog` | The wrong skill fires, descriptions overlap, or the whole catalog costs too much. Lints descriptions, checks a rewrite keeps every trigger, splits long bodies, parks rarely used skills, audits startup files. Formerly [skill-tidy](https://github.com/m4bwav/skill-tidy) |
 
 The four families:
 
@@ -31,7 +32,10 @@ python tw.py score                             # rank the newest session's token
 python tw.py repeats --last 50                 # command sequences repeated across sessions
 python tw.py skill path/to/plugin              # what each skill costs: always, on trigger, on demand
 python tw.py estimate big.log                  # rough tokens before you load something
+python tw.py catalog conflicts                 # skills that compete for the same prompts (tidy.py)
 ```
+
+`tw.py catalog` forwards to `skills/tokenwright-catalog/scripts/tidy.py`, a second standard-library file: `lint`, `conflicts`, `triggers`, `check`, `apply`, `sections`, `split`, `budget`, `usage`, `offload`, `park`, `unpark`, `parked`, `startup`, `harvest`.
 
 Example `score` output on a real 187-turn session: about 28,000 avoidable tokens (files read twice), carried as about 3.3 million cache-read tokens because they entered early.
 
@@ -54,6 +58,8 @@ claude plugin install tokenwright@tokenwright
 ```
 
 Other agents: copy or link the folders under `skills/` into the agent's skills directory.
+
+Coming from skill-tidy: uninstall it and install tokenwright. Parked skills, backups and the parked index keep working: tidy.py still uses `~/.skill-tidy` and the same index markers. Run `python tw.py catalog parked index` once so the index points at the new tidy.py path.
 
 ## Development
 

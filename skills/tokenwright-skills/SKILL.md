@@ -1,9 +1,9 @@
 ---
 name: tokenwright-skills
-description: Review a skill or plugin for token cost and rank the savings: description length (paid in every session), always-loaded text, references that should load on demand, instructions that should be a script, sweeps a subagent should own, files nothing links to. Runs tw.py skill for the numbers. Use when writing or reviewing a skill ('is this skill too big', 'make this skill cheaper', 'token cost of my plugin', 'review this SKILL.md for tokens'), and from evergreen-new, evergreen-tune and skill-tidy.
+description: Review a skill or plugin for token cost and rank the savings: description length (paid in every session), always-loaded text, references that should load on demand, instructions that should be a script, sweeps a subagent should own, files nothing links to. Runs tw.py skill. Use when writing or reviewing one skill ('is this skill too big', 'make this skill cheaper', 'token cost of my plugin', 'review this SKILL.md for tokens'), and from evergreen-new and evergreen-tune. The whole catalog: tokenwright-catalog.
 license: MIT
 metadata:
-  version: 0.1.0
+  version: 0.2.0
 ---
 
 # tokenwright-skills
@@ -26,7 +26,7 @@ A skill costs in three tiers. Fix the most-paid tier first.
 ## Checklist
 
 - **Description**: what it does and when to use it, with the user's trigger phrases. No history, no feature list, no explanation of how. Aim at 300 to 600 characters; past 1,024 some hosts reject it.
-- **Rarely used skill**: a slash-command-only skill can set `disable-model-invocation: true` (no description cost), or be parked (skill-tidy).
+- **Rarely used skill**: a slash-command-only skill can set `disable-model-invocation: true` (no description cost), or be parked (tokenwright-catalog). Long sections move with its `split` command.
 - **Body**: rules and routing. Procedures, tables and examples move to `references/` with a line saying when to read each. Aim under 200 lines.
 - **Code in prose**: a code block the agent retypes, or a numbered procedure it follows step by step every time, should be a script it runs (tokenwright-script). The script's output should be a few lines.
 - **Sweeps**: steps that read many files to produce one answer belong in a subagent or `context: fork`, so the reads never reach the main context.
