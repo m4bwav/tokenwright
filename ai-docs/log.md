@@ -85,3 +85,7 @@
 ## 2026-10-31 session 17
 
 - Scanned 796 SKILL.md files for the last two book-note checks in tokenwright-skills: copied AGENTS.md or CLAUDE.md text (4 skills, one line each) and uncapped retry loops (2 real, both Unity status polls). Both ruled out, no code change, no release (R-20261031-8, R-20261031-9). Another session released 0.2.6 the same afternoon (PR #20).
+
+## 2026-10-31 session 18
+
+- Caught up after the other session's 0.2.6: tokenwright@mark-local updated 0.2.5 to 0.2.6; wiki Versions and footer moved to 0.2.6 and checked live. No code change. Meter and best-past-session ideas held back while the size budget is yellow.
