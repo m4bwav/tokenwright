@@ -16,7 +16,7 @@ Updated 2026-10-30 (session 7). Continue with `ai-docs/plans/2026-10-30-tokenwri
 
 ## Waits on Mark
 
-1. skill-tidy's Claude directory submission: Mark approved withdrawal 2026-10-30, but the finwright PreToolUse guard blocks browser actions containing "withdraw". Mark clicks "Withdraw submission" on claude.ai/directory/manage (Skill Tidy page) himself, or confirms through the guard.
+Nothing. skill-tidy's Claude directory submission was withdrawn by Mark 2026-10-30.
 
 ## Next
 
