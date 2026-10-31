@@ -1,9 +1,9 @@
 ---
 name: tokenwright-skills
-description: Review a skill or plugin for token cost and rank the savings: description length (paid in every session), always-loaded text, references that should load on demand, instructions that should be a script, sweeps a subagent should own, files nothing links to. Runs tw.py skill. Use when writing or reviewing one skill ('is this skill too big', 'make this skill cheaper', 'token cost of my plugin', 'review this SKILL.md for tokens'), and from evergreen-new and evergreen-tune. The whole catalog: tokenwright-catalog.
+description: Review one skill or plugin for token cost and rank the savings: description length, always-loaded text, references to load on demand, steps that should be scripts or subagents. Runs tw.py skill. Use on 'is this skill too big', 'make this skill cheaper', 'token cost of my plugin', 'review this SKILL.md for tokens', and from evergreen-new and evergreen-tune.
 license: MIT
 metadata:
-  version: 0.2.6
+  version: 0.2.7
 ---
 
 # tokenwright-skills

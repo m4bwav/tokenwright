@@ -93,3 +93,7 @@
 ## 2026-10-31 session 19
 
 - Checked state: main up to date, no open PRs, 0.2.6 installed. Every remaining item needs a macOS or Linux eval run or a design call held back by the yellow size budget. No change.
+
+## 2026-10-31 session 20
+
+- Mark pointed out the yellow budget was no reason to hold back the two book ideas. Generated the 250 KB server.log fixture at eval time (repository 1,076 to 845 KB), trimmed the four descriptions with tidy.py check (1,920 to 1,467 characters; trigger eval 9/9, T-20261031-1). Added `tw.py meter`, a hook meter note per 25k tokens of tool output, and `score --compare N`. Budget GREEN, 45 tests. Released 0.2.7.

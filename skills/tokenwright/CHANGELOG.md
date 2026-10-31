@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261031-3 · 2026-10-31 · meter, compare, budget back to green (0.2.7)
+- because: book-note items held back while the budget was yellow (HANDOFF session 18); Mark asked for them 2026-10-31
+- files: scripts/tw.py (`meter`, hook meter, `score --compare`), hooks/hooks.json (post hook also on Read and Glob), evals/fixtures/make_server_log.py replaces the 250 KB server.log, all four descriptions trimmed (1,920 to 1,467 characters; tidy.py check OK on each)
+- The meter and the best-past-session comparison are design choices, not calibrated thresholds: 25k tokens per meter step, past sessions under 10 tool calls skipped.
+
 ### C-20261031-2 · 2026-10-31 · AI Engineering (0.2.6)
 - because: R-20261031-8 (book-learnings pass)
 - files: references/habits.md (Family 1: Edges, not middle; Memory by frequency), references/levers.md (Result caching)

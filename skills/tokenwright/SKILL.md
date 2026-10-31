@@ -1,9 +1,9 @@
 ---
 name: tokenwright
-description: Spend fewer tokens on the same result in any agent work. Habits by family (don't load or reload data, shortcut the process, script repeats) and tw.py (skip unchanged re-reads with a diff, rank a session's token sinks, cost a skill). Use on 'save tokens', 'this is expensive', 'context is filling', 'why did that cost so much', 'score this session', 'did the file change'. One skill's cost: tokenwright-skills; the catalog: tokenwright-catalog; scripting: tokenwright-script.
+description: Spend fewer tokens on the same result in any agent work: habits (don't load or reload data, shortcut the process, script repeats) and tw.py (diff instead of re-read, rank a session's token sinks). Use on 'save tokens', 'this is expensive', 'context is filling', 'why did that cost so much', 'score this session', 'did the file change'. Siblings: tokenwright-skills, -catalog, -script.
 license: MIT
 metadata:
-  version: 0.2.6
+  version: 0.2.7
 ---
 
 # tokenwright
@@ -58,7 +58,8 @@ The report names each sink by its kind of waste, after lean manufacturing ([refe
 | Command | Use |
 |---|---|
 | `changed <paths> [--quiet]` | Before a re-read. Prints `unchanged` or a diff. First call stores a snapshot in `.tokenwright/snapshots` |
-| `score [transcript] [--json]` | After a session or when it felt expensive. Ranks sinks by carried cost |
+| `score [transcript] [--json] [--compare N]` | After a session or when it felt expensive. Ranks sinks by carried cost; `--compare` sets it against the best of the newest N past sessions in the same project |
+| `meter [session]` | Tool output so far in a session, counted by the post hook; short enough for a status line |
 | `repeats [transcripts] [--last N]` | Find command sequences repeated across sessions: script candidates |
 | `skill <dir>` | Cost of a skill or plugin: always loaded, on trigger, on demand |
 | `estimate <paths>` | Rough tokens of files before loading them |
@@ -72,7 +73,7 @@ See [references/levers.md](references/levers.md): prompt cache and its TTL, `/co
 
 ## Hooks (off by default)
 
-`hooks/hooks.json` warns on a whole read of a large file and on very large tool output. They do nothing until `TOKENWRIGHT_HOOKS=warn` (or `block`, which denies whole reads of large files) is set in the environment.
+`hooks/hooks.json` warns on a whole read of a large file and on very large tool output, and keeps a session meter that speaks once per 25k tokens of tool output. They do nothing until `TOKENWRIGHT_HOOKS=warn` (or `block`, which denies whole reads of large files) is set in the environment.
 
 ## Neighbours
 

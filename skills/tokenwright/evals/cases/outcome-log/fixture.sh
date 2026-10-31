@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-# Copy the fixture into the empty eval workspace.
+# Generate the fixture into the empty eval workspace.
 set -e
-cp -r "$(dirname "$0")/../../fixtures/server.log" .
+"$(command -v python3 || command -v python)" "$(dirname "$0")/../../fixtures/make_server_log.py" server.log
