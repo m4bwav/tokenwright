@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261031-2 · 2026-10-31 · AI Engineering (0.2.6)
+- because: R-20261031-8 (book-learnings pass)
+- files: references/habits.md (Family 1: Edges, not middle; Memory by frequency), references/levers.md (Result caching)
+- Both habits are estimates; the rule-placement test is a study item on the token-saving beat.
+
 ### C-20261031-1 · 2026-10-31 · tw.py score kind debug-loop (0.2.5)
 - because: R-20261031-1
 - files: scripts/tw.py (`debug-loop`, DEBUG_LOOP_ERRORS = 3), references/waste-vocabulary.md (Defects row), tests/test_tw.py

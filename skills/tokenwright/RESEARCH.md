@@ -78,3 +78,6 @@ A count of shouted words (MUST, NEVER, ALWAYS, IMPORTANT, CRITICAL, REQUIRED, DO
 - tooling: GitHub `path:SKILL.md token`, hooks and MCP servers that trim output, ccusage-style meters.
 - practice: the everscout beat `token-saving` (Claude Code issues, r/ClaudeAI, r/ClaudeCode, Hacker News, OpenAI and Cursor forums).
 - testing: published token measurements; claude plugin eval cost fields.
+
+### R-20261031-8 · practice · magnitude 0.1
+Huyen, *AI Engineering* (ch. 5, 6, 10): lost-in-the-middle placement, memory as a hierarchy by frequency of use, exact result caching over semantic caching. Paraphrased in the book-learnings notes, not in this repository.

@@ -15,6 +15,8 @@ Each habit: when it applies, how, and the saving. "Measured" numbers come from `
 | Delegate big reads | Logs, long diffs, many-file sweeps where you need a conclusion | A subagent (Explore, or a Haiku one) or local-delegate | The sweep's tokens stay out of the main context |
 | Don't paste what a file already holds | Writing a report or handing work over | Name the path | Output and later input |
 | Cut the load, not lean on the fix | A project needs compaction, raised caps or a subagent just to fit its always-loaded files | Trim CLAUDE.md, AGENTS.md and skill descriptions first; the fix keeps the load (Meadows ch. 5, shifting the burden) | Every turn's fixed cost (estimate) |
+| Edges, not middle | Writing CLAUDE.md, a skill or a long prompt | Put the must-follow rules first and repeat the key one at the end; models skim the middle of a long context | Rework from a skipped rule (estimate; Huyen, AI Engineering ch. 5) |
+| Memory by frequency | Deciding where a fact lives | Always-needed facts in CLAUDE.md, rarely needed ones in a skill or a file read on demand, this-step facts only in the transcript; move a CLAUDE.md line to a reference once fewer than one session in five uses it | Every turn's fixed cost for the moved lines (estimate; Huyen, AI Engineering ch. 6) |
 
 ## Family 2: shortcut the whole process
 
