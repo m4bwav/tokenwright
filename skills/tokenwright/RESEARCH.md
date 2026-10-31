@@ -63,6 +63,9 @@ A `stale` scan across the latest 279 transcripts with tool calls, measured 2026-
 ### R-20261031-6 · testing · magnitude 0.1
 An exploration-share line (Read, Grep and Glob as a share of tool calls) across the same 279 transcripts: median 0.06, p90 0.33, p95 0.50, and short sessions reach 1.00. A high share marks research sessions, not waste, so no line was added. Source: local transcripts, one maintainer's work.
 
+### R-20261031-7 · testing · magnitude 0.1
+A count of shouted words (MUST, NEVER, ALWAYS, IMPORTANT, CRITICAL, REQUIRED, DO NOT) for `tw.py skill`, over 458 distinct SKILL.md files on one machine (own, marketplace and synced skills): median 0, p95 0, p99 3, max 3, and one of the top three is tokenwright-skills naming the words. A count line would never fire, so none was added; the prose check in tokenwright-skills stays. Source: local skill files.
+
 ## Open questions
 
 - Batch API request cap: sources disagree (10k vs 100k).
