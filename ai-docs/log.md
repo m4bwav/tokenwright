@@ -89,3 +89,7 @@
 ## 2026-10-31 session 18
 
 - Caught up after the other session's 0.2.6: tokenwright@mark-local updated 0.2.5 to 0.2.6; wiki Versions and footer moved to 0.2.6 and checked live. No code change. Meter and best-past-session ideas held back while the size budget is yellow.
+
+## 2026-10-31 session 19
+
+- Checked state: main up to date, no open PRs, 0.2.6 installed. Every remaining item needs a macOS or Linux eval run or a design call held back by the yellow size budget. No change.
