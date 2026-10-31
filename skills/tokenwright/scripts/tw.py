@@ -23,7 +23,7 @@ import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
-VERSION = "0.2.0"
+VERSION = "0.2.1"
 CHARS_PER_TOKEN = 4
 BIG_FILE_LINES = 400        # a whole read of a file this long, used for a few lines, is a sink
 BIG_OUTPUT_CHARS = 20000    # a tool result this long is a sink unless it was the point
@@ -51,6 +51,10 @@ def _snap_name(path):
     return hashlib.sha1(str(Path(path).resolve()).lower().encode("utf-8")).hexdigest()[:16]
 
 
+def _line_count(data):
+    return data.count(b"\n") + (1 if data and not data.endswith(b"\n") else 0)
+
+
 def cmd_changed(a):
     root = _snap_root(a.snapshots)
     root.mkdir(parents=True, exist_ok=True)
@@ -75,7 +79,7 @@ def cmd_changed(a):
             unchanged += 1
         elif not old:
             out("new       %s (%d lines, ~%d tokens): no snapshot yet; read it once" %
-                (p, data.count(b"\n") + 1, tokens(len(data))))
+                (p, _line_count(data), tokens(len(data))))
         else:
             prev = body_f.read_bytes() if body_f.exists() else None
             if prev is None or b"\0" in data[:4096]:
@@ -190,10 +194,11 @@ def score(path):
             edits[fp].append(i)
         if name == "Read" and fp and not d["error"]:
             lines = text.count("\n") + 1
-            if lines >= BIG_FILE_LINES and not inp.get("offset") and not inp.get("limit"):
+            prev = reads[fp]
+            # a second whole read is counted once, as a repeat read
+            if lines >= BIG_FILE_LINES and not prev and not inp.get("offset") and not inp.get("limit"):
                 sinks.append(("whole-read", tokens(size), i, "Read %s whole (%d lines)" % (fp, lines),
                               "search first (Grep -n with -C), then Read offset/limit; or readwright outline"))
-            prev = reads[fp]
             if prev:
                 edited_between = any(prev[-1] < e < i for e in edits[fp])
                 own_edit = edited_between and not inp.get("offset")

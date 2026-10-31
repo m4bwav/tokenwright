@@ -3,7 +3,7 @@ name: tokenwright
 description: Spend fewer tokens on the same result in any agent work. Habits by family (don't load or reload data, shortcut the process, script repeats) and tw.py (skip unchanged re-reads with a diff, rank a session's token sinks, cost a skill). Use on 'save tokens', 'this is expensive', 'context is filling', 'why did that cost so much', 'score this session', 'did the file change'. One skill's cost: tokenwright-skills; the catalog: tokenwright-catalog; scripting: tokenwright-script.
 license: MIT
 metadata:
-  version: 0.2.0
+  version: 0.2.1
 ---
 
 # tokenwright

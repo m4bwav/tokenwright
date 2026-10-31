@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261030-4 · 2026-10-30 · tw.py score and changed fixes (0.2.1)
+- because: wiki verification (ai-docs/notes/2026-10-30-github-wiki.md, bugs 1 and 2)
+- files: scripts/tw.py (score, changed), ../../tests/test_tw.py
+- `score` counted a second whole read of a big file twice, as whole-read and as repeat read; it now counts once, as a repeat read. `changed` reported one line too many for files ending in a newline.
+
 ### C-20261030-3 · 2026-10-30 · skill-tidy folded in as tokenwright-catalog (0.2.0)
 - because: user request (fold skill-tidy into tokenwright)
 - files: SKILL.md (description, tw.py commands, Neighbours), scripts/tw.py (catalog command, VERSION), ../tokenwright-skills/SKILL.md (description boundary), ../tokenwright-catalog/ (new skill, from skill-tidy 0.2.4), evals/cases (six catalog cases), ../../tests/test_tidy.py

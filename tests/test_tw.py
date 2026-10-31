@@ -49,6 +49,13 @@ class Changed(unittest.TestCase):
             self.assertIn("+TWO", out)
             self.assertIn("-two", out)
 
+    def test_line_count(self):
+        with tempfile.TemporaryDirectory() as d:
+            f, snaps = Path(d, "a.txt"), str(Path(d, "snaps"))
+            f.write_bytes(b"one\ntwo\nthree\n")
+            self.assertIn("(3 lines", run("changed", str(f), "--snapshots", snaps))
+            self.assertEqual([tw._line_count(b) for b in (b"", b"a", b"a\nb")], [0, 1, 2])
+
     def test_touched_same_content(self):
         with tempfile.TemporaryDirectory() as d:
             f, snaps = Path(d, "a.txt"), str(Path(d, "snaps"))
@@ -96,6 +103,12 @@ class Score(unittest.TestCase):
             sinks, _, _ = tw.score(self.transcript(d))
             first = [s for s in sinks if s[0] == "whole-read"][0]
             self.assertEqual(first[5], first[1] * 5)   # read on turn 1 of 6
+
+    def test_second_whole_read_counted_once(self):
+        with tempfile.TemporaryDirectory() as d:
+            sinks, _, _ = tw.score(self.transcript(d))
+            reads = [s for s in sinks if s[0] in ("whole-read", "repeat read")]
+            self.assertEqual([(s[0], s[2]) for s in reads], [("whole-read", 1), ("repeat read", 2)])
 
     def test_edit_between_reads(self):
         with tempfile.TemporaryDirectory() as d:
