@@ -51,6 +51,12 @@ Failed tool calls across the same 300 local transcripts, measured 2026-10-31: er
 ### R-20261031-2 · testing · magnitude 0.1
 Denied calls across the same 300 local transcripts, measured 2026-10-31: 26 denials (auto-mode classifier 15, built-in safety check 4, a guard hook 2, user rejections the rest) in 8 sessions; at most 2 per session. After 24 of 26 the next call was the same tool, mostly the same command split or narrowed, which is the right response to a classifier denial; true workarounds (for example `rm -rf` denied, then `rmdir`) look the same and cannot be told apart from the call alone. So a `workaround-after-deny` score kind was not added: too rare to matter for tokens and no mechanical signal for "same end". The concern stays a habit (judgement), not a tw.py check. Source: local transcripts, one maintainer's work.
 
+### R-20261031-3 · testing · magnitude 0.1
+A `plateau` scan across the same 300 local transcripts, measured 2026-10-31: the same shell command failing again after an edit, with no pass between. Longest such run per session: 0 in 176 sessions, 1 in 121, 2 in 3, never 3. So a `plateau` score kind at three runs would never fire; not added. Two variations then a step back stays a habit row; `debug-loop` and `retry` already catch the failure streaks that do occur. Source: local transcripts, one maintainer's work.
+
+### R-20261031-4 · testing · magnitude 0.1
+A `many-similar-edits` scan across the same 300 transcripts, measured 2026-10-31: Edit calls with the same old and new text grouped by file. No session has the same edit in two files (109 sessions edit at all). Bulk changes already go through scripts, so the kind was not added. Source: local transcripts, one maintainer's work.
+
 ## Open questions
 
 - Batch API request cap: sources disagree (10k vs 100k).

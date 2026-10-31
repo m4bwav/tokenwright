@@ -1,6 +1,6 @@
 # Handoff: tokenwright
 
-Updated 2026-10-31 (session 13). Continue with `ai-docs/plans/2026-10-30-tokenwright-continue-prompt.md`.
+Updated 2026-10-31 (session 14). Continue with `ai-docs/plans/2026-10-30-tokenwright-continue-prompt.md`.
 
 ## State
 
@@ -21,5 +21,5 @@ Nothing. skill-tidy's Claude directory submission was withdrawn by Mark 2026-10-
 
 1. Multi-turn evals that need Bash (a repeated job that should become a script; a long session scored by tw.py; `tw.py changed`): run on macOS or Linux, since Windows eval runs cannot get Bash. Pattern: cases/multiturn-reread (make_history.py builds turn1.jsonl).
 2. Books: Pragmatic Programmer and Algorithms to Live By done (notes in Ai/books/plugin-learnings tokenwright-pragmatic.md and tokenwright-algorithms.md). Meadows done too (tokenwright-meadows.md). No book left on disk in books.md; Berryman and Ziegler is not on disk. Still owed from the three notes: a visible meter in hook mode, score against the best past session of the same kind, a workaround-after-deny score kind, a MUST/NEVER count in tw.py skill; tw.py score kinds plateau, stale, many-similar-edits and an exploration share line; tokenwright-skills checks (copied AGENTS.md text, retry loops with no cap); all need thresholds from real transcripts (item 3).
-3. Thresholds calibrated 2026-10-30 (R-20261030-9: 20k chars is about p99 of text results, 400 lines about p95 of whole reads; both kept). poll done 2026-10-30 (R-20261030-10, POLL_RUNS = 3); debug-loop done 2026-10-31 (R-20261031-1, DEBUG_LOOP_ERRORS = 3, same-tool failure streak). workaround-after-deny ruled out 2026-10-31 (R-20261031-2: 26 denials in 300 sessions, follow-ups indistinguishable from fixes). Next kind to calibrate: plateau (or stale / many-similar-edits); write a scan like the poll one (counts per session, p95/p99) before coding.
+3. Thresholds calibrated 2026-10-30 (R-20261030-9: 20k chars is about p99 of text results, 400 lines about p95 of whole reads; both kept). poll done 2026-10-30 (R-20261030-10, POLL_RUNS = 3); debug-loop done 2026-10-31 (R-20261031-1, DEBUG_LOOP_ERRORS = 3, same-tool failure streak). workaround-after-deny ruled out 2026-10-31 (R-20261031-2: 26 denials in 300 sessions, follow-ups indistinguishable from fixes). plateau and many-similar-edits ruled out 2026-10-31 (R-20261031-3, -4: never reach threshold in 300 sessions). Left to calibrate: stale (big outputs never referred to again) and the exploration-share line; scan first, as before.
 4. Optional: trim descriptions back to green if a trigger eval shows room.
