@@ -42,6 +42,11 @@ Checked 2026-10-30 against code.claude.com/docs and docs.claude.com. Sources and
 - Context editing (tool result clearing) and the memory tool: Anthropic reports 84% fewer tokens on a 100-turn search eval (their own figure). Tool search cut definition tokens about 85% (their own figure).
 - Smaller models for mechanical steps: Haiku or a local model for extraction, classification and summaries.
 
+## Result caching
+
+- Cache expensive tool results (web fetches, searches, slow commands) by an exact hash of the input, with an expiry; a repeat costs nothing.
+- Avoid semantic caching (reuse for a similar input) unless a measured hit rate justifies tuning the similarity threshold and the false hits it brings (Huyen, AI Engineering ch. 10).
+
 ## Popular add-ons, measured by others
 
 An independent test reported "caveman" style output compression saving about 8.5% (claimed 65%), and another found it no better than asking for brief answers. Treat claims of large savings from output-style tools with suspicion; measure with `tw.py score` on your own sessions.
