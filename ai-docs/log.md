@@ -53,3 +53,7 @@
 ## 2026-10-30 session 9
 
 - Meadows, Thinking in Systems read by a reading agent (note in the book-learnings folder, tokenwright-meadows.md). Three habit rows, a leverage ranking in levers.md, a shouted-rules check in tokenwright-skills (R-20261030-8, C-20261030-6). PR #9 merged, v0.2.3 tagged and released, installed 0.2.3, wiki at 0.2.3. Code ideas (meter hook, workaround-after-deny) deferred until real-transcript thresholds.
+
+## 2026-10-30 session 10
+
+- Calibrated tw.py score thresholds on 300 local transcripts (R-20261030-9): 20k chars is about the 99th percentile of text tool results, 400 lines about the 95th percentile of whole reads; both kept, no code change, no release. Measure text only: image blocks inflate sizes about sevenfold.

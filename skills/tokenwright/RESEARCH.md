@@ -39,11 +39,14 @@ Hunt and Thomas, *The Pragmatic Programmer* 20th anniversary ed. (Topics 12, 20,
 ### R-20261030-8 · practice · magnitude 0.2
 Meadows, *Thinking in Systems* (ch. 2, 4, 5, 6): delays and oscillation, bounded rationality, system traps, leverage points. Paraphrased in the book-learnings notes, not in this repository.
 
+### R-20261030-9 · testing · magnitude 0.1
+Baseline across 300 recent Claude Code transcripts (12,928 tool results, 256 whole-file reads), measured 2026-10-30. Text tool results: median 311 chars, p95 7,763, p99 18,067, p99.9 40,337; 0.8% are 20k or more, and 68 of 300 sessions have at least one. Whole reads: median 66 lines, p90 288, p95 392, p99 591; 4.7% are 400 lines or more, in 12 sessions. Both lines sit near the tail (p99 and p95), so `BIG_OUTPUT_CHARS = 20000` and `BIG_FILE_LINES = 400` stay. Counting image blocks as text inflates output sizes about sevenfold; measure text only. Source: local transcripts, one maintainer's work, not a population.
+
 ## Open questions
 
 - Batch API request cap: sources disagree (10k vs 100k).
 - Programmatic tool calling's 37% figure: secondary sources only.
-- Thresholds for "big output" (20k chars) and "whole read" (400 lines) need a baseline across many real transcripts.
+- Thresholds checked against one maintainer's 300 transcripts (R-20261030-9); a second user's baseline would show whether they generalise.
 
 ## Search plan
 
