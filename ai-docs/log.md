@@ -29,3 +29,7 @@
 - Evals: hub T-20261030-2 5/5; catalog T-20261030-1 5/6, outcome-catalog blocked by the sandbox after three tuning iterations (L-003 in the catalog unit).
 - skill-tidy 0.2.5 released with a moved notice (PR #10 merged). Local: skill-tidy@mark-local uninstalled and removed from the Ai marketplace; tokenwright@mark-local updated to 0.2.0; the parked index in the user CLAUDE.md now points at tokenwright-catalog's tidy.py (`tw.py catalog parked index`).
 - Wiki updated for 0.2.0, live check 0 failures.
+
+## 2026-10-30 session 5
+
+- Mark approved archiving and withdrawing skill-tidy. m4bwav/skill-tidy description set to a moved notice and archived. Directory withdrawal blocked by the finwright guard hook (false positive on the word "withdraw"); left for Mark.
