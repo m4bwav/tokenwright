@@ -66,6 +66,12 @@ An exploration-share line (Read, Grep and Glob as a share of tool calls) across 
 ### R-20261031-7 · testing · magnitude 0.1
 A count of shouted words (MUST, NEVER, ALWAYS, IMPORTANT, CRITICAL, REQUIRED, DO NOT) for `tw.py skill`, over 458 distinct SKILL.md files on one machine (own, marketplace and synced skills): median 0, p95 0, p99 3, max 3, and one of the top three is tokenwright-skills naming the words. A count line would never fire, so none was added; the prose check in tokenwright-skills stays. Source: local skill files.
 
+### R-20261031-8 · testing · magnitude 0.1
+A tokenwright-skills check for SKILL.md text copied from the repository's AGENTS.md or CLAUDE.md (lines of 60+ characters, whitespace and case folded), over 796 SKILL.md files on one machine: 4 skills share any line, one line each. The check would almost never fire, so none was added. Source: local skill files.
+
+### R-20261031-9 · testing · magnitude 0.1
+A tokenwright-skills check for retry or poll loops with no cap, over the same 796 files: 28 mention retrying with no cap word nearby, but read in context only 2 are real uncapped loops ("repeat until completed" status polls in Unity skills); the rest say retry once, retry with backoff, or do not retry. Too rare for a check; none added. Source: local skill files.
+
 ## Open questions
 
 - Batch API request cap: sources disagree (10k vs 100k).

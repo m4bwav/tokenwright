@@ -81,3 +81,7 @@
 ## 2026-10-31 session 16
 
 - Counted shouted words (MUST, NEVER and the like) in 458 SKILL.md files on this machine for a `tw.py skill` count: max 3, p99 3. Ruled out, no code change, no release (R-20261031-7). Left from the book notes: a visible meter in hook mode, score against the best past session, tokenwright-skills checks for copied AGENTS.md text and uncapped retry loops; all need either a Linux eval run or design calls.
+
+## 2026-10-31 session 17
+
+- Scanned 796 SKILL.md files for the last two book-note checks in tokenwright-skills: copied AGENTS.md or CLAUDE.md text (4 skills, one line each) and uncapped retry loops (2 real, both Unity status polls). Both ruled out, no code change, no release (R-20261031-8, R-20261031-9). Another session released 0.2.6 the same afternoon (PR #20).
