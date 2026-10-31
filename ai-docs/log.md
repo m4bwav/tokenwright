@@ -49,3 +49,7 @@
 ## 2026-10-30 session 8
 
 - Two books read by reading agents (notes outside the repo, in the book-learnings folder). Six Family 2 habit rows and two waste-vocabulary fixes folded in, all estimates (R-20261030-7, C-20261030-5). PR #7 merged, v0.2.2 tagged and released, installed 0.2.2, wiki at 0.2.2. tw.py score kind ideas deferred until real-transcript thresholds.
+
+## 2026-10-30 session 9
+
+- Meadows, Thinking in Systems read by a reading agent (note in the book-learnings folder, tokenwright-meadows.md). Three habit rows, a leverage ranking in levers.md, a shouted-rules check in tokenwright-skills (R-20261030-8, C-20261030-6). PR #9 merged, v0.2.3 tagged and released, installed 0.2.3, wiki at 0.2.3. Code ideas (meter hook, workaround-after-deny) deferred until real-transcript thresholds.
