@@ -72,6 +72,19 @@
       "runs": 3
     },
     {
+      "id": "multiturn-reread",
+      "kind": "outcome",
+      "prompt": "(second turn; turn 1 in cases/multiturn-reread/turn1.jsonl read settings.py whole) I just edited settings.py. What is REQUEST_TIMEOUT now, and did RETRY_LIMIT change?",
+      "reference": "REQUEST_TIMEOUT 45 (was 30); RETRY_LIMIT unchanged at 3",
+      "expectations": [
+        "states 45 and RETRY_LIMIT unchanged",
+        "settings.py is not read whole a second time"
+      ],
+      "evidence": "trace: no Read of settings.py without offset/limit (tool_used max 0)",
+      "baseline": true,
+      "runs": 3
+    },
+    {
       "id": "outcome-log",
       "kind": "outcome",
       "prompt": "Summarise the errors in evals/fixtures/server.log: which distinct errors, how many times each.",
