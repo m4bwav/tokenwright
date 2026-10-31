@@ -77,3 +77,7 @@
 ## 2026-10-31 session 15
 
 - Scanned 279 transcripts for `stale` (big result never referred to again: 11 of 97, at most one per session, all already `big-output`) and an exploration-share line (median 0.06, p95 0.50; marks research, not waste). Both ruled out, no code change, no release (R-20261031-5, R-20261031-6). Score-kind backlog from the books is closed.
+
+## 2026-10-31 session 16
+
+- Counted shouted words (MUST, NEVER and the like) in 458 SKILL.md files on this machine for a `tw.py skill` count: max 3, p99 3. Ruled out, no code change, no release (R-20261031-7). Left from the book notes: a visible meter in hook mode, score against the best past session, tokenwright-skills checks for copied AGENTS.md text and uncapped retry loops; all need either a Linux eval run or design calls.
