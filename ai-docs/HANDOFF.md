@@ -1,6 +1,6 @@
 # Handoff: tokenwright
 
-Updated 2026-10-30 (session 9). Continue with `ai-docs/plans/2026-10-30-tokenwright-continue-prompt.md`.
+Updated 2026-10-30 (session 10). Continue with `ai-docs/plans/2026-10-30-tokenwright-continue-prompt.md`.
 
 ## State
 
@@ -21,5 +21,5 @@ Nothing. skill-tidy's Claude directory submission was withdrawn by Mark 2026-10-
 
 1. Multi-turn evals that need Bash (a repeated job that should become a script; a long session scored by tw.py; `tw.py changed`): run on macOS or Linux, since Windows eval runs cannot get Bash. Pattern: cases/multiturn-reread (make_history.py builds turn1.jsonl).
 2. Books: Pragmatic Programmer and Algorithms to Live By done (notes in Ai/books/plugin-learnings tokenwright-pragmatic.md and tokenwright-algorithms.md). Meadows done too (tokenwright-meadows.md). No book left on disk in books.md; Berryman and Ziegler is not on disk. Still owed from the three notes: a visible meter in hook mode, score against the best past session of the same kind, a workaround-after-deny score kind, a MUST/NEVER count in tw.py skill; tw.py score kinds poll, plateau, stale, debug-loop, many-similar-edits and an exploration share line; tokenwright-skills checks (copied AGENTS.md text, retry loops with no cap); all need thresholds from real transcripts (item 3).
-3. Calibrate tw.py thresholds (400 lines, 20k chars) across many transcripts.
+3. Thresholds calibrated 2026-10-30 (R-20261030-9: 20k chars is about p99 of text results, 400 lines about p95 of whole reads; both kept). The same scan can now set thresholds for the deferred score kinds in item 2.
 4. Optional: trim descriptions back to green if a trigger eval shows room.
