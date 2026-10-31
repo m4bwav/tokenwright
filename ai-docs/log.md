@@ -65,3 +65,7 @@
 ## 2026-10-31 session 12
 
 - Calibrated and added the `debug-loop` score kind: longest same-tool failure streak per session in 300 transcripts is 0 or 1 in 95%, 3 or more in 3 sessions (R-20261031-1). PR #14 merged, v0.2.5 tagged and released, installed 0.2.5, wiki at 0.2.5 (Commands kinds table, Versions, Getting-Started, footer). Budget yellow now also on tracked repository size (1,076 KB).
+
+## 2026-10-31 session 13
+
+- Scanned denied calls for a `workaround-after-deny` score kind: 26 denials in 300 sessions, the follow-up is almost always the same tool with a split or narrowed command; workarounds cannot be told from fixes. Kind not added, no release (R-20261031-2).

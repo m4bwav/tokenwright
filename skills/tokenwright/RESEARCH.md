@@ -48,6 +48,9 @@ Exact repeats of a shell command across the same 300 local transcripts, measured
 ### R-20261031-1 · testing · magnitude 0.1
 Failed tool calls across the same 300 local transcripts, measured 2026-10-31: errors per session median 0, p95 6, p99 12, max 16. The longest run of failed calls in a row to one tool per session: 0 in 162 sessions, 1 in 124, 2 in 11, 3, 4 and 6 in one each. So `DEBUG_LOOP_ERRORS = 3` flags about the top 1% of sessions. Errors are mostly isolated; a streak of three is rare enough to be worth a look. Source: local transcripts, one maintainer's work.
 
+### R-20261031-2 · testing · magnitude 0.1
+Denied calls across the same 300 local transcripts, measured 2026-10-31: 26 denials (auto-mode classifier 15, built-in safety check 4, a guard hook 2, user rejections the rest) in 8 sessions; at most 2 per session. After 24 of 26 the next call was the same tool, mostly the same command split or narrowed, which is the right response to a classifier denial; true workarounds (for example `rm -rf` denied, then `rmdir`) look the same and cannot be told apart from the call alone. So a `workaround-after-deny` score kind was not added: too rare to matter for tokens and no mechanical signal for "same end". The concern stays a habit (judgement), not a tw.py check. Source: local transcripts, one maintainer's work.
+
 ## Open questions
 
 - Batch API request cap: sources disagree (10k vs 100k).

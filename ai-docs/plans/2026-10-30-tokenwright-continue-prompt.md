@@ -3,7 +3,7 @@
 Start a session in the tokenwright clone (`Ai/tokenwright` in the maintainer's projects folder) with:
 
 ```
-Execute ai-docs/plans/2026-10-30-tokenwright-continue-prompt.md
+Execute <tokenwright clone>/ai-docs/plans/2026-10-30-tokenwright-continue-prompt.md
 ```
 
 This file does not change between sessions. State lives in `ai-docs/HANDOFF.md`.
@@ -36,7 +36,7 @@ This file does not change between sessions. State lives in `ai-docs/HANDOFF.md`.
 - Before stopping: update `ai-docs/HANDOFF.md`, add a log entry to `ai-docs/log.md`, update the backlog entry in `Ai/plugin-backlog/new-plugins.md`, then end the reply with the same start line:
 
 ```
-Execute ai-docs/plans/2026-10-30-tokenwright-continue-prompt.md
+Execute <tokenwright clone>/ai-docs/plans/2026-10-30-tokenwright-continue-prompt.md
 ```
 
-and the folder to start in (the tokenwright clone (`Ai/tokenwright` in the maintainer's projects folder)).
+with `<tokenwright clone>` replaced by the clone's absolute path, so it works from any folder.
