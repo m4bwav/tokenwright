@@ -211,6 +211,20 @@ class Hook(unittest.TestCase):
             finally:
                 os.environ.pop("TOKENWRIGHT_HOOKS", None)
 
+    def test_meter_counts_an_image_at_its_token_cost(self):
+        with tempfile.TemporaryDirectory() as d:
+            os.environ["TOKENWRIGHT_HOOKS"] = "warn"
+            os.environ["TOKENWRIGHT_METER_DIR"] = d
+            try:
+                ev = {"session_id": "s2", "tool_name": "Read", "tool_input": {"file_path": "shot.png"},
+                      "tool_response": {"type": "image", "file": {"base64": "A" * 680000}}}
+                sys.stdin = io.StringIO(json.dumps(ev))
+                self.assertEqual(run("hook", "post"), "")   # base64 is not what the model pays for
+                self.assertEqual(run("meter", "s2").strip(), "tw ~1k")
+            finally:
+                os.environ.pop("TOKENWRIGHT_HOOKS", None)
+                os.environ.pop("TOKENWRIGHT_METER_DIR", None)
+
     def test_meter_speaks_once_per_step(self):
         with tempfile.TemporaryDirectory() as d:
             os.environ["TOKENWRIGHT_HOOKS"] = "warn"

@@ -117,3 +117,7 @@
 ## 2026-11-01 session 24
 
 - Mark pasted a third-party top-ten list of token habits and asked for gaps. A research subagent checked primary docs (R-20261101-1): added a mention-a-range habit, queued follow-ups, a formatter and failures-only lint hook section, `@file` load notes, LSP plugins and search over RAG for code; output price ratio is exactly 5x. A transcript scan ruled out a follow-up-burst score kind (median one typed message per session). Set TOKENWRIGHT_HOOKS=warn in ~/.claude/settings.json env and as a user variable, so the meter runs from the next session. Released 0.2.10.
+
+## 2026-11-01 session 25
+
+- First look at the hook meter in real use (three sessions since TOKENWRIGHT_HOOKS=warn): notes at ~35k and ~38k read fine, but one session jumped to ~181k on a single screenshot Read, since the post hook measured the base64. The hook now sizes an image Read at IMAGE_TOKENS, as `score` already did. Test first (fails before, passes after), 47 tests. Released 0.2.11.
