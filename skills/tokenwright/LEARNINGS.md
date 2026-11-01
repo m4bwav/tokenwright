@@ -18,3 +18,6 @@ Write an entry the moment a real signal happens: a user correction, the same err
 - Trigger: T-20261030-1: the find-function and log cases cost the same with and without the plugin; the model already searched.
 - Hypothesis: current models apply the basic read habits on short prompts. Savings come from habits that matter over many turns (repeat reads, early big outputs, cache breaks, scripting repeats) and from tw.py measuring them. Next evals should be multi-turn: a re-read after an external change (tw.py changed), a repeated job.
 
+### L-004 · 2026-11-01 · A short repeated job is answered, not scripted, and that is right
+- Trigger: T-20261101-2: a third 'same again' for a two-command summary cost $0.05 and two turns; no description wording woke tokenwright-script.
+- Hypothesis: a script case needs a job of three or more steps with output that needs trimming. Build that case before claiming a scripting saving.

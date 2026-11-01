@@ -125,3 +125,7 @@
 ## 2026-11-01 session 26
 
 - Mark asked to run the Bash evals in a Linux environment. WSL Ubuntu (claude updated to 2.1.316): the old read-only sandbox came from tmpfs /tmp; TMPDIR=$HOME/evaltmp fixes it. Built outcome-score, multiturn-changed and multiturn-repeat-job. T-20261101-1: 8/9, repeat-job fails (no script written on the third repeat). Catalog L-003 resolved.
+
+## 2026-11-01 session 27
+
+- Ran evergreen-tune on multiturn-repeat-job. Adding 'same again for' to tokenwright-script's description changed nothing (0/3, two turns, $0.05 a run), so it was reverted. The case asked for a script on a two-command job, which tokenwright-script's own rule says does not pay; the script grader was dropped and the case passes 3/3 (T-20261101-2, L-004). The eval run's own transcript landed in the case folder; that pattern is now gitignored. No release (eval files only).

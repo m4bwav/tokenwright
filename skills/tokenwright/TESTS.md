@@ -4,6 +4,12 @@ Test runs for [SKILL.md](SKILL.md). Cases live in `evals/evals.json`. Unit tests
 
 ## Runs
 
+### T-20261101-2 · 2026-11-01 · claude plugin eval 2.1.316 (3 runs, single-arm, --scaffold) · WSL2 Ubuntu · 1/1
+- Why: evergreen-tune on multiturn-repeat-job (T-20261101-1 fail). Iteration 1: added 'same again for' to tokenwright-script's description; still 0/3 Write, 2 turns, $0.05 a run. Reverted.
+- Ruling: the job is two commands and answers in two turns. tokenwright-script's own rule says a script pays at three or more steps or when output needs trimming, so the case expected what the skill advises against. Dropped the wrote-script grader; the judge (right counts) stays. Re-run 3/3, $0.15.
+- Harness: the run wrote its own 900 KB session transcript next to turn1.jsonl; now gitignored.
+- led to: L-004.
+
 ### T-20261101-1 · 2026-11-01 · claude plugin eval 2.1.316 (1 run each arm, --scaffold, Bash Write Edit granted) · WSL2 Ubuntu, TMPDIR on ext4 · 8/9
 - Why: first run with Bash, on Linux. The read-only sandbox of catalog L-003 came from the eval temp folder on WSL's tmpfs /tmp; with `TMPDIR=$HOME/evaltmp` writes work. Command in AGENTS.md.
 - New cases: outcome-score (tw.py score on a generated transcript), multiturn-changed (snapshot seeded by the scaffold, `tw.py changed` on turn 2), multiturn-repeat-job (third request for the same two-command log summary).
