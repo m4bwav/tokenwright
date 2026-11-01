@@ -1,0 +1,22 @@
+schema_version: "1.1"
+name: multiturn-changed
+description: Second turn after an edit; turn 1 stored a tw.py snapshot, so tw.py changed gives the diff without a whole re-read
+execution:
+  max_turns: 8
+  timeout_seconds: 300
+  allowed_tools: [Bash, Read, Glob, Grep, Skill]
+  runs: 3
+context:
+  history_file: turn1.jsonl
+  scaffold_script: fixture.sh
+graders:
+  - name: no-second-whole-read
+    type: tool_used
+    tool: Read
+    input_match: 'settings\.py"\}'
+    min: 0
+    max: 0
+  - name: used-changed
+    type: tool_used
+    tool: Bash
+    input_match: 'tw\.py[\s\S]*\bchanged\b'

@@ -12,6 +12,7 @@ Write an entry the moment a real signal happens: a user correction, the same err
 - Rule: scripts that write must not crash on a read-only state folder; judge a write case by the gate in the trace when the harness blocks writes, and re-run it where writes work before calling it a skill failure
 - Evidence: T-20261030-1, C-20261030-2
 - Scope: env:eval-wsl2
+- Resolved 2026-11-01: the cause was the eval temp folder on WSL's tmpfs /tmp; `TMPDIR=$HOME/evaltmp` makes writes work (outcome-catalog 5/5, T-20261101-1 in ../tokenwright/TESTS.md)
 - Status: active · helpful 1 · harmful 0 · last_confirmed 2026-10-30
 
 ### L-002 · 2026-09-30 · Test runs count as skill use unless headless sessions are left out (`headless-runs-are-not-use`)

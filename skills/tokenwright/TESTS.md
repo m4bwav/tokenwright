@@ -4,6 +4,14 @@ Test runs for [SKILL.md](SKILL.md). Cases live in `evals/evals.json`. Unit tests
 
 ## Runs
 
+### T-20261101-1 · 2026-11-01 · claude plugin eval 2.1.316 (1 run each arm, --scaffold, Bash Write Edit granted) · WSL2 Ubuntu, TMPDIR on ext4 · 8/9
+- Why: first run with Bash, on Linux. The read-only sandbox of catalog L-003 came from the eval temp folder on WSL's tmpfs /tmp; with `TMPDIR=$HOME/evaltmp` writes work. Command in AGENTS.md.
+- New cases: outcome-score (tw.py score on a generated transcript), multiturn-changed (snapshot seeded by the scaffold, `tw.py changed` on turn 2), multiturn-repeat-job (third request for the same two-command log summary).
+- action-catalog Δ +1.00, outcome-catalog Δ +0.40 (baseline edits without checking). outcome-find-function, outcome-log, outcome-score Δ 0 (both arms 1.00; the with arm ran tw.py score). multiturn-changed 1.00 (used `tw.py changed`, no whole re-read), multiturn-reread 1.00. History cases now run single-arm (the harness says history carries the plugin into both arms).
+- Fail: multiturn-repeat-job 0.50: right counts, but no script written on the third repeat; "Same again for ..." does not wake tokenwright-script. To evergreen-tune.
+- About $2.0.
+- led to: catalog L-003 resolved.
+
 ### T-20261031-1 · 2026-10-31 · claude plugin eval (1 run each, --ablation none) · Windows 11 native · 9/9
 - Why: all four descriptions trimmed to bring the budget back to green (C-20261031-3). trigger-1..5 and decoy-1..4 pass. About $1.03.
 - led to: none.
