@@ -5,3 +5,4 @@ dist/
 evals/results/
 evals-*.txt
 skills/tokenwright/evals/cases/*/00000000-0000-4000-8000-*.jsonl
+skills/tokenwright/evals/cases/multiturn-*/settings_v*.py

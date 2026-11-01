@@ -5,6 +5,7 @@ Between turns the scaffold puts settings_v2.py in place (timeout 45, nothing els
 Run: python make_history.py
 """
 import json
+import sys
 import uuid
 from pathlib import Path
 
@@ -59,4 +60,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if sys.argv[1:2] == ["settings"]:
+        # Scaffold use: write one version straight to a path, so the versions need not be tracked.
+        text = settings(30) if sys.argv[2] == "v1" else settings(45)
+        Path(sys.argv[3]).write_text(text, encoding="utf-8", newline="\n")
+    else:
+        main()
