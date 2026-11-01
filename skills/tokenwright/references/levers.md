@@ -27,7 +27,17 @@ Checked 2026-10-30 against code.claude.com/docs and docs.claude.com. Sources and
 - CLAUDE.md and AGENTS.md: every turn. Keep under about 200 lines; move workflows into skills.
 - Skill descriptions: every turn, cut at 1,536 characters. The body loads on invoke; files beside it only when read. `disable-model-invocation: true` removes the description entirely (slash command only).
 - MCP tool schemas: deferred behind tool search when enabled; otherwise every turn. A CLI the agent already knows costs nothing until used, so prefer CLIs where one exists.
-- Subagents and `context: fork` skills: their reads stay in their own context; only the result returns. Give simple ones Haiku.
+- Subagents and `context: fork` skills: their reads stay in their own context; only the result returns. Give simple ones Haiku. See Subagents below for when they pay.
+
+## Subagents: a smaller main context, a bigger bill
+
+- They move tokens, they do not remove them. Anthropic measured single agents at about 4x the tokens of chat and multi-agent research at about 15x; Claude Code agent teams at about 7x a normal session. Subagent requests count toward the same usage limits (R-20261031-10).
+- Each one pays a cold start: its own system prompt, tools and CLAUDE.md, and its first request misses the parent's cache. A fork reuses the parent's prefix and hits the cache. Subagents get a 5-minute cache TTL even on a subscription (`CLAUDE_CODE_SUBAGENT_PROMPT_CACHE_TTL` overrides).
+- They pay on verbose, independent, read-heavy work whose answer is small: test runs, log reads, doc fetches, many-file sweeps, a review that should not be anchored on your reasoning. The main context keeps the 1,000 to 2,000 token conclusion instead of the 50k-token sweep, and a smaller context also answers better (context rot, R-20261031-10).
+- They lose on small lookups (a known file, one grep), on tightly coupled sequential work (plan, implement, test share context), on frequent back-and-forth, and when parallel agents must make consistent decisions. If you will re-read what the subagent read to check it, you paid twice.
+- Brief like a peer: objective, what is ruled out, output format and a length cap. For big results have it write a file and return the path. Many detailed returns still fill the main context.
+- Cheaper alternatives first: a script or hook that filters output (a 10k-line log to a few hundred tokens) costs no second model. Override the built-in Explore with a `model: haiku` agent of the same name for cheap sweeps.
+- No public size threshold exists; check with `/usage` (per-subagent share) or `tw.py score` before and after.
 
 ## Output caps
 

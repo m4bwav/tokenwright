@@ -3,7 +3,7 @@ name: tokenwright
 description: Spend fewer tokens on the same result in any agent work: habits (don't load or reload data, shortcut the process, script repeats) and tw.py (diff instead of re-read, rank a session's token sinks). Use on 'save tokens', 'this is expensive', 'context is filling', 'why did that cost so much', 'score this session', 'did the file change'. Siblings: tokenwright-skills, -catalog, -script.
 license: MIT
 metadata:
-  version: 0.2.8
+  version: 0.2.9
 ---
 
 # tokenwright
@@ -32,7 +32,7 @@ Read [references/habits.md](references/habits.md) for each habit's when, how and
 - Trim command output at the source: `head`, `tail -n`, `--stat`, `-q`, `--oneline`, Grep `head_limit` and `files_with_matches`, `jq` field picks.
 - Outline before sections: headings, `grep -n '^#'`, symbol lists, then one section (readwright for books and PDFs).
 - Shrink images before reading them; one 1568 px image is about 1,600 tokens.
-- Send big mechanical reads (logs, long diffs, many files) to a subagent or local-delegate so only the answer returns.
+- Send big mechanical reads (logs, long diffs, many files) to a subagent or local-delegate so only the answer returns. It raises total tokens (cold start, no shared cache), so skip it for small lookups and coupled work.
 
 **2. Shortcut the whole process**
 - Stop when the answer is known. Skip steps that cannot change it.

@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261031-5 · 2026-10-31 · when subagents pay (0.2.9)
+- because: R-20261031-10; Mark asked to study subagents as context offload
+- files: references/levers.md (Subagents section), references/habits.md (Delegate big reads row), SKILL.md (one line)
+
 ### C-20261031-4 · 2026-10-31 · score counts a repeated record once (0.2.8)
 - because: HANDOFF known bug (session 20): `score` listed one call's sink twice when a transcript repeated the tool_result record
 - files: scripts/tw.py (`load_events` drops a tool_use or tool_result whose id it has already seen), tests/test_tw.py

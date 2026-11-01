@@ -78,6 +78,9 @@ A tokenwright-skills check for retry or poll loops with no cap, over the same 79
 - Programmatic tool calling's 37% figure: secondary sources only.
 - Thresholds checked against one maintainer's 300 transcripts (R-20261030-9); a second user's baseline would show whether they generalise.
 
+### R-20261031-10 · practice · magnitude 0.3
+Subagents as context offload. Total cost rises: agents about 4x chat tokens, multi-agent about 15x (anthropic.com/engineering/multi-agent-research-system, 2025-06-13); agent teams about 7x (code.claude.com/docs/en/costs, read 2026-10-31). Subagents start cold, miss the parent cache, 5-minute TTL; forks share the prefix (code.claude.com/docs/en/prompt-caching, sub-agents). Poor fit for shared-context or dependent work (same Anthropic post; cognition.com/blog/dont-build-multi-agents, 2025-06-12). Returns of 1,000 to 2,000 tokens, files and references for big outputs (anthropic.com/engineering/effective-context-engineering-for-ai-agents, 2025-09-29). Context rot: 18 models degrade with length; focused ~300-token prompts beat ~113k full ones on LongMemEval (trychroma.com/research/context-rot, 2025-07-14). Not found: a startup token count or a size threshold for delegation. Gathered by a subagent, which used about 98k tokens and returned about 1.5k.
+
 ## Search plan
 
 - subject: Claude Code changelog and docs (costs, caching, context, skills, hooks), Anthropic API release notes.
