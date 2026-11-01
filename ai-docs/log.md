@@ -121,3 +121,7 @@
 ## 2026-11-01 session 25
 
 - First look at the hook meter in real use (three sessions since TOKENWRIGHT_HOOKS=warn): notes at ~35k and ~38k read fine, but one session jumped to ~181k on a single screenshot Read, since the post hook measured the base64. The hook now sizes an image Read at IMAGE_TOKENS, as `score` already did. Test first (fails before, passes after), 47 tests. Released 0.2.11.
+
+## 2026-11-01 session 26
+
+- Mark asked to run the Bash evals in a Linux environment. WSL Ubuntu (claude updated to 2.1.316): the old read-only sandbox came from tmpfs /tmp; TMPDIR=$HOME/evaltmp fixes it. Built outcome-score, multiturn-changed and multiturn-repeat-job. T-20261101-1: 8/9, repeat-job fails (no script written on the third repeat). Catalog L-003 resolved.
