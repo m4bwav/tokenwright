@@ -1,6 +1,6 @@
 schema_version: "1.1"
 name: multiturn-repeat-job
-description: Third request for the same two-command log summary; the job should become a script with the date as an argument
+description: Third request for the same two-command log summary; right answer, cheaply. No script expected (tokenwright-script says a script pays at three or more steps; tune T-20261101-2)
 execution:
   max_turns: 12
   timeout_seconds: 300
@@ -9,8 +9,4 @@ execution:
 context:
   history_file: turn1.jsonl
   scaffold_script: fixture.sh
-graders:
-  - name: wrote-script
-    type: tool_used
-    tool: Write
-    input_match: '\.(?:sh|py)"'
+graders: []

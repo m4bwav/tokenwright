@@ -1,6 +1,6 @@
 # Handoff: tokenwright
 
-Updated 2026-11-01 (session 26). Continue with `ai-docs/plans/2026-10-30-tokenwright-continue-prompt.md`.
+Updated 2026-11-01 (session 27). Continue with `ai-docs/plans/2026-10-30-tokenwright-continue-prompt.md`.
 
 ## State
 
@@ -24,7 +24,7 @@ Nothing. skill-tidy's Claude directory submission was withdrawn by Mark 2026-10-
 
 ## Next
 
-0. Bash evals now run in WSL (AGENTS.md command; T-20261101-1, 8/9). Open: multiturn-repeat-job fails (no script on the third 'same again'); run evergreen-tune on tokenwright-script's description or the hub, three iterations at most.
+0. (Done 2026-11-01, session 27) multiturn-repeat-job tuned: the two-command job is rightly answered, not scripted (T-20261101-2, L-004); script grader dropped, 3/3. Owed if wanted: a case with a job of three or more steps and long output, to test scripting for real. Budget is YELLOW on tracked repository KB (1,028 of 1,024) since session 26's new cases; trim a fixture or generate it at eval time.
 1. (Done 2026-11-01) Multi-turn evals that need Bash (a repeated job that should become a script; a long session scored by tw.py; `tw.py changed`): run on macOS or Linux, since Windows eval runs cannot get Bash. Pattern: cases/multiturn-reread (make_history.py builds turn1.jsonl).
 2. Books: Pragmatic Programmer and Algorithms to Live By done (notes in Ai/books/plugin-learnings tokenwright-pragmatic.md and tokenwright-algorithms.md). Meadows done too (tokenwright-meadows.md). No book left on disk in books.md; Berryman and Ziegler is not on disk. Still owed from the three notes: a visible meter in hook mode, score against the best past session of the same kind, a workaround-after-deny score kind, a MUST/NEVER count in tw.py skill; tw.py score kinds plateau, stale, many-similar-edits and an exploration share line; tokenwright-skills checks (copied AGENTS.md text, retry loops with no cap); all need thresholds from real transcripts (item 3).
 3. Thresholds calibrated 2026-10-30 (R-20261030-9: 20k chars is about p99 of text results, 400 lines about p95 of whole reads; both kept). poll done 2026-10-30 (R-20261030-10, POLL_RUNS = 3); debug-loop done 2026-10-31 (R-20261031-1, DEBUG_LOOP_ERRORS = 3, same-tool failure streak). workaround-after-deny ruled out 2026-10-31 (R-20261031-2: 26 denials in 300 sessions, follow-ups indistinguishable from fixes). plateau and many-similar-edits ruled out 2026-10-31 (R-20261031-3, -4: never reach threshold in 300 sessions). stale and the exploration-share line ruled out 2026-10-31 (R-20261031-5, -6: stale results top out at one per session and big-output already flags them; exploration share marks research sessions, not waste). Every score-kind idea from the book notes is now added or ruled out. The MUST/NEVER count for `tw.py skill` ruled out 2026-10-31 (R-20261031-7: max 3 in 458 skills). The tokenwright-skills checks for copied AGENTS.md text and uncapped retry loops ruled out 2026-10-31 (R-20261031-8, -9: 4 and 2 hits in 796 skills). Both left book ideas (hook meter, best-past-session comparison) shipped in 0.2.7. The repeated-record bug in `score` was fixed in 0.2.8.
