@@ -11,7 +11,7 @@ Updated 2026-11-01 (session 25). Continue with `ai-docs/plans/2026-10-30-tokenwr
 - 0.2.8 (session 21; PR #26, released, installed, wiki at 0.2.8): `load_events` skips a tool_use or tool_result whose id it already saw, so a repeated record no longer lists one sink twice (C-20261031-4).
 - 0.2.9 (session 22): when subagents pay (levers.md Subagents section, R-20261031-10). Docs only. Released, installed, wiki at 0.2.9.
 - 0.2.10 (session 24): gaps from a third-party top-ten list (R-20261101-1): @file ranges, queued follow-ups, failures-only lint hook, search over RAG. Docs only.
-- 0.2.11 (session 25): the hook meter counts an image Read at IMAGE_TOKENS instead of its base64 length (a screenshot had put ~170k on the meter).
+- 0.2.11 (session 25): the hook meter counts an image Read at IMAGE_TOKENS instead of its base64 length (a screenshot had put ~170k on the meter). PR #33, released, installed, wiki at 0.2.11.
 - Tests: 47 unit tests (test_tw.py + test_tidy.py).
 - Evals: hub T-20261030-2 5/5 (triggers, decoys); T-20261030-3 multiturn-reread 1/1, no gain over baseline (multi-turn via `context.history_file` + scaffold). Catalog T-20261030-1 5/6: outcome-catalog fails because the WSL2 eval sandbox (claude 2.1.307) makes the workspace read-only (catalog L-003). Re-run it on macOS or Linux, or when the harness allows writes.
 - Wiki live at 0.2.6 (https://github.com/m4bwav/tokenwright/wiki), note in ai-docs/notes/2026-10-30-github-wiki.md.
