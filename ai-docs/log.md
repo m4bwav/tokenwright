@@ -113,3 +113,7 @@
 ## 2026-10-31 session 23
 
 - Checked state: main up to date, no open PRs, 0.2.9 released and installed. TOKENWRIGHT_HOOKS is unset here, so the meter has not been seen in real use; Bash evals still need macOS or Linux. No change.
+
+## 2026-11-01 session 24
+
+- Mark pasted a third-party top-ten list of token habits and asked for gaps. A research subagent checked primary docs (R-20261101-1): added a mention-a-range habit, queued follow-ups, a formatter and failures-only lint hook section, `@file` load notes, LSP plugins and search over RAG for code; output price ratio is exactly 5x. A transcript scan ruled out a follow-up-burst score kind (median one typed message per session). Set TOKENWRIGHT_HOOKS=warn in ~/.claude/settings.json env and as a user variable, so the meter runs from the next session. Released 0.2.10.
