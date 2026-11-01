@@ -129,3 +129,7 @@
 ## 2026-11-01 session 27
 
 - Ran evergreen-tune on multiturn-repeat-job. Adding 'same again for' to tokenwright-script's description changed nothing (0/3, two turns, $0.05 a run), so it was reverted. The case asked for a script on a two-command job, which tokenwright-script's own rule says does not pay; the script grader was dropped and the case passes 3/3 (T-20261101-2, L-004). The eval run's own transcript landed in the case folder; that pattern is now gitignored. No release (eval files only).
+
+## 2026-11-01 session 28
+
+- Mark pasted ten token ideas from another model. Five were already covered; added hand over deltas and keep a state capsule, and extended the trim (runner quiet flags), model (start low, raise on a failed check), stop-rule (when to ask the user) and subagent-brief (output file and proof) rows. Fine-tuning skipped as out of scope. Tested quiet modes on 400 sessions: 79% of 507 test and build runs already quiet or piped, plain p90 2,269 vs 1,013 characters; no score kind (R-20261101-2). habits.md trimmed back under its 2,500-token budget. Released 0.2.12, installed, wiki at 0.2.12. Budget still YELLOW on tracked KB (1,032) and installed KB (655): the turn1.jsonl fixtures are the candidates.
