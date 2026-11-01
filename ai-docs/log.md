@@ -101,3 +101,7 @@
 ## 2026-10-31 session 21
 
 - Fixed the known `score` bug: `load_events` now drops a tool_use or tool_result record it has already seen by id. New test fails before, passes after; 46 tests. PR #26 merged, v0.2.8 tagged and released, installed 0.2.8, wiki Versions and footer at 0.2.8. Left: Bash evals on macOS/Linux, watching the meter in real use.
+
+## 2026-10-31 session 22
+
+- Checked state: main up to date, no open PRs, 0.2.8 installed, the evergreen wrap-up PRs merged. What is left needs a macOS or Linux eval run, or the meter watched in real use. No change.
