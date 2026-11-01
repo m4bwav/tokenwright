@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261101-3 · 2026-11-01 · deltas, state capsule, quiet runners (0.2.12)
+- because: R-20261101-2; Mark asked to fold in and test a second list of token ideas
+- files: references/habits.md (two new rows; trim, model, stop rule and brief rows extended)
+
 ### C-20261101-2 · 2026-11-01 · meter counts an image at its token cost (0.2.11)
 - because: first real use of the hook meter (session 25): one screenshot Read put ~170k on the meter, the length of its base64, when an image costs about 1.6k tokens
 - files: scripts/tw.py (post hook sizes an image Read at IMAGE_TOKENS, as `score` already did), tests/test_tw.py
