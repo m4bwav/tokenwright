@@ -109,3 +109,7 @@
 ## 2026-10-31 session 22 (continued)
 
 - Mark asked to study subagents as context offload. A research subagent (about 98k tokens, returned about 1.5k) gathered sources; folded into a new Subagents section in levers.md, the Delegate big reads habit row and one SKILL.md line (R-20261031-10, C-20261031-5). Released 0.2.9.
+
+## 2026-10-31 session 23
+
+- Checked state: main up to date, no open PRs, 0.2.9 released and installed. TOKENWRIGHT_HOOKS is unset here, so the meter has not been seen in real use; Bash evals still need macOS or Linux. No change.
