@@ -133,3 +133,7 @@
 ## 2026-11-01 session 28
 
 - Mark pasted ten token ideas from another model. Five were already covered; added hand over deltas and keep a state capsule, and extended the trim (runner quiet flags), model (start low, raise on a failed check), stop-rule (when to ask the user) and subagent-brief (output file and proof) rows. Fine-tuning skipped as out of scope. Tested quiet modes on 400 sessions: 79% of 507 test and build runs already quiet or piped, plain p90 2,269 vs 1,013 characters; no score kind (R-20261101-2). habits.md trimmed back under its 2,500-token budget. Released 0.2.12, installed, wiki at 0.2.12. Budget still YELLOW on tracked KB (1,032) and installed KB (655): the turn1.jsonl fixtures are the candidates.
+
+## 2026-11-01 session 29
+
+- Budget back to GREEN. The four settings_v*.py fixtures (192 KB) of multiturn-reread and multiturn-changed are no longer tracked: `make_history.py settings v1|v2 OUT` writes one version and fixture.sh calls it (byte-identical output checked; turn1.jsonl stays tracked because the harness reads history_file before the scaffold). fixture.sh picks python3 only if it runs, since Windows has a Store stub named python3. Scaffolds checked in Git Bash and WSL. Tracked KB 1,032 to 867, installed 655 to 489. No release (eval files only).

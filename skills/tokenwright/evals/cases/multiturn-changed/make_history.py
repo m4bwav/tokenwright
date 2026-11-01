@@ -6,6 +6,7 @@ Between turns the scaffold seeds that snapshot from settings_v1.py and puts sett
 Run: python make_history.py
 """
 import json
+import sys
 import uuid
 from pathlib import Path
 
@@ -65,4 +66,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if sys.argv[1:2] == ["settings"]:
+        # Scaffold use: write one version straight to a path, so the versions need not be tracked.
+        text = settings(30, False) if sys.argv[2] == "v1" else settings(45, True)
+        Path(sys.argv[3]).write_text(text, encoding="utf-8", newline="\n")
+    else:
+        main()
