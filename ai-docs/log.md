@@ -137,3 +137,7 @@
 ## 2026-11-01 session 29
 
 - Budget back to GREEN. The four settings_v*.py fixtures (192 KB) of multiturn-reread and multiturn-changed are no longer tracked: `make_history.py settings v1|v2 OUT` writes one version and fixture.sh calls it (byte-identical output checked; turn1.jsonl stays tracked because the harness reads history_file before the scaffold). fixture.sh picks python3 only if it runs, since Windows has a Store stub named python3. Scaffolds checked in Git Bash and WSL. Tracked KB 1,032 to 867, installed 655 to 489. No release (eval files only).
+
+## 2026-11-01 session 30
+
+- Second look at the hook meter: 40 sessions since 2026-11-01 over 50 KB, meter notes in 10 of them, one or two real notes each (one main session at ~100k from Bash). The 9 hits in one transcript were session 25 grepping its own notes. METER_STEP_TOKENS = 25k kept, no code change, no release. Nothing left on the list but watching.
