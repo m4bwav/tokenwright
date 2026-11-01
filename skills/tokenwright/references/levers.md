@@ -27,6 +27,7 @@ Checked 2026-10-30 against code.claude.com/docs and docs.claude.com. Sources and
 - CLAUDE.md and AGENTS.md: every turn. Keep under about 200 lines; move workflows into skills.
 - Skill descriptions: every turn, cut at 1,536 characters. The body loads on invoke; files beside it only when read. `disable-model-invocation: true` removes the description entirely (slash command only).
 - MCP tool schemas: deferred behind tool search when enabled; otherwise every turn. A CLI the agent already knows costs nothing until used, so prefer CLIs where one exists.
+- `@file` mentions: the whole file (to the Read cap) plus its directory's CLAUDE.md files, with no tool call, so PreToolUse hooks never see it. `CLAUDE_CODE_DISABLE_FILE_MENTIONS=1` passes only paths. The VS Code extension attaches the selection and names the open file; both can be turned off.
 - Subagents and `context: fork` skills: their reads stay in their own context; only the result returns. Give simple ones Haiku. See Subagents below for when they pay.
 
 ## Subagents: a smaller main context, a bigger bill
@@ -44,6 +45,13 @@ Checked 2026-10-30 against code.claude.com/docs and docs.claude.com. Sources and
 - Bash output is capped at 30,000 characters (`BASH_MAX_OUTPUT_LENGTH`), file reads at about 25k tokens, MCP output at 25k (`MAX_MCP_OUTPUT_TOKENS`, warning at 10k). Caps stop disasters; they do not make 29,000 characters cheap.
 - A PreToolUse hook can rewrite noisy commands (the docs' example shows only failing tests). tokenwright's own hooks warn instead.
 
+## Format and lint in a hook, failures only
+
+- A PostToolUse hook on `Edit|Write` runs the formatter (the docs' example: `jq -r '.tool_input.file_path' | xargs npx prettier --write`), so the model never writes or re-reads formatting fixes.
+- Lint the same way, quietly: exit 0 when clean (PostToolUse stdout on exit 0 never reaches the model), exit 2 with only the failures on stderr. `additionalContext` past 10,000 characters is saved to a file and the model sees a 2,000-character preview.
+- Keep it fast and scoped to the edited file; a whole-repo lint on every edit costs wall time.
+- Typed languages: a code intelligence (LSP) plugin turns grep-then-read-candidates into one go-to-definition call.
+
 ## API side
 
 - Cache writes cost 1.25x input (5 minutes) or 2x (1 hour); reads 0.1x. Minimum cacheable prefix is 512 tokens on 5.x models; shorter prompts silently skip caching. Put stable text first and the breakpoint after it.
@@ -51,6 +59,10 @@ Checked 2026-10-30 against code.claude.com/docs and docs.claude.com. Sources and
 - Token counting endpoint: free; use it to measure before and after.
 - Context editing (tool result clearing) and the memory tool: Anthropic reports 84% fewer tokens on a 100-turn search eval (their own figure). Tool search cut definition tokens about 85% (their own figure).
 - Smaller models for mechanical steps: Haiku or a local model for extraction, classification and summaries.
+
+## Search, not retrieval, for code
+
+- Claude Code dropped an early RAG and vector-index design for agentic search (grep, glob, reads), reportedly for simplicity, freshness and privacy (secondary source, R-20261101-1). For code, a CODEMAP and good search beat a chunking pipeline; RAG still fits big document sets outside the repository.
 
 ## Result caching
 

@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261101-1 · 2026-11-01 · mentions, queued follow-ups, lint hooks (0.2.10)
+- because: R-20261101-1; Mark asked to check a third-party top-ten list for gaps
+- files: references/habits.md (two rows, output side), references/levers.md (lint hook, @file, search not retrieval)
+
 ### C-20261031-5 · 2026-10-31 · when subagents pay (0.2.9)
 - because: R-20261031-10; Mark asked to study subagents as context offload
 - files: references/levers.md (Subagents section), references/habits.md (Delegate big reads row), SKILL.md (one line)
