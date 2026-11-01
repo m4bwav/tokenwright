@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261101-2 · 2026-11-01 · meter counts an image at its token cost (0.2.11)
+- because: first real use of the hook meter (session 25): one screenshot Read put ~170k on the meter, the length of its base64, when an image costs about 1.6k tokens
+- files: scripts/tw.py (post hook sizes an image Read at IMAGE_TOKENS, as `score` already did), tests/test_tw.py
+
 ### C-20261101-1 · 2026-11-01 · mentions, queued follow-ups, lint hooks (0.2.10)
 - because: R-20261101-1; Mark asked to check a third-party top-ten list for gaps
 - files: references/habits.md (two rows, output side), references/levers.md (lint hook, @file, search not retrieval)

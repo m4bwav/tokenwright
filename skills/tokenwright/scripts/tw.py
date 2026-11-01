@@ -25,7 +25,7 @@ import tempfile
 from collections import Counter, defaultdict
 from pathlib import Path
 
-VERSION = "0.2.10"
+VERSION = "0.2.11"
 CHARS_PER_TOKEN = 4
 BIG_FILE_LINES = 400        # a whole read of a file this long, used for a few lines, is a sink
 BIG_OUTPUT_CHARS = 20000    # a tool result this long is a sink unless it was the point
@@ -483,6 +483,9 @@ def cmd_hook(a):
     elif a.when == "post":
         resp = ev.get("tool_response")
         size = len(json.dumps(resp)) if resp is not None else 0
+        if name == "Read" and ((isinstance(resp, dict) and resp.get("type") == "image")
+                               or str(inp.get("file_path") or "").lower().endswith(IMAGE_EXT)):
+            size = IMAGE_TOKENS * CHARS_PER_TOKEN   # base64 length is not the image's token cost
         if size >= BIG_OUTPUT_CHARS and name != "Read":
             msg = ("tokenwright: that %s output was ~%d tokens. Next time trim at the source (head, --stat, -q, "
                    "head_limit) or hand the sweep to a subagent." % (name, tokens(size)))
