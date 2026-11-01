@@ -1,6 +1,6 @@
 # Handoff: tokenwright
 
-Updated 2026-11-01 (session 27). Continue with `ai-docs/plans/2026-10-30-tokenwright-continue-prompt.md`.
+Updated 2026-11-01 (session 28). Continue with `ai-docs/plans/2026-10-30-tokenwright-continue-prompt.md`.
 
 ## State
 
@@ -12,6 +12,7 @@ Updated 2026-11-01 (session 27). Continue with `ai-docs/plans/2026-10-30-tokenwr
 - 0.2.9 (session 22): when subagents pay (levers.md Subagents section, R-20261031-10). Docs only. Released, installed, wiki at 0.2.9.
 - 0.2.10 (session 24): gaps from a third-party top-ten list (R-20261101-1): @file ranges, queued follow-ups, failures-only lint hook, search over RAG. Docs only.
 - 0.2.11 (session 25): the hook meter counts an image Read at IMAGE_TOKENS instead of its base64 length (a screenshot had put ~170k on the meter). PR #33, released, installed, wiki at 0.2.11.
+- 0.2.12 (session 28): a second pasted list of ten token ideas folded into habits.md (deltas, state capsule, quiet runners, effort ladder, escalation point, brief names output and proof; R-20261101-2). Quiet modes tested on 400 sessions: already practised, no score kind. PR #37, released, installed, wiki at 0.2.12.
 - Tests: 47 unit tests (test_tw.py + test_tidy.py).
 - Evals: hub T-20261030-2 5/5 (triggers, decoys); T-20261030-3 multiturn-reread 1/1, no gain over baseline (multi-turn via `context.history_file` + scaffold). Catalog T-20261030-1 5/6: outcome-catalog fails because the WSL2 eval sandbox (claude 2.1.307) makes the workspace read-only (catalog L-003). Re-run it on macOS or Linux, or when the harness allows writes.
 - Wiki live at 0.2.6 (https://github.com/m4bwav/tokenwright/wiki), note in ai-docs/notes/2026-10-30-github-wiki.md.
