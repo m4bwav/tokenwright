@@ -9,11 +9,12 @@ Each habit: when it applies, how, and the saving. "Measured" numbers come from `
 | Search, then ranged read | You need a few lines of a file over about 200 lines | `Grep -n -C 3 pattern file`, then Read `offset`/`limit` | Measured payload (fixture `inventory.py`, 2,690 lines): about 21,400 tokens whole, 56 for `grep -n -A4` of the function. A 4,000-line log: about 61,600 whole (past the Read cap), under 50 for `grep ERROR \| sort \| uniq -c` |
 | No re-read after own edit | Right after Edit or Write | Trust the tool; it errors on failure | The whole file each time |
 | Skip unchanged re-reads | Checking whether a file you read earlier changed (another process, a build, the user) | `tw.py changed <paths>`; in a repo `git diff --stat` | Unchanged: one line. Changed: diff only |
-| Trim output at the source | Any command that can print a lot | `head`, `tail -n 40`, `--stat`, `--oneline`, `-q`, Grep `head_limit`, `files_with_matches`, `jq '.field'` | Bash caps at 30k chars; trimming keeps it near the few hundred you need |
+| Trim output at the source | Any command that can print a lot | `head`, `tail -n 40`, `--stat`, `--oneline`, `-q`, Grep `head_limit`, `files_with_matches`, `jq '.field'`; runners: `pytest -q --tb=short`, `npm --silent`, `dotnet test -v q` | Bash caps at 30k chars; trimming keeps it near the few hundred you need. |
 | Outline first | Long documents, books, big code files | Headings (`grep -n '^#'`), a symbol list, a TOC; readwright for books and PDFs | Most of the document never loads |
-| Mention a range, not a file | Pointing Claude at code in chat | `@file` pastes the whole file (up to the Read cap, about 25k tokens) plus the CLAUDE.md files above it; in VS Code mention `@app.ts#5-10` (Alt+K) or select the lines; or name the path and the function and let it grep | The rest of the file, carried every later turn (estimate) |
+| Mention a range, not a file | Pointing Claude at code in chat | `@file` pastes the whole file (up to the Read cap) plus the CLAUDE.md files above it; in VS Code mention `@app.ts#5-10` (Alt+K) or select the lines; or name the path and the function and let it grep | The rest of the file, carried every later turn (estimate) |
 | Small images | Reading screenshots, renders, contact sheets | Resize to the size you need; crop to the region | About 1,600 tokens per full image |
 | Delegate big reads | Logs, long diffs, many-file sweeps where you need a conclusion | A subagent (Explore, or a Haiku one) or local-delegate, briefed with a length cap; not for one known file or coupled step-by-step work | The sweep's tokens stay out of the main context; total tokens go up, so it pays only when the read is big and the answer small |
+| Hand over deltas, not snapshots | Passing work between turns, sessions or agents | `git diff`, the changed facts, the now-failing tests; not whole files or logs | What did not change (estimate) |
 | Don't paste what a file already holds | Writing a report or handing work over | Name the path | Output and later input |
 | Cut the load, not lean on the fix | A project needs compaction, raised caps or a subagent just to fit its always-loaded files | Trim CLAUDE.md, AGENTS.md and skill descriptions first; the fix keeps the load (Meadows ch. 5, shifting the burden) | Every turn's fixed cost (estimate) |
 | Edges, not middle | Writing CLAUDE.md, a skill or a long prompt | Put the must-follow rules first and repeat the key one at the end; models skim the middle of a long context | Rework from a skipped rule (estimate; Huyen, AI Engineering ch. 5) |
@@ -26,20 +27,21 @@ Each habit: when it applies, how, and the saving. "Measured" numbers come from `
 | Stop when the answer is known | Mid-exploration | Act; don't confirm what the evidence already settles |
 | Answer from what you have | The fact is in context, an index, a CODEMAP, a cache | Look there before searching |
 | Ask one question | A fork the user settles in a word | Ask before exploring both branches |
-| Queue follow-ups, don't wait to send | You think of a correction while Claude works | Type it and press Enter: a message queued during tool calls joins the running turn; a separate turn later re-reads the whole history at the cache rate (about 0.05x input on Opus and Sonnet 5.5) | One extra turn's cached re-read; small in a fresh session, real in a long one |
+| Queue follow-ups, don't wait to send | You think of a correction while Claude works | Type it and press Enter: a message queued during tool calls joins the running turn; a later separate turn re-reads the whole history at the cache rate | One extra turn's cached re-read; small in a fresh session, real in a long one |
+| Keep a state capsule | A task that spans sessions, a `/clear` or several agents | HANDOFF.md: goal, decisions, constraints, open questions, pointers to the source files | The re-exploration (estimate) |
 | Batch independent calls | Several reads or commands that don't depend on each other | One turn, many calls; each turn re-sends the context |
 | `/clear` between unrelated tasks | A new task | Free; the largest saving there is |
 | Keep the cache warm | Long task | Don't switch model, fast mode or plugins mid-task |
-| Right-size the model | Mechanical steps | Haiku, a local model, or lower effort |
+| Right-size the model | Mechanical steps | Haiku, a local model, or lower effort; start low, raise effort only when a check fails |
 | Check cheaply before an expensive step | Before a long render, a big generation, a slow test suite | A dry run or a probe that can fail fast |
-| Set the stop rule first | Any search, hunt or comparison of options | Decide in advance what ends it (the first option that passes a test, or N tries), then hold to it (estimate; Christian and Griffiths ch. 1) |
+| Set the stop rule first | Any search, hunt or comparison of options | Decide in advance what ends it (the first option that passes a test, or N tries, and when to hand the question to the user), then hold to it (estimate; Christian and Griffiths ch. 1) |
 | Bisect, don't scan | A regression, or a bad item in a long input | `git bisect run <test>`, or halve the input: about log2(n) probes instead of n (estimate; Hunt and Thomas, Topic 20) |
 | Read the error you have | A failure printed a message | Read it whole before searching or editing; suspect your own code before the library (Hunt and Thomas, Topic 20) |
 | Change approach after two misses | The same test still fails after two variations of one fix | Step back to a different hypothesis; more tweaks climb a local peak (estimate; Christian and Griffiths ch. 9) |
 | Sample before a sweep | A large set of files, logs or results | Look at three to five first; the sample often answers or narrows the sweep (estimate) |
-| Wait with a deadline | Waiting on a build, render or remote job | One blocking wait or polling with a growing interval, a deadline and a cap on retries; a 20-turn poll re-sends the context 20 times (estimate; Christian and Griffiths ch. 10) |
+| Wait with a deadline | Waiting on a build, render or remote job | One blocking wait, or polling with a growing interval, a deadline and a retry cap; a 20-turn poll re-sends the context 20 times (estimate; Christian and Griffiths ch. 10) |
 | Let the check finish before the next edit | A build or test is still running, or only part of its output is in | Wait for the whole result, then make one change; editing on a partial reading makes fix and counter-fix swings (Meadows ch. 2, delays and oscillation) | The extra edit-test rounds (estimate) |
-| Brief a subagent with the purpose and a size | Delegating a search or a review | Give the goal, what is ruled out and how long the answer should be; it acts only on what it can see (Meadows ch. 4, bounded rationality) | A wandering sweep and a long report (estimate) |
+| Brief a subagent with the purpose and a size | Delegating a search or a review | Give the goal, what is ruled out, the answer's length, its output file and the proof it is done; it acts only on what it can see (Meadows ch. 4, bounded rationality) | A wandering sweep and a long report (estimate) |
 
 ## Family 3: script a process that repeats
 
