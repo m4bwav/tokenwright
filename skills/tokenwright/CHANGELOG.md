@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261102-1 · 2026-11-02 · budget-fit reads, fewer tools in view (0.2.13)
+- because: everscout token-saving beat distilled Berryman and Ziegler, Prompt Engineering for LLMs (2024): elastic snippets and priority tiers (ch. 6), tool count (ch. 8), hierarchical summaries (ch. 5)
+- files: references/habits.md (Outline first row: the biggest part that fits; two rows shortened to stay under the 2,500-token budget), references/levers.md (fewer tools in view; summarize up the tree)
+
 ### C-20261101-3 · 2026-11-01 · deltas, state capsule, quiet runners (0.2.12)
 - because: R-20261101-2; Mark asked to fold in and test a second list of token ideas
 - files: references/habits.md (two new rows; trim, model, stop rule and brief rows extended)

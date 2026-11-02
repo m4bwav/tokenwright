@@ -27,6 +27,7 @@ Checked 2026-10-30 against code.claude.com/docs and docs.claude.com. Sources and
 - CLAUDE.md and AGENTS.md: every turn. Keep under about 200 lines; move workflows into skills.
 - Skill descriptions: every turn, cut at 1,536 characters. The body loads on invoke; files beside it only when read. `disable-model-invocation: true` removes the description entirely (slash command only).
 - MCP tool schemas: deferred behind tool search when enabled; otherwise every turn. A CLI the agent already knows costs nothing until used, so prefer CLIs where one exists.
+- Fewer tools in view: disable MCP servers and plugins a task does not use; every loaded definition costs each turn, and more tools mean more wrong picks (Berryman and Ziegler, Prompt Engineering for LLMs ch. 8). Too big to read even in outline: summarize files, then folders from those summaries (ch. 5).
 - `@file` mentions: the whole file (to the Read cap) plus its directory's CLAUDE.md files, with no tool call, so PreToolUse hooks never see it. `CLAUDE_CODE_DISABLE_FILE_MENTIONS=1` passes only paths. The VS Code extension attaches the selection and names the open file; both can be turned off.
 - Subagents and `context: fork` skills: their reads stay in their own context; only the result returns. Give simple ones Haiku. See Subagents below for when they pay.
 
