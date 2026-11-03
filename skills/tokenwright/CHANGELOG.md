@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261103-2 · 2026-11-03 · select sentences before summarising (0.2.16)
+- because: book distill of Zhai and Massung, Text Data Management and Analysis (sec. 16.2)
+- files: references/levers.md (Search, not retrieval: MMR selection up to a word budget, no model call)
+
 ### C-20261103-1 · 2026-11-03 · filter retrieved text, reuse it, index whole corpora (0.2.15)
 - because: book distill of Wei and Wu, Advanced Retrieval-Augmented Generation (2026; sec. 3.3, 4.4, 7.2)
 - files: references/levers.md (Search, not retrieval: drop copies and off-topic passages; reuse earlier results; summary or graph index for whole-corpus questions)

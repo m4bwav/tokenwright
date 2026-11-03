@@ -65,6 +65,7 @@ Checked 2026-10-30 against code.claude.com/docs and docs.claude.com. Sources and
 
 - Claude Code dropped an early RAG and vector-index design for agentic search (grep, glob, reads), reportedly for simplicity, freshness and privacy (secondary source, R-20261101-1). For code, a CODEMAP and good search beat a chunking pipeline; RAG still fits big document sets outside the repository.
 - When a tool must retrieve (an MCP search tool, docs RAG), return the top few results after reranking, not every match: extra chunks cost tokens, and models attend most to the first and last pieces. Search small, read wide only around hits (small-to-big); grep then a ranged read is the agent form (Iusztin and Labonne, LLM Engineer's Handbook, sec. 97 and 219).
+- Before paying for a summary of long text, try selecting: split it into passages, keep the sentences most relevant to the question and least like those already kept (MMR), and stop at a word budget. It takes no model call and keeps original wording (Zhai and Massung, Text Data Management and Analysis, sec. 16.2). Unmeasured here for token savings.
 - Before retrieved text enters the context, drop copies and off-topic passages, and reuse what an earlier turn already returned instead of searching again. For a question about a whole corpus, answer from a summary or graph index (community summaries, a CODEMAP) and drill down only where it points (Wei and Wu, Advanced Retrieval-Augmented Generation, sec. 3.3, 4.4, 7.2).
 
 ## Result caching
