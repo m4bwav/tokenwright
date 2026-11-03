@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261103-1 · 2026-11-03 · filter retrieved text, reuse it, index whole corpora (0.2.15)
+- because: book distill of Wei and Wu, Advanced Retrieval-Augmented Generation (2026; sec. 3.3, 4.4, 7.2)
+- files: references/levers.md (Search, not retrieval: drop copies and off-topic passages; reuse earlier results; summary or graph index for whole-corpus questions)
+
 ### C-20261102-2 · 2026-11-02 · retrieve few, read around hits (0.2.14)
 - because: book distill of Iusztin and Labonne, LLM Engineer's Handbook (sec. 97 and 219): retrieval tools that return every match waste tokens
 - files: references/levers.md (Search, not retrieval: top few reranked results; search small, read around hits)
