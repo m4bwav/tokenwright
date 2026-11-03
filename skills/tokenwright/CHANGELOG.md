@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261102-2 · 2026-11-02 · retrieve few, read around hits (0.2.14)
+- because: book distill of Iusztin and Labonne, LLM Engineer's Handbook (sec. 97 and 219): retrieval tools that return every match waste tokens
+- files: references/levers.md (Search, not retrieval: top few reranked results; search small, read around hits)
+
 ### C-20261102-1 · 2026-11-02 · budget-fit reads, fewer tools in view (0.2.13)
 - because: everscout token-saving beat distilled Berryman and Ziegler, Prompt Engineering for LLMs (2024): elastic snippets and priority tiers (ch. 6), tool count (ch. 8), hierarchical summaries (ch. 5)
 - files: references/habits.md (Outline first row: the biggest part that fits; two rows shortened to stay under the 2,500-token budget), references/levers.md (fewer tools in view; summarize up the tree)
