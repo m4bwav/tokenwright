@@ -64,6 +64,7 @@ Checked 2026-10-30 against code.claude.com/docs and docs.claude.com. Sources and
 ## Search, not retrieval, for code
 
 - Claude Code dropped an early RAG and vector-index design for agentic search (grep, glob, reads), reportedly for simplicity, freshness and privacy (secondary source, R-20261101-1). For code, a CODEMAP and good search beat a chunking pipeline; RAG still fits big document sets outside the repository.
+- When a tool must retrieve (an MCP search tool, docs RAG), return the top few results after reranking, not every match: extra chunks cost tokens, and models attend most to the first and last pieces. Search small, read wide only around hits (small-to-big); grep then a ranged read is the agent form (Iusztin and Labonne, LLM Engineer's Handbook, sec. 97 and 219).
 
 ## Result caching
 
