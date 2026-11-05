@@ -60,6 +60,7 @@ Checked 2026-10-30 against code.claude.com/docs and docs.claude.com. Sources and
 - Token counting endpoint: free; use it to measure before and after.
 - Context editing (tool result clearing) and the memory tool: Anthropic reports 84% fewer tokens on a 100-turn search eval (their own figure). Tool search cut definition tokens about 85% (their own figure).
 - Smaller models for mechanical steps: Haiku or a local model for extraction, classification and summaries.
+- A per-request model router can lose the prompt cache, since a hit needs the same model on consecutive requests with a shared prefix (Microsoft Foundry Model Router docs, read 2026-11-05; session affinity helps but guarantees no hit). Route per task or session, and compare its savings with the cache misses.
 
 ## Search, not retrieval, for code
 
