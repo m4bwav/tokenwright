@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261105-1 · 2026-11-05 · Version 0.2.17: scripts never hide a failure from the agent
+because: Winteringham, Software Testing with Generative AI, sec. 9.3.2: a swallowed database exception made his agent repeat a broken function until it hit the call limit. One anecdote, no token count.
+files: skills/tokenwright-script/SKILL.md (checklist item 4).
+
 ### C-20261103-2 · 2026-11-03 · select sentences before summarising (0.2.16)
 - because: book distill of Zhai and Massung, Text Data Management and Analysis (sec. 16.2)
 - files: references/levers.md (Search, not retrieval: MMR selection up to a word budget, no model call)

@@ -24,7 +24,7 @@ Checklist, in order:
 1. **Inputs** as arguments, never edited constants. Sensible defaults.
 2. **Dry run** (`--dry-run`) that prints what it would do and changes nothing. Make it the default for anything destructive.
 3. **Idempotent**: running twice does no harm (check before create, skip what is done).
-4. **Fail fast** with one clear line naming what failed and what to check. Non-zero exit code.
+4. **Fail fast** with one clear line naming what failed and what to check. Non-zero exit code. Never catch an error and print success: an agent that cannot see the failure may call the tool again and again, paying for each try.
 5. **Output for the judge**: a few lines: a status, counts, the one number, paths to the full logs. Never the raw log.
 6. **Where**: beside the project it serves (`scripts/`), or in the skill that owns the job. Standard library where you can.
 7. **Record it** where the next session looks: the project's AGENTS.md commands list, the skill's SKILL.md, or the handoff. A script nobody can find saves nothing.
