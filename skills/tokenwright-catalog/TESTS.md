@@ -8,6 +8,12 @@ Entry shape: `### T-YYYYMMDD-n · date · harness · env · passed/total`, then 
 
 ## Runs
 
+### T-20261105-1 · 2026-11-05 · claude plugin eval (--ablation none) · Windows 11 native 2.1.281, WSL2 2.1.316 · 5/6
+- Why: the 2026-11-05 refresh edited SKILL.md. Triggers and decoys native, action and outcome in WSL2. Judge not calibrated. About $5.
+- outcome-catalog · outcome · env · 0.80 over 1 run: `changed` fails, the other four graders pass. Same read-only sandbox as T-20261030-1, not tuned.
+- Harness notes: the suite lives in skills/tokenwright/evals/cases, so do not run eval-export for this unit (its copies have no fixture). outcome-catalog needs `--scaffold`, or it runs on an empty workspace and scores 0.
+- led to: none
+
 ### T-20261030-1 · 2026-10-30 · claude plugin eval 2.1.307 (--ablation none) · Windows 11 native + WSL2 · 5/6
 - Why: the move into tokenwright (new name, new description, case ids renamed). trigger-4, trigger-5, decoy-3, decoy-4 pass natively (1 run; trigger-4 and -5 hit max_turns 3 after the Skill call, as before). action-catalog passes in WSL2 (3 runs).
 - outcome-catalog · outcome · env · the WSL2 eval sandbox now makes the home folder, $TMPDIR and the workspace read-only for the agent, so neither `tidy.py apply` nor the Edit fallback could write feed-scan's SKILL.md; `tidy.py check` printed OK each time and the agent reported the read-only error. Three tuning iterations: tidy.py backs up beside the file when the state folder is read-only (unit test added), the grader now checks the `check` gate, and SKILL.md names the Edit fallback. Still 0.80 (`changed` fails) over 3 runs. Re-run when the harness allows workspace writes, or on macOS or Linux.

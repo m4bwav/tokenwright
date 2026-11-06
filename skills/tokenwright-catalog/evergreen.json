@@ -71,12 +71,12 @@
     "learnings": 0,
     "changes": 4,
     "research": 9,
-    "tests": 5
+    "tests": 6
   },
   "consolidate_every": 25,
   "tests": {
-    "last_run": "2026-10-30T19:13",
-    "harness": "claude plugin eval 2.1.307",
+    "last_run": "2026-11-05T22:44",
+    "harness": "claude plugin eval 2.1.316 (WSL2)",
     "env": "Windows 11 native + WSL2",
     "cases": 6,
     "passed": 5,
@@ -85,8 +85,8 @@
       "outcome-catalog"
     ],
     "last_failure": {
-      "date": "2026-10-30",
-      "note": "after the fold; outcome-catalog blocked by a read-only eval sandbox"
+      "date": "2026-11-05",
+      "note": "after the 2026-11-05 refresh; outcome-catalog still blocked by the read-only eval sandbox"
     },
     "research_after_days": null
   },
