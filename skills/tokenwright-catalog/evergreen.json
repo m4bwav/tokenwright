@@ -13,9 +13,9 @@
   "source": null,
   "topic": "Agent Skills description quality and selection conflicts, skill catalog listing budgets and token cost per host (Claude Code, Codex, Copilot, Cursor), and startup-context trimming",
   "tier": "fast",
-  "interval_days": 6.22,
-  "last_checked": "2026-10-30",
-  "next_due": "2026-11-05",
+  "interval_days": 4.15,
+  "last_checked": "2026-11-05",
+  "next_due": "2026-11-10",
   "verify_at_use": false,
   "volatile_claims": [
     "Parking-lot design (inline index in always-read instruction files, groups of 8 or fewer) rests on one vendor eval (Vercel 2026-01-27) and routing research; no study tests an index line format",
@@ -59,12 +59,18 @@
       "m": null,
       "interval_after": 6.22,
       "note": "moved into tokenwright as tokenwright-catalog (from m4bwav/skill-tidy 0.2.4); schedule kept"
+    },
+    {
+      "date": "2026-11-05",
+      "m": 0.45,
+      "interval_after": 4.15,
+      "note": "excludes in rewrites, delta 0 removal; Codex unit open; cost: searches 7 · fetches 24 · tool calls 35"
     }
   ],
   "counts": {
     "learnings": 0,
     "changes": 4,
-    "research": 8,
+    "research": 9,
     "tests": 5
   },
   "consolidate_every": 25,

@@ -16,6 +16,8 @@ Topic: Agent Skills description quality and selection conflicts, skill catalog l
 
 ## Open questions
 
+- Is Codex's 2% in tokens or characters, and do file paths count? `budgets()` treats it as characters; if tokens, the budget is about 4x more lenient. Confirm with `/skills` or a rollout before changing tidy.py.
+- Cursor's numeric listing cap: staff confirm a silent cap, no number is documented.
 - A validated cheap similarity measure (would let 0.45 / 0.65 be calibrated).
 - (resolved 2026-10-23, R-20261023-3) Cursor's roots; tidy.py fixed. Earlier, 2026-10-11 (R-20261011-1): Copilot's roots match tidy.py and Copilot CLI silently drops (not truncates) a description over 1,024 (issue 3494 open). Codex reads `.agents/skills` in every parent up to the repo root plus `~/.agents/skills` and `/etc/codex/skills`, does not document `~/.codex/skills`, and honours `agents/openai.yaml` `policy.allow_implicit_invocation: false`; tidy.py scans only `<project>/.agents/skills`, includes `~/.codex/skills` and ignores openai.yaml: fix `roots_for` and `scan`.
 - Should `lint` flag an unknown frontmatter key as an error for claude.ai uploads and the Skills API, which reject it, while Claude Code ignores it (R-20261011-1)?
@@ -56,6 +58,10 @@ Best sources (primary first): the vendor docs above, the Agent Skills spec, arXi
 ## Findings log
 
 Newest first. `Track` is subject, tooling, practice, or testing.
+
+### R-20261105-1 · 2026-11-05 · Skill++ and Google Cloud's method; Codex unit and Cursor cap questioned
+- tracks: subject, tooling, practice, testing · magnitude 0.45 · applied: C-20261105-1
+- Skill++: rewriting only the incoming skill's metadata took full selection from 36.4% to 76.3% over 731 skills (abstract only; the effect of the boundary is not isolated): https://arxiv.org/abs/2611.00544. Google Cloud: gate collisions first, no evals on a laptop, paired runs at k=3, delete at delta 0 (a vendor on its own tool): https://cloud.google.com/blog/topics/developers-practitioners/evaluate-agent-skills-before-they-bloat-your-context-window. Cursor staff on the silent cap, and `paths:` skills stay out of the list: https://forum.cursor.com/t/skill-descriptions-are-truncated-in-initial-agent-context/163761. CoSA: benign-looking additions raised violations from 35.02% to 58.45%: https://arxiv.org/abs/2610.35082. Claude Code to 2.1.318: no budget change. VS Code page updated 2026-11-04, `chat.agentSkillsLocations` deprecated, tidy.py does not use it. Plan additions: forum.cursor.com, community.openai.com, openai/codex releases, github/copilot-cli changelog; arXiv `abs:"agent skills"`; HN Algolia by date; promptfoo, microsoft/waza.
 
 ### R-20261030-1 · 2026-10-30 · Quiet: Claude Code 2.1.309 namespaces --add-dir name clashes
 - Summary: Claude Code 2.1.309 offers a skill in an `--add-dir` folder whose name is already taken as `<folder>:<name>` instead of making it unreachable; 2.1.312 fixed per-directory and `paths:` skills not found after a `cd`; 2.1.314 caps `~/.claude/skills/.trash`. No change to the listing budget or description limits in 2.1.282 to 2.1.314. Community posts on `skillListingBudgetFraction` repeat known facts. Tooling, practice, testing: nothing new.

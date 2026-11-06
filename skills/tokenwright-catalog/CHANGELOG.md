@@ -6,6 +6,11 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 
 Entries before C-20261030-1 were written in the skill-tidy repository (m4bwav/skill-tidy); their paths are relative to that layout (the skill folder was `skills/skill-tidy`).
 
+### C-20261105-1 · 2026-11-05 · Rewrites state what the skill excludes; delta 0 named as a removal test
+- because: R-20261105-1
+- files: SKILL.md (Step 2 items 4 and 6), RESEARCH.md
+- Direct evidence for the boundary step, and a removal test beyond never used.
+
 ### C-20261030-3 · 2026-10-30 · conflicts lists shared words in a stable order
 - because: user request (handoff item: output changed with the hash seed)
 - files: scripts/tidy.py (similar pairs), ../../tests/test_tidy.py (test_conflicts_report_shared_words_triggers_and_boundaries)
