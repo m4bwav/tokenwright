@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261105-3 · 2026-11-05 · Version 0.2.19: ships the tokenwright-catalog refresh
+- because: installed copies lacked the tokenwright-catalog edit from PR #47.
+- files: .claude-plugin/plugin.json, plugin.json, scripts/tw.py (VERSION).
+
 ### C-20261105-2 · 2026-11-05 · Version 0.2.18: routers can lose the prompt cache
 because: González Sánchez et al., Generative AI on Microsoft Azure, recommends per-request routing without this cost; the Model Router docs state it.
 files: skills/tokenwright/references/levers.md (API side).
