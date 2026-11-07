@@ -240,7 +240,12 @@ class TestUsageBudgetOffload(Base):
         self.assertEqual(tidy.scan("claude", self.proj)[1]["listed_chars"], len("idle-one"))
         b = tidy.budgets(tidy.scan("claude", self.proj), 20000)
         self.assertTrue(b["claude"]["over"])
-        self.assertEqual(b["codex"]["budget_chars"], 400)
+        self.assertEqual((b["codex"]["budget"], b["codex"]["unit"]), (400, "tokens"))
+        skills = tidy.scan("claude", self.proj)
+        line = sum(len("- :  (file: )") + len(s["name"]) + len(s["desc"]) + len(s["path"]) for s in tidy.listed(skills))
+        self.assertEqual(b["codex"]["used"], tidy.est_tokens(line))
+        fallback = tidy.budgets(skills, 0)["codex"]
+        self.assertEqual((fallback["budget"], fallback["unit"], fallback["used"]), (8000, "chars", line))
 
     def test_headless_sessions_are_not_uses(self):
         d = os.path.join(self.home, ".claude", "projects", "p2")

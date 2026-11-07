@@ -16,7 +16,7 @@ Topic: Agent Skills description quality and selection conflicts, skill catalog l
 
 ## Open questions
 
-- Is Codex's 2% in tokens or characters, and do file paths count? `budgets()` treats it as characters; if tokens, the budget is about 4x more lenient. Confirm with `/skills` or a rollout before changing tidy.py.
+- (resolved 2026-11-07) Codex's 2% is in tokens (bytes / 4), the 8,000 fallback in characters, and each line's path counts: `skill_metadata_budget` and `render_with_description` in openai/codex `codex-rs/ext/skills/src/render.rs`, read at main, not run. `budgets()` now does this. It uses the path on disk and the `file` line form; other locator kinds are not modelled.
 - Cursor's numeric listing cap: staff confirm a silent cap, no number is documented.
 - A validated cheap similarity measure (would let 0.45 / 0.65 be calibrated).
 - (resolved 2026-10-23, R-20261023-3) Cursor's roots; tidy.py fixed. Earlier, 2026-10-11 (R-20261011-1): Copilot's roots match tidy.py and Copilot CLI silently drops (not truncates) a description over 1,024 (issue 3494 open). Codex reads `.agents/skills` in every parent up to the repo root plus `~/.agents/skills` and `/etc/codex/skills`, does not document `~/.codex/skills`, and honours `agents/openai.yaml` `policy.allow_implicit_invocation: false`; tidy.py scans only `<project>/.agents/skills`, includes `~/.codex/skills` and ignores openai.yaml: fix `roots_for` and `scan`.
