@@ -1101,13 +1101,16 @@ def budgets(skills, window):
     """Characters of the listing against each host's documented limit (RESEARCH.md, Hosts)."""
     ls = listed(skills)
     chars = sum(s["listed_chars"] for s in ls)
+    # Codex renders "- name: description (file: path)" and charges the whole line; the 2% is in tokens (bytes / 4).
+    codex_chars = sum(len("- :  (file: )") + len(s["name"]) + len(s["desc"]) + len(s["path"]) for s in ls)
+    codex_budget, codex_used = (int(window * 0.02), est_tokens(codex_chars)) if window else (8000, codex_chars)
     return {
         "skills_listed": len(ls), "listing_chars": chars, "listing_tokens_est": est_tokens(chars),
         "claude": {"budget_chars": int(window * 0.01), "over": chars > window * 0.01,
                    "rule": "skillListingBudgetFraction 0.01 of the window; over it, least-used descriptions are dropped (names stay)",
                    "cut_1536": [s["id"] for s in ls if len(s["desc"]) + len(s["when_to_use"]) > 1536]},
-        "codex": {"budget_chars": int(window * 0.02) if window else 8000, "over": chars > (window * 0.02 if window else 8000),
-                  "rule": "2% of the window, or 8,000 chars when unknown; descriptions are shortened first, then skills omitted"},
+        "codex": {"budget": codex_budget, "unit": "tokens" if window else "chars", "used": codex_used, "over": codex_used > codex_budget,
+                  "rule": "2% of the window in tokens, or 8,000 chars when unknown; each line's file path counts; descriptions are shortened first, then skills omitted"},
         "spec": {"over_1024": [s["id"] for s in ls if len(s["desc"]) > 1024],
                  "rule": "Agent Skills spec: description 1-1,024 chars; Copilot is reported to drop longer ones"},
     }
@@ -1582,7 +1585,7 @@ def cmd_budget(a):
     b = budgets(sk, a.window)
     lines = ["%d skills listed, %s chars (~%s tokens) of listing, window %s" % (b["skills_listed"], k(b["listing_chars"]), k(b["listing_tokens_est"]), k(a.window)),
              "claude: budget %s chars -> %s (%s)" % (k(b["claude"]["budget_chars"]), "OVER" if b["claude"]["over"] else "within", b["claude"]["rule"]),
-             "codex:  budget %s chars -> %s (%s)" % (k(b["codex"]["budget_chars"]), "OVER" if b["codex"]["over"] else "within", b["codex"]["rule"])]
+             "codex:  %s of %s %s -> %s (%s)" % (k(b["codex"]["used"]), k(b["codex"]["budget"]), b["codex"]["unit"], "OVER" if b["codex"]["over"] else "within", b["codex"]["rule"])]
     if b["claude"]["cut_1536"]:
         lines.append("cut at 1,536 in Claude Code: " + ", ".join(b["claude"]["cut_1536"]))
     if b["spec"]["over_1024"]:

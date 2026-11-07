@@ -22,7 +22,7 @@ Run what the request needs, not everything:
 
 - `TIDY conflicts`: pairs at TF-IDF cosine 0.45+ (0.65+ near-duplicate), the words both share, trigger phrases both claim, and a starting boundary sentence for each side.
 - `TIDY lint [SKILL_DIR ...]`: rules ST001-ST023; errors are spec or host limits, warnings are research-backed style. Exit code 1 when an error exists.
-- `TIDY budget --window <model window>`: listing size against Claude Code's 1% character budget (over it, least-used descriptions are dropped; `SLASH_COMMAND_TOOL_CHAR_BUDGET` fixes it in characters), Codex's 2% / 8,000 chars (`skills.max_context_tokens` overrides it), the 1,536 cut and the spec's 1,024.
+- `TIDY budget --window <model window>`: listing size against Claude Code's 1% character budget (over it, least-used descriptions are dropped; `SLASH_COMMAND_TOOL_CHAR_BUDGET` fixes it in characters), Codex's 2% of the window in tokens, paths included, or 8,000 chars when the window is unknown (`skills.max_context_tokens` overrides it), the 1,536 cut and the spec's 1,024.
 - `TIDY usage --days 30`, `TIDY startup`: invocations from transcripts (headless runs shown apart as `+N headless`, never counted as use); the instruction chain, memory and MCP settings.
 
 ## Step 2: fix a conflict (no functionality lost)
