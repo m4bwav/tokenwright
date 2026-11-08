@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261108-1 · 2026-11-08 · Version 0.2.20: brief reasoning models without step-by-step or role text
+- because: book distill of Koch, Kohne and Brechbuehler, Prompt Engineering in the Enterprise (sec. 6.4): reasoning models plan on their own; prescribed paths and roles add tokens and can lower quality. One source plus the study it cites; not measured here.
+- files: skills/tokenwright/references/levers.md (Subagents), .claude-plugin/plugin.json, plugin.json, scripts/tw.py (VERSION).
+
 ### C-20261105-3 · 2026-11-05 · Version 0.2.19: ships the tokenwright-catalog refresh
 - because: installed copies lacked the tokenwright-catalog edit from PR #47.
 - files: .claude-plugin/plugin.json, plugin.json, scripts/tw.py (VERSION).
