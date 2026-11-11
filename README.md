@@ -52,6 +52,16 @@ The plugin installs two hooks that do nothing until you set `TOKENWRIGHT_HOOKS`:
 - `warn`: a note to the agent when it reads a large file whole, or a tool returns very large output, and a meter note each time the session's tool output passes another 25k tokens.
 - `block`: also denies whole reads of large files, so the agent searches and reads a range instead.
 
+## Works with
+
+tokenwright measures and trims what other plugins cost to load, so it is useful next to any plugin you keep installed.
+
+- [readwright](https://github.com/m4bwav/readwright): tokenwright's rule is outline first, then one section. readwright does exactly that for books and PDFs, so tokenwright points long documents there and doesn't copy it.
+- [everscout](https://github.com/m4bwav/everscout) and [fetchwright](https://github.com/m4bwav/fetchwright): an everscout beat on token saving feeds tokenwright's research, and fetchwright reaches the forums plain web search misses. New tricks arrive as sourced leads, not guesses.
+- [askwright](https://github.com/m4bwav/askwright), [grindwright](https://github.com/m4bwav/grindwright) and other plugins that run often: `tw.py` sizes their skills and finds what to cut, which saves the most on plugins that load in every session.
+
+More: [Works with](https://github.com/m4bwav/tokenwright/wiki/Works-With) on the wiki.
+
 ## Install
 
 ```sh

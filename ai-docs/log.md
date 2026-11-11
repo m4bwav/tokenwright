@@ -141,3 +141,7 @@
 ## 2026-11-01 session 30
 
 - Second look at the hook meter: 40 sessions since 2026-11-01 over 50 KB, meter notes in 10 of them, one or two real notes each (one main session at ~100k from Bash). The 9 hits in one transcript were session 25 grepping its own notes. METER_STEP_TOKENS = 25k kept, no code change, no release. Nothing left on the list but watching.
+
+## 2026-11-11 Works with
+
+At the owner's request: a README "Works with" section and a Works-With wiki page (linked from the sidebar and Home), each entry naming the real handoff with a partner plugin (taken from the skills that name each other) and why the pair helps.
