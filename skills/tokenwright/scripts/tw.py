@@ -9,6 +9,8 @@ Commands
   estimate <paths...>     rough token count of files (chars / 4)
   catalog <args...>       the whole skill catalog: forwards to tokenwright-catalog's tidy.py (lint, conflicts, park...)
   hook <pre|post>         hook entry point (reads the hook JSON on stdin); off unless TOKENWRIGHT_HOOKS is set
+  note --saved N --why W --how H   record, in the transcript, why and how tokenwright was used and the tokens
+                          you think it saved (cost reports such as chainwright read it; prints one word)
   meter [session]         tool output so far in a session, as counted by the hook (for a status line)
 
 Token counts are estimates (about 4 characters per token for English and code). Use them to rank, not to bill.
@@ -547,6 +549,12 @@ def cmd_meter(a):
     return 0
 
 
+def cmd_note(a):
+    """Nothing to store: the command line itself sits in the transcript, where reports read it."""
+    out("noted")
+    return 0
+
+
 TIDY = Path(__file__).resolve().parent.parent.parent / "tokenwright-catalog" / "scripts" / "tidy.py"
 
 
@@ -600,6 +608,11 @@ def main(argv=None):
     s = sub.add_parser("meter", help="tool output so far in a session, counted by the hook")
     s.add_argument("session", nargs="?", help="session id (default: the most recent)")
     s.set_defaults(fn=cmd_meter)
+    s = sub.add_parser("note", help="record why/how tokenwright was used and the tokens you think it saved")
+    s.add_argument("--saved", default="0", help="estimated tokens saved, e.g. 12000 or 12k")
+    s.add_argument("--why", default="")
+    s.add_argument("--how", default="")
+    s.set_defaults(fn=cmd_note)
     a = p.parse_args(argv)
     return a.fn(a)
 
