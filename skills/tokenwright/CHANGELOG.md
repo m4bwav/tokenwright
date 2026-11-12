@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261111-1 · 2026-11-11 · tw.py note: the agent's why, how and tokens-saved guess (0.3.0)
+- because: user request 2026-11-11: cost reports (chainwright) should show whether tokenwright helped and by about how much
+- files: scripts/tw.py (note command), SKILL.md (commands table)
+- `note` stores nothing; the command line sits in the transcript, where chainwright's chain_report.py reads it. One short command per session, only when tokenwright changed what the agent did. 47 tests.
+
 ### C-20261110-1 · 2026-11-10 · harvest.json: technique-harvest targets for this unit
 - because: user request 2026-11-10: plugins store their own technique-harvest targets (evergreen 1.1.0 harvest.json)
 - files: harvest.json (new)

@@ -59,6 +59,7 @@ The report names each sink by its kind of waste, after lean manufacturing ([refe
 |---|---|
 | `changed <paths> [--quiet]` | Before a re-read. Prints `unchanged` or a diff. First call stores a snapshot in `.tokenwright/snapshots` |
 | `score [transcript] [--json] [--compare N]` | After a session or when it felt expensive. Ranks sinks by carried cost; `--compare` sets it against the best of the newest N past sessions in the same project |
+| `note --saved N --why W --how H` | Once, at the end of a session where tokenwright changed what you did: one line of why, how and your rough tokens-saved guess. Cost reports (chainwright) read it from the transcript; skip it when tokenwright did nothing |
 | `meter [session]` | Tool output so far in a session, counted by the post hook; short enough for a status line |
 | `repeats [transcripts] [--last N]` | Find command sequences repeated across sessions: script candidates |
 | `skill <dir>` | Cost of a skill or plugin: always loaded, on trigger, on demand |
