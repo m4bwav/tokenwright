@@ -3,6 +3,11 @@
   "targets": [
     {
       "kind": "reddit",
+      "sub": "ClaudeAI",
+      "keep": "token, context, caching and usage-limit techniques with measurements; drop showcases and model-vibes posts"
+    },
+    {
+      "kind": "reddit",
       "sub": "AI_Agents",
       "keep": "agent orchestration and long-run techniques; drop SaaS pitches"
     },
