@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261111-2 · 2026-11-11 · Pass data between steps by file path (0.3.1)
+- because: technique-harvest verdict 1pbfjru (r/AI_Agents, "tool outputs as named variables passed by reference"; the author reported 82% fewer tokens on one GPT-4o-mini task, not measured here): pasted data costs its tokens once as output and again as the next call's input. Principle only, labelled unmeasured.
+- files: SKILL.md (habits, family 2)
+
 ### C-20261111-1 · 2026-11-11 · tw.py note: the agent's why, how and tokens-saved guess (0.3.0)
 - because: user request 2026-11-11: cost reports (chainwright) should show whether tokenwright helped and by about how much
 - files: scripts/tw.py (note command), SKILL.md (commands table)

@@ -3,7 +3,7 @@ name: tokenwright
 description: Spend fewer tokens on the same result in any agent work: habits (don't load or reload data, shortcut the process, script repeats) and tw.py (diff instead of re-read, rank a session's token sinks). Use on 'save tokens', 'this is expensive', 'context is filling', 'why did that cost so much', 'score this session', 'did the file change'. Siblings: tokenwright-skills, -catalog, -script.
 license: MIT
 metadata:
-  version: 0.2.16
+  version: 0.3.1
 ---
 
 # tokenwright
@@ -38,6 +38,7 @@ Read [references/habits.md](references/habits.md) for each habit's when, how and
 - Stop when the answer is known. Skip steps that cannot change it.
 - Answer from what is already in context, a cache, an index or a map (CODEMAP, INDEX.md) before exploring.
 - Ask one question instead of exploring a fork the user can settle in a word.
+- Data another step or subagent needs travels as a file path (or artifact URL), never pasted into a prompt or tool argument; pasted, it is paid twice.
 - Batch independent calls in one turn; each turn re-sends the whole context.
 - Pick the smallest model and effort that does the step (Haiku or a local model for mechanical work).
 
