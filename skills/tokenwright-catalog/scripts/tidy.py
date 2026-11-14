@@ -1097,6 +1097,20 @@ def cmd_parked(a):
 
 # ----------------------------------------------------------------------------- budgets
 
+def claude_char_budget(window):
+    """Claude Code's skill-listing budget in characters and where it came from. SLASH_COMMAND_TOOL_CHAR_BUDGET
+    (process env, or the env block of ~/.claude/settings.json) overrides 1% of the window when a positive int."""
+    raw = os.environ.get("SLASH_COMMAND_TOOL_CHAR_BUDGET")
+    if not raw:
+        raw = ((read_json(os.path.join(claude_dir(), "settings.json"), {}) or {}).get("env") or {}).get("SLASH_COMMAND_TOOL_CHAR_BUDGET")
+    try:
+        if raw and int(raw) > 0:
+            return int(raw), "SLASH_COMMAND_TOOL_CHAR_BUDGET"
+    except (TypeError, ValueError):
+        pass
+    return int((window or 0) * 0.01), "1% of the window"
+
+
 def budgets(skills, window):
     """Characters of the listing against each host's documented limit (RESEARCH.md, Hosts)."""
     ls = listed(skills)
@@ -1104,9 +1118,10 @@ def budgets(skills, window):
     # Codex renders "- name: description (file: path)" and charges the whole line; the 2% is in tokens (bytes / 4).
     codex_chars = sum(len("- :  (file: )") + len(s["name"]) + len(s["desc"]) + len(s["path"]) for s in ls)
     codex_budget, codex_used = (int(window * 0.02), est_tokens(codex_chars)) if window else (8000, codex_chars)
+    cb, src = claude_char_budget(window)
     return {
         "skills_listed": len(ls), "listing_chars": chars, "listing_tokens_est": est_tokens(chars),
-        "claude": {"budget_chars": int(window * 0.01), "over": chars > window * 0.01,
+        "claude": {"budget_chars": cb, "budget_source": src, "over": chars > cb,
                    "rule": "skillListingBudgetFraction 0.01 of the window; over it, least-used descriptions are dropped (names stay)",
                    "cut_1536": [s["id"] for s in ls if len(s["desc"]) + len(s["when_to_use"]) > 1536]},
         "codex": {"budget": codex_budget, "unit": "tokens" if window else "chars", "used": codex_used, "over": codex_used > codex_budget,
@@ -1584,7 +1599,7 @@ def cmd_budget(a):
     sk = _catalog(a)
     b = budgets(sk, a.window)
     lines = ["%d skills listed, %s chars (~%s tokens) of listing, window %s" % (b["skills_listed"], k(b["listing_chars"]), k(b["listing_tokens_est"]), k(a.window)),
-             "claude: budget %s chars -> %s (%s)" % (k(b["claude"]["budget_chars"]), "OVER" if b["claude"]["over"] else "within", b["claude"]["rule"]),
+             "claude: budget %s chars (%s) -> %s (%s)" % (k(b["claude"]["budget_chars"]), b["claude"]["budget_source"], "OVER" if b["claude"]["over"] else "within", b["claude"]["rule"]),
              "codex:  %s of %s %s -> %s (%s)" % (k(b["codex"]["used"]), k(b["codex"]["budget"]), b["codex"]["unit"], "OVER" if b["codex"]["over"] else "within", b["codex"]["rule"])]
     if b["claude"]["cut_1536"]:
         lines.append("cut at 1,536 in Claude Code: " + ", ".join(b["claude"]["cut_1536"]))

@@ -6,6 +6,11 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 
 Entries before C-20261030-1 were written in the skill-tidy repository (m4bwav/skill-tidy); their paths are relative to that layout (the skill folder was `skills/skill-tidy`).
 
+### C-20261114-1 · 2026-11-14 · budget honours SLASH_COMMAND_TOOL_CHAR_BUDGET
+- because: user request (the env override was ignored, so `budget` reported OVER at 1% of the window)
+- files: scripts/tidy.py (claude_char_budget, budgets, cmd_budget), ../../tests/test_tidy.py (test_claude_budget_honours_char_budget_override)
+- A positive int in the process env or the env block of settings.json sets the Claude listing budget in characters; the output names the source. Released as 0.3.2.
+
 ### C-20261105-1 · 2026-11-05 · Rewrites state what the skill excludes; delta 0 named as a removal test
 - because: R-20261105-1
 - files: SKILL.md (Step 2 items 4 and 6), RESEARCH.md

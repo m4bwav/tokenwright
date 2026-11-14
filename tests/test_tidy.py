@@ -247,6 +247,23 @@ class TestUsageBudgetOffload(Base):
         fallback = tidy.budgets(skills, 0)["codex"]
         self.assertEqual((fallback["budget"], fallback["unit"], fallback["used"]), (8000, "chars", line))
 
+    def test_claude_budget_honours_char_budget_override(self):
+        os.environ.pop("SLASH_COMMAND_TOOL_CHAR_BUDGET", None)
+        settings = os.path.join(self.home, ".claude", "settings.json")
+        write(settings, json.dumps({"env": {}}))
+        self.assertEqual(tidy.claude_char_budget(1000000), (10000, "1% of the window"))
+        write(settings, json.dumps({"env": {"SLASH_COMMAND_TOOL_CHAR_BUDGET": "80000"}}))
+        self.assertEqual(tidy.claude_char_budget(1000000), (80000, "SLASH_COMMAND_TOOL_CHAR_BUDGET"))
+        os.environ["SLASH_COMMAND_TOOL_CHAR_BUDGET"] = "12345"
+        try:
+            self.assertEqual(tidy.claude_char_budget(1000000)[0], 12345)
+            os.environ["SLASH_COMMAND_TOOL_CHAR_BUDGET"] = "nope"
+            self.assertEqual(tidy.claude_char_budget(1000000)[0], 10000)
+        finally:
+            os.environ.pop("SLASH_COMMAND_TOOL_CHAR_BUDGET", None)
+        write(settings, json.dumps({"env": {"SLASH_COMMAND_TOOL_CHAR_BUDGET": "-5"}}))
+        self.assertEqual(tidy.budgets([], 1000000)["claude"]["budget_chars"], 10000)
+
     def test_headless_sessions_are_not_uses(self):
         d = os.path.join(self.home, ".claude", "projects", "p2")
         call = {"type": "assistant", "message": {"role": "assistant", "content": [
