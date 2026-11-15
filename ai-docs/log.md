@@ -145,3 +145,10 @@
 ## 2026-11-11 Works with
 
 At the owner's request: a README "Works with" section and a Works-With wiki page (linked from the sidebar and Home), each entry naming the real handoff with a partner plugin (taken from the skills that name each other) and why the pair helps.
+
+## 2026-11-15 Improvement grind prompt
+
+- At the owner's request: studied the plugin and repository at 0.3.2 and wrote a continue prompt for an improvement grind run with chainwright, grindwright and askwright (research, study, suggest, test). The 2026-10-30 build prompt was renamed and rewritten, since its list was finished. Study and 17 seed candidates in research/2026-11-15-improvement-study.md. HANDOFF.md rewritten: it had stopped at 0.2.12.
+- Found: budget YELLOW (levers.md 2,527 tokens), hub evergreen unit overdue since 2026-11-13, no eval has shown a saving on an outcome case, 0.2.13 to 0.3.2 were never logged here.
+- Decided: grind state lives in the everlast vault's private folder for this project, not in this public repository, because ledger evidence can name private sessions.
+- `chain.py check` reports `no-start-command` on the prompt. It does not apply: this repository may hold no absolute local path, so the prompt uses a placeholder and the session prints the real path.

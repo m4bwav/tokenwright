@@ -5,4 +5,5 @@
 - [decisions/2026-10-30-shape.md](decisions/2026-10-30-shape.md): name, three skills, carried cost, hooks off by default.
 - [research/2026-10-30-token-saving-survey-web.md](research/2026-10-30-token-saving-survey-web.md): Claude Code and API levers, other agents, measured tools.
 - [research/books.md](research/books.md): book candidates and status.
-- [plans/2026-10-30-tokenwright-continue-prompt.md](plans/2026-10-30-tokenwright-continue-prompt.md): the repeating continue prompt.
+- [research/2026-11-15-improvement-study.md](research/2026-11-15-improvement-study.md): where the plugin stands at 0.3.2, the main finding (no eval shows a saving yet) and 17 seed candidates with tests.
+- [plans/2026-11-15-tokenwright-improve-continue-prompt.md](plans/2026-11-15-tokenwright-improve-continue-prompt.md): the repeating continue prompt for the improvement grind (chainwright, grindwright, askwright).
