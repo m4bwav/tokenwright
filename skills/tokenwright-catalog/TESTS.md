@@ -8,6 +8,10 @@ Entry shape: `### T-YYYYMMDD-n · date · harness · env · passed/total`, then 
 
 ## Runs
 
+### T-20261115-1 · 2026-11-15 · claude plugin eval (with-without, --scaffold) · WSL2, TMPDIR on a real disk · 1/1
+- outcome-catalog: with 1.00, without 0.80, delta +0.20, $0.32. The read-only sandbox block is cleared by the TMPDIR fix from T-20261101-1. The without arm missed `checked-with-tidy` (no tidy call).
+- led to: blocked entry removed from evergreen.json
+
 ### T-20261105-1 · 2026-11-05 · claude plugin eval (--ablation none) · Windows 11 native 2.1.281, WSL2 2.1.316 · 5/6
 - Why: the 2026-11-05 refresh edited SKILL.md. Triggers and decoys native, action and outcome in WSL2. Judge not calibrated. About $5.
 - outcome-catalog · outcome · env · 0.80 over 1 run: `changed` fails, the other four graders pass. Same read-only sandbox as T-20261030-1, not tuned.

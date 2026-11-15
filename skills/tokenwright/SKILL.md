@@ -3,7 +3,7 @@ name: tokenwright
 description: Spend fewer tokens on the same result in any agent work: habits (don't load or reload data, shortcut the process, script repeats) and tw.py (diff instead of re-read, rank a session's token sinks). Use on 'save tokens', 'this is expensive', 'context is filling', 'why did that cost so much', 'score this session', 'did the file change'. Siblings: tokenwright-skills, -catalog, -script.
 license: MIT
 metadata:
-  version: 0.3.2
+  version: 0.3.3
 ---
 
 # tokenwright
@@ -59,7 +59,7 @@ The report names each sink by its kind of waste, after lean manufacturing ([refe
 | Command | Use |
 |---|---|
 | `changed <paths> [--quiet]` | Before a re-read. Prints `unchanged` or a diff. First call stores a snapshot in `.tokenwright/snapshots` |
-| `score [transcript] [--json] [--compare N]` | After a session or when it felt expensive. Ranks sinks by carried cost; `--compare` sets it against the best of the newest N past sessions in the same project |
+| `score [transcript] [--json] [--compare N] [--no-subagents]` | After a session or when it felt expensive. Ranks sinks by carried cost, subagent transcripts included; `--compare` sets it against the best of the newest N past sessions in the same project |
 | `note --saved N --why W --how H` | Once, at the end of a session where tokenwright changed what you did: one line of why, how and your rough tokens-saved guess. Cost reports (chainwright) read it from the transcript; skip it when tokenwright did nothing |
 | `meter [session]` | Tool output so far in a session, counted by the post hook; short enough for a status line |
 | `repeats [transcripts] [--last N]` | Find command sequences repeated across sessions: script candidates |

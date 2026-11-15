@@ -2,6 +2,15 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261115-2 · 2026-11-15 · Version 0.3.3: score reads subagent transcripts; idle hook 5x faster; note checks --saved
+- because: a scan of 1,917 local sessions over 30 days found subagent transcripts held 33.9% of cost-weighted spend (median 56% in the 288 sessions with subagents), and `score` read none of them. The hook process took about 139 ms a call even when off, since it loaded every module before checking `TOKENWRIGHT_HOOKS`; now 26 ms off and 71 ms on. `note --saved lots` was accepted.
+- files: scripts/tw.py (`score` adds `<session>/subagents/**/*.jsonl` with tagged sinks and a usage line, `--no-subagents`; early exit for an idle hook and lazy imports; `--saved` must be a count), tests/test_tw.py (three tests). Ships C-20261115-1 (refresh, levers).
+
+### C-20261115-1 · 2026-11-15 · Evergreen refresh: levers re-checked, new levers, budget green
+- because: R-20261115-1 (three volatile claims hold; the docs' test-output hook keeps the last 100 lines, not only failures), R-20261115-2 (cache read rates by model, `/usage` cache line and shares, image drops and idle compaction, progress-summary switch, background output trimmed, MCP 50,000-character file spill, Bash cap ceiling 150,000), and budget.py yellow (levers.md 2,527 tokens against 2,500).
+- files: references/levers.md (header, prompt cache, context commands, subagents, output caps, API side, recent changes; wording tightened throughout, no sourced lever cut; the unconfirmed 10-minute cache report replaced by the `/usage` cache line; the 2.1.311 release link dropped), RESEARCH.md
+- Shipped skill text changed; no version bump in this change.
+
 ### C-20261111-2 · 2026-11-11 · Pass data between steps by file path (0.3.1)
 - because: technique-harvest verdict 1pbfjru (r/AI_Agents, "tool outputs as named variables passed by reference"; the author reported 82% fewer tokens on one GPT-4o-mini task, not measured here): pasted data costs its tokens once as output and again as the next call's input. Principle only, labelled unmeasured.
 - files: SKILL.md (habits, family 2)

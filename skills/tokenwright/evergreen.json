@@ -13,22 +13,22 @@
   "source": null,
   "topic": "ways an AI agent spends fewer tokens on the same result: Claude Code and API cost levers, context habits, scripting repeated work, skill token cost",
   "tier": "fast",
-  "interval_days": 14,
-  "last_checked": "2026-10-30",
-  "next_due": "2026-11-13",
+  "interval_days": 9.33,
+  "last_checked": "2026-11-15",
+  "next_due": "2026-11-24",
   "verify_at_use": true,
   "volatile_claims": [
     {
       "claim": "Skill descriptions are cut at 1,536 characters",
-      "checked": "2026-10-30"
+      "checked": "2026-11-15"
     },
     {
       "claim": "Main-conversation cache TTL is 1 hour on a subscription, 5 minutes for subagents",
-      "checked": "2026-10-30"
+      "checked": "2026-11-15"
     },
     {
       "claim": "Bash output cap 30,000 characters; MCP output 25k tokens",
-      "checked": "2026-10-30"
+      "checked": "2026-11-15"
     }
   ],
   "contradiction": null,
@@ -45,12 +45,18 @@
       "m": null,
       "interval_after": 14,
       "note": "created"
+    },
+    {
+      "date": "2026-11-15",
+      "m": 0.3,
+      "interval_after": null,
+      "note": "3 volatile claims hold; new levers folded into levers.md; budget green; beat leads: 0 of 25 (token-saving); cost: searches 0 · fetches 12 · tool calls 25"
     }
   ],
   "counts": {
     "learnings": 3,
     "changes": 1,
-    "research": 5,
+    "research": 6,
     "tests": 2
   },
   "consolidate_every": 25,

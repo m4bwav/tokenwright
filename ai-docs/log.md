@@ -152,3 +152,13 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 - Found: budget YELLOW (levers.md 2,527 tokens), hub evergreen unit overdue since 2026-11-13, no eval has shown a saving on an outcome case, 0.2.13 to 0.3.2 were never logged here.
 - Decided: grind state lives in the everlast vault's private folder for this project, not in this public repository, because ledger evidence can name private sessions.
 - `chain.py check` reports `no-start-command` on the prompt. It does not apply: this repository may hold no absolute local path, so the prompt uses a placeholder and the session prints the real path.
+
+## 2026-11-15 Grind session 1
+
+- Set up the grind: state in the everlast vault's private tokenwright folder (profile, draft road, 17 seeds plus follow-ups). The road and value model are on an askwright page (set road-2026-11-15, two questions) for the owner.
+- Study: over 30 days, 288 of 1,917 local sessions used subagents, and their transcripts held 33.9% of cost-weighted spend (median 56% in those sessions). `tw.py score` read none of them. It now does, with tagged sinks and a usage line (`--no-subagents` opts out).
+- Hook latency: about 139 ms a call even when off, because tw.py loaded every module and argparse first. An early exit and lazy imports bring it to 26 ms off and 71 ms on. The hook runs on every Read, Bash, Grep, Glob, WebFetch and MCP call.
+- Hub refresh: the three volatile claims hold, one wrong line in levers.md fixed, six new levers added, next due 2026-11-24. levers.md back under budget; budget GREEN.
+- outcome-catalog re-run in WSL with TMPDIR on a real disk: with 1.00, without 0.80. Block cleared. An earlier attempt died on the 5-hour usage limit, not the sandbox.
+- Wiki brought to 0.3.2 (commit 4dd7e89). `note --saved` now must be a count.
+- Released 0.3.3.
