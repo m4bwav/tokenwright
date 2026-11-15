@@ -1,28 +1,28 @@
 # Handoff: tokenwright
 
-Updated 2026-11-15. Status: in progress (improvement grind, not yet started). Continue with [plans/2026-11-15-tokenwright-improve-continue-prompt.md](plans/2026-11-15-tokenwright-improve-continue-prompt.md). It replaces the 2026-10-30 build prompt, whose list was finished at session 30.
+Updated 2026-11-15 (after grind session 1). Status: in progress (improvement grind). Continue with [plans/2026-11-15-tokenwright-improve-continue-prompt.md](plans/2026-11-15-tokenwright-improve-continue-prompt.md). It replaces the 2026-10-30 build prompt, whose list was finished at session 30.
 
 ## State
 
-- Public: https://github.com/m4bwav/tokenwright. v0.3.2 tagged and released (0.3.0 `tw.py note`, 0.3.1 pass data by file path, 0.3.2 `SLASH_COMMAND_TOOL_CHAR_BUDGET` honoured by the listing budget). No open pull requests or issues on 2026-11-15.
-- Four skills (tokenwright, tokenwright-script, tokenwright-skills, tokenwright-catalog), `tw.py` and `tidy.py`. 48 unit tests pass.
-- Budget YELLOW: `references/levers.md` is 2,527 tokens against a green line of 2,500.
-- Evergreen: the hub is overdue (last checked 2026-10-30, due 2026-11-13; three volatile claims to re-check). The catalog unit was refreshed 2026-11-15, due 2026-11-21.
-- Evals: hub 10 of 10, catalog 5 of 5 with `outcome-catalog` recorded as blocked by a read-only sandbox. T-20261101-1 found a fix (`TMPDIR` on a real disk in WSL), so a re-run may clear it.
-- Wiki last recorded at 0.2.12. Check it against 0.3.2.
+- Public: https://github.com/m4bwav/tokenwright. v0.3.3 tagged and released (subagent transcripts in `score`, idle hook 26 ms, `note --saved` checked, hub refresh).
+- Four skills (tokenwright, tokenwright-script, tokenwright-skills, tokenwright-catalog), `tw.py` and `tidy.py`. 51 unit tests pass.
+- Budget GREEN. habits.md is the largest reference at 2,498 tokens, right at the line.
+- Evergreen: hub refreshed 2026-11-15, due 2026-11-24. Catalog unit due 2026-11-21.
+- Evals: hub 10 of 10, catalog 5 of 5; outcome-catalog unblocked (with 1.00, without 0.80, T-20261115-1).
+- Wiki at 0.3.2 (commit 4dd7e89). Owes a 0.3.3 pass (ledger item).
 - Hook meter live since 2026-11-01 (`TOKENWRIGHT_HOOKS=warn`), step kept at 25k after two looks.
 - everscout beat `token-saving` feeds refreshes. Harvest targets are in `skills/tokenwright/harvest.json`.
 
 ## The improvement grind
 
 - Study and seed list: [research/2026-11-15-improvement-study.md](research/2026-11-15-improvement-study.md). Main finding: no eval has shown a saving yet, since outcome cases score the same with and without the plugin. First question is which parts pay, tested on long sessions.
-- Grind state does not exist yet. The first session sets it up in the everlast vault at `projects/tokenwright/private/grind` from the draft profile and road in the study note, and puts the road on an askwright page.
-- No askwright set is open. No live-use check is in flight.
-- No ledger yet, so the 17 seed candidates in the study note are the queue. Load them with `grw.py add` at setup.
+- Grind state: everlast vault, `projects/tokenwright/private/grind` (pass as `--state`). Session 1 finished seven items; the ledger ranks the rest.
+- Open askwright set: `projects/tokenwright/private/ask/road-2026-11-15` in the vault (what finished means; which milestones stay). Until answered, take only road-independent work. The worth-verdict item waits on it.
+- Live-use check in flight: from 2026-11-16, compare hook start time and `score` output on sessions with subagents against the numbers in log.md.
 
 ## Waits on the owner
 
-- The road and value model, once the first session puts them on an askwright page.
+- The road and value model: askwright set road-2026-11-15.
 - Unattended running is not agreed. No hours or budget are granted, so sessions run attended.
 
 ## Grants

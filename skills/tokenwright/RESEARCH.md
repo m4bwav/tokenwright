@@ -2,11 +2,11 @@
 
 Findings that back [SKILL.md](SKILL.md). Changes they caused are logged in [CHANGELOG.md](CHANGELOG.md); lessons in [LEARNINGS.md](LEARNINGS.md); test runs in [TESTS.md](TESTS.md); state in `evergreen.json`. Protocol: MAINTENANCE.md.
 
-Topic: ways an AI agent spends fewer tokens on the same result: Claude Code and API cost levers, context loading habits, scripting repeated work, skill token cost. Tier `fast`. Last refresh 2026-10-30; next due 2026-11-13.
+Topic: ways an AI agent spends fewer tokens on the same result: Claude Code and API cost levers, context loading habits, scripting repeated work, skill token cost. Tier `fast`. Last refresh 2026-11-15.
 
 ## Current understanding
 
-- The prompt cache decides most of the bill in long sessions: every token in context is re-read each turn, at about a tenth of input price (R-20261030-1). Early waste costs most.
+- The prompt cache decides most of the bill in long sessions: every token in context is re-read each turn, at 0.1x input price or less (0.05x Opus and Sonnet 5.5, 0.025x Fable 5.1 and 5.2) (R-20261030-1, R-20261115-2). Early waste costs most.
 - Cache breaks (model switch, fast mode toggle, MCP or plugin connect, compaction, upgrades) make the next turn pay full price for everything (R-20261030-1).
 - `/clear` between unrelated tasks is free and the largest single saving; `/rewind` beats compacting a dead end (R-20261030-2).
 - Skill descriptions load every turn and are cut at 1,536 characters; bodies on invoke; files on read (R-20261030-3).
@@ -14,6 +14,15 @@ Topic: ways an AI agent spends fewer tokens on the same result: Claude Code and 
 - No published before-and-after numbers exist for search-then-range reads or compaction; this plugin's evals measure them (R-20261030-5).
 
 ## Findings
+
+### R-20261115-1 · subject · magnitude 0.1
+Volatile claims re-checked 2026-11-15, all hold. (a) Description plus `when_to_use` cut at 1,536 characters in the skill listing (code.claude.com/docs/en/skills). (b) Main conversation 1 h on a subscription within plan usage, 5 min for subagents, forks, compaction, API keys, cloud and usage credits; `promptCacheTtl`, `subagentPromptCacheTtl` and their env vars (code.claude.com/docs/en/prompt-caching). (c) Bash 30,000 characters by default, now settable up to 150,000 (`bashOutputMaxChars` or `BASH_MAX_OUTPUT_LENGTH`; code.claude.com/docs/en/env-vars); MCP warning at 10k tokens, cap 25k, text results over 50,000 characters saved to a file (code.claude.com/docs/en/mcp). Fixed: the costs page's PreToolUse example keeps the last 100 lines of test output, not only failures (code.claude.com/docs/en/costs). applied: C-20261115-1.
+
+### R-20261115-2 · subject · magnitude 0.3
+New levers since 2026-11-01. Cache reads on Fable 5.1 and 5.2 cost 0.025x input; 512-token minimum on current models, 1,024 on Sonnet 5 (platform.claude.com/docs/en/build-with-claude/prompt-caching). `/usage` shows a prompt cache line with the likely cause of the last miss, and usage shares per skill, subagent and MCP server (code.claude.com/docs/en/costs). Dropping old images past the request limit breaks the cache; idle compaction on the 1 h TTL, off with `idleCompaction: false` (prompt-caching page). Changelog (code.claude.com/docs/en/changelog): 2.1.321 shows the model only the start and end of background command output over 1,000 characters; 2.1.323 adds `CLAUDE_CODE_DISABLE_AGENT_PROGRESS_SUMMARIES` and raises the assumed window for unknown model IDs to 1M; 2.1.318 backgrounds subagent shell commands after 3 minutes so the cache does not expire; 2.1.319 stops `/context` re-sending its grid. API: message threads beta sends only new messages per request (platform.claude.com/docs/en/release-notes/overview, 2026-11-02); Fable 5.2 at $8/$40 per Mtok. Plugin change suggested: tw.py's "about a tenth of input" line could name the lower rates (not done here; tw.py was out of scope). applied: C-20261115-1.
+
+### R-20261115-3 · tooling, practice, testing · magnitude 0
+Beat token-saving: last scan 2026-10-30, no new scan this refresh; 25 leads read, all already folded in or book notes. Tooling: nothing new checked. Testing: nothing new.
 
 ### R-20261030-1 · subject · magnitude n/a (creation)
 Cache matching, TTLs (1 h main conversation on a subscription, 5 min for subagents and API keys), what breaks the cache. Sources: code.claude.com/docs (costs, prompt caching pages), checked 2026-10-30. Detail: repository ai-docs/research/2026-10-30-token-saving-survey-web.md.

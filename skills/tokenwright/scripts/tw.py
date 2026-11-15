@@ -15,19 +15,20 @@ Commands
 
 Token counts are estimates (about 4 characters per token for English and code). Use them to rank, not to bill.
 """
+
+import os
+import sys
+
+if sys.argv[1:2] == ["hook"] and os.environ.get("TOKENWRIGHT_HOOKS", "").lower() not in ("warn", "block", "1", "on"):
+    sys.exit(0)   # off by default: leave before the imports below, so an idle hook costs one bare interpreter start
 import argparse
-import difflib
 import hashlib
 import json
-import os
 import re
-import subprocess
-import sys
-import tempfile
 from collections import Counter, defaultdict
 from pathlib import Path
 
-VERSION = "0.3.2"
+VERSION = "0.3.3"
 CHARS_PER_TOKEN = 4
 BIG_FILE_LINES = 400        # a whole read of a file this long, used for a few lines, is a sink
 BIG_OUTPUT_CHARS = 20000    # a tool result this long is a sink unless it was the point
@@ -93,7 +94,7 @@ def cmd_changed(a):
             if prev is None or b"\0" in data[:4096]:
                 out("changed   %s (binary or no stored copy; read it)" % p)
             else:
-                diff = list(difflib.unified_diff(
+                diff = list(__import__("difflib").unified_diff(
                     prev.decode("utf-8", "replace").splitlines(),
                     data.decode("utf-8", "replace").splitlines(),
                     "before", "after", n=a.context, lineterm=""))
@@ -257,16 +258,33 @@ def score(path):
     return sinks, usage, n
 
 
+def subagent_files(path):
+    """Subagent transcripts of a session: <session>/subagents/**/*.jsonl beside <session>.jsonl."""
+    d = path.with_suffix("") / "subagents"
+    return sorted(d.rglob("*.jsonl")) if d.is_dir() else []
+
+
 def cmd_score(a):
     path = Path(a.transcript) if a.transcript else latest_transcript()
     sinks, usage, n = score(path)
+    sub = None
+    for f in ([] if a.no_subagents else subagent_files(path)):
+        s_sinks, s_usage, _n = score(f)
+        sub = sub or {"count": 0, "tool_calls": 0, "usage": Counter(), "waste_tokens": 0}
+        sub["count"] += 1
+        sub["tool_calls"] += _n
+        sub["usage"].update(s_usage)
+        sub["waste_tokens"] += sum(s[1] for s in s_sinks)
+        tag = "[subagent %s] " % f.stem.replace("agent-", "")[:8]
+        sinks += [s[:3] + (tag + s[3],) + s[4:] for s in s_sinks]
     by_kind = Counter()
     for k, t, *_ in sinks:
         by_kind[k] += t
     total_waste = sum(by_kind.values())
     carried = sum(s[5] for s in sinks)
     if a.json:
-        out(json.dumps({"transcript": str(path), "tool_calls": n, "waste_per_100_calls": _rate(total_waste, n), "usage": usage, "waste_by_kind": by_kind,
+        out(json.dumps({"transcript": str(path), "tool_calls": n, "waste_per_100_calls": _rate(total_waste, n + (sub["tool_calls"] if sub else 0)), "usage": usage, "waste_by_kind": by_kind,
+                        **({"subagents": sub} if sub else {}),
                         "carried_cache_read_tokens": carried,
                         "sinks": [dict(zip(("kind", "tokens", "call", "what", "fix", "carried"), s)) for s in
                                   sorted(sinks, key=lambda s: -s[1])[:a.top]]}, indent=1))
@@ -278,6 +296,11 @@ def cmd_score(a):
         out("turns %d, tool calls %d; input %d, cache read %d, cache write %d, output %d tokens" % (
             usage["turns"], n, usage["input_tokens"], usage["cache_read_input_tokens"],
             usage["cache_creation_input_tokens"], usage["output_tokens"]))
+    if sub:
+        u = sub["usage"]
+        out("subagents %d: turns %d; input %d, cache read %d, cache write %d, output %d tokens (not in the line above)" % (
+            sub["count"], u["turns"], u["input_tokens"], u["cache_read_input_tokens"],
+            u["cache_creation_input_tokens"], u["output_tokens"]))
     if not sinks:
         out("no sinks found")
         return 0
@@ -501,7 +524,7 @@ def cmd_hook(a):
 
 
 def _meter_file(session):
-    root = Path(os.environ.get("TOKENWRIGHT_METER_DIR") or Path(tempfile.gettempdir()) / "tokenwright-meter")
+    root = Path(os.environ.get("TOKENWRIGHT_METER_DIR") or Path(__import__("tempfile").gettempdir()) / "tokenwright-meter")
     return root / ("%s.json" % re.sub(r"[^A-Za-z0-9_.-]", "_", str(session)))
 
 
@@ -549,6 +572,12 @@ def cmd_meter(a):
     return 0
 
 
+def _saved(v):
+    if not re.fullmatch(r"\d+(\.\d+)?[kKmM]?", v.strip()):
+        raise argparse.ArgumentTypeError("--saved takes a token count such as 12000, 12k or 1.5m, not %r" % v)
+    return v.strip()
+
+
 def cmd_note(a):
     """Nothing to store: the command line itself sits in the transcript, where reports read it."""
     out("noted")
@@ -562,7 +591,7 @@ def cmd_catalog(a):
     if not TIDY.is_file():
         print("tokenwright: tidy.py not found at %s" % TIDY, file=sys.stderr)
         return 2
-    return subprocess.run([sys.executable, str(TIDY)] + (a.args or ["--help"])).returncode
+    return __import__("subprocess").run([sys.executable, str(TIDY)] + (a.args or ["--help"])).returncode
 
 
 def main(argv=None):
@@ -580,6 +609,7 @@ def main(argv=None):
     s.add_argument("transcript", nargs="?", help="JSONL path (default: newest under ~/.claude/projects)")
     s.add_argument("--top", type=int, default=10)
     s.add_argument("--json", action="store_true")
+    s.add_argument("--no-subagents", action="store_true", help="score the main transcript only")
     s.add_argument("--compare", type=int, default=0, metavar="N",
                    help="compare with the best of the newest N past sessions in the same project")
     s.set_defaults(fn=cmd_score)
@@ -609,7 +639,7 @@ def main(argv=None):
     s.add_argument("session", nargs="?", help="session id (default: the most recent)")
     s.set_defaults(fn=cmd_meter)
     s = sub.add_parser("note", help="record why/how tokenwright was used and the tokens you think it saved")
-    s.add_argument("--saved", default="0", help="estimated tokens saved, e.g. 12000 or 12k")
+    s.add_argument("--saved", default="0", type=_saved, help="estimated tokens saved, e.g. 12000 or 12k")
     s.add_argument("--why", default="")
     s.add_argument("--how", default="")
     s.set_defaults(fn=cmd_note)

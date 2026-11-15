@@ -144,6 +144,21 @@ class Score(unittest.TestCase):
             sinks, _, _ = tw.score(p)
             self.assertEqual([s[0] for s in sinks], ["big-output"])
 
+    def test_subagent_transcripts_are_scored(self):
+        with tempfile.TemporaryDirectory() as d:
+            main = self.transcript(d)
+            sub = Path(d, "s", "subagents")
+            sub.mkdir(parents=True)
+            Path(sub, "agent-a1.jsonl").write_text(use(1, "Grep", {"pattern": "z"}) + result(1, "y" * 40000))
+            data = json.loads(run("score", str(main), "--json"))
+            self.assertEqual(data["subagents"]["count"], 1)
+            self.assertEqual(data["subagents"]["usage"]["output_tokens"], 5)
+            self.assertEqual(data["subagents"]["waste_tokens"], 10000)
+            self.assertTrue(any(s["what"].startswith("[subagent a1]") for s in data["sinks"]))
+            text = run("score", str(main))
+            self.assertIn("subagents 1:", text)
+            self.assertEqual(json.loads(run("score", str(main), "--json", "--no-subagents")).get("subagents"), None)
+
     def test_json_output(self):
         with tempfile.TemporaryDirectory() as d:
             data = json.loads(run("score", str(self.transcript(d)), "--json"))
@@ -240,6 +255,27 @@ class Hook(unittest.TestCase):
             finally:
                 os.environ.pop("TOKENWRIGHT_HOOKS", None)
                 os.environ.pop("TOKENWRIGHT_METER_DIR", None)
+
+
+class Note(unittest.TestCase):
+    def test_saved_must_be_a_count(self):
+        import contextlib
+        self.assertEqual(run("note", "--saved", "12k", "--why", "w").strip(), "noted")
+        with contextlib.redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
+            tw.main(["note", "--saved", "lots"])
+
+
+class HookProcess(unittest.TestCase):
+    def test_off_exits_before_heavy_imports(self):
+        import subprocess
+        env = dict(os.environ)
+        env.pop("TOKENWRIGHT_HOOKS", None)
+        env["PYTHONVERBOSE"] = "1"
+        r = subprocess.run([sys.executable, str(Path(tw.__file__)), "hook", "post"], input="{}", text=True,
+                           capture_output=True, env=env)
+        self.assertEqual(r.returncode, 0)
+        self.assertNotIn("import 'argparse'", r.stderr)
+        self.assertNotIn("import 'json'", r.stderr)
 
 
 class Compare(unittest.TestCase):
