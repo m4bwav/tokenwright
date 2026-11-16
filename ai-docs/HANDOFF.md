@@ -1,6 +1,6 @@
 # Handoff: tokenwright
 
-Updated 2026-11-16 (after grind session 6). Status: in progress (improvement grind). Continue with [plans/2026-11-15-tokenwright-improve-continue-prompt.md](plans/2026-11-15-tokenwright-improve-continue-prompt.md). It replaces the 2026-10-30 build prompt, whose list was finished at session 30.
+Updated 2026-11-16 (after grind session 7). Status: in progress (improvement grind). Continue with [plans/2026-11-15-tokenwright-improve-continue-prompt.md](plans/2026-11-15-tokenwright-improve-continue-prompt.md). It replaces the 2026-10-30 build prompt, whose list was finished at session 30.
 
 ## State
 
@@ -21,12 +21,13 @@ Updated 2026-11-16 (after grind session 6). Status: in progress (improvement gri
 - Per-agent: table in [research/2026-11-16-other-agents-sessions.md](research/2026-11-16-other-agents-sessions.md). Copilot CLI read by score. Next readers: Gemini CLI, then Codex (zstd). Cursor has no local data.
 - A/B: T-20261116-1 (long job) and T-20261116-2 (history cases, stub-plugin arm) showed no saving. `scripts/ab_eval.py` now runs any A/B with tokens per arm. History cases leak the plugin into the stub arm, so the next case needs no history (ledger item). Ledger also holds: tw.py discoverability (bare `tw.py` costs 2-5 calls).
 - Session 6 ruled out: change-check in one turn (T-20261116-4, case ab-regen-changed) and a habit for session-start loads (T-20261116-5, loads are used). Hook times in T-20261116-6.
-- Next picks: g053f05 (live check: a subagent tool call leaves the main meter unchanged, 0.3.7 installed), g714968 (PR on finwright: its guard costs ~390 ms a call), then the ledger.
+- Session 7: live meter check passed (T-20261116-8). finwright guard PR #21 (~470 to ~210 ms a call) waits on the owner. Next picks: the ledger (`grw.py next`).
 - Live-use check in flight: from 2026-11-16, compare hook start time and `score` output on sessions with subagents against the numbers in log.md.
 
 ## Waits on the owner
 
-- Nothing open on askwright (note-2026-11-16 answered keep-quiet, applied in 0.3.6).
+- Nothing open on askwright.
+- Review https://github.com/m4bwav/finwright/pull/21 (guard launcher speed-up; touches the permission guard, so not self-merged).
 - Unattended running is not agreed. No hours or budget are granted, so sessions run attended.
 
 ## Grants

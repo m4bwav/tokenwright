@@ -191,3 +191,10 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 - Bug (T-20261116-7): the meter added subagent tool output to the main session. Fixed with an agent_id skip; released 0.3.7.
 - Platform-levers research lowered to value 2 and folded into the 2026-11-24 hub refresh, since the 2026-11-15 refresh already added six levers (small ruling).
 - 2026-11-16: kept eval sandboxes under ~/evaltmp in WSL have read-only sealed/config/out folders; plain rm -rf fails. Use chmod -R u+w first.
+
+## 2026-11-16 Grind session 7
+
+- Owner asked whether tokenwright pays. Measured: 51 parked skills take ~10.6K tokens (42K chars) off every session's skill listing; without parking the listing (59K + 42K chars) would pass Claude Code's 80K-char budget and get truncated anyway. Hook meter and score have found sinks and bugs; no eval has yet shown a per-task saving from the habits (T-20261116-1, -4).
+- finwright guard launcher (g714968): the cost was the launcher, not fw_guard.py. It tried the WindowsApps python3 Store stub (~170 ms to fail) and started Python twice. PR m4bwav/finwright#21 (one start, stubs skipped, launcher tests): ~470 ms to ~210 ms a call. Left open for the owner (permission guard).
+- Live check g053f05 (T-20261116-8): with 0.3.7 installed, a subagent Bash call left the main meter unchanged. Done.
+- 2026-11-16: on this PC `python3` resolves to the WindowsApps Store stub; any hook launcher that tries python3 first pays ~170 ms a call.
