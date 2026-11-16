@@ -9,6 +9,13 @@ Test runs for [SKILL.md](SKILL.md). Cases live in `evals/evals.json`. Unit tests
 
 ## Runs
 
+### T-20261116-11 · 2026-11-16 · transcript scan: does Copilot CLI inputTokens include cache reads? 34 local sessions · Windows · study (per-agent reader)
+- Why: ledger gc0e1f0. tw.py mapped Copilot `inputTokens` to Claude's `input_tokens`, which counts only uncached input.
+- Method: every `session.usage_record` (n=3,229) in local Copilot CLI events.jsonl; compare inputTokens with cacheReadTokens and cacheWriteTokens.
+- Result: cache reads never exceed inputTokens (0 of 3,229); in the 2,868 records with a cache hit, reads are a median 98% of inputTokens (max 100%). inputTokens minus reads minus writes is never negative, with writes in 2,927 records.
+- Verdict: ship. inputTokens is the whole prompt, cached parts included. tw.py now reports input as inputTokens less reads and writes, so the usage line no longer counts cached input twice (it overstated input about 50-fold on cached turns).
+- Limit: one user's sessions, mostly one model (gpt-5.6-luna). No official doc states it; the evidence is the data.
+
 ### T-20261116-10 · 2026-11-16 · transcript scan: real tokens per tool result vs chars/4, newest 500 local sessions · Windows · study (estimate accuracy)
 - Why: improvement study seed 6 (ledger g302e75). How far is tw.py's chars/4 from what the model bills?
 - Method: for each user turn holding one tool result of 3,000+ chars, real tokens = (input + cache creation + cache read) of the next assistant message, less the same for the previous one, less its output tokens. Main sessions only, images skipped.

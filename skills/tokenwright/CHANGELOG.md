@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261116-6 · 2026-11-16 · Version 0.3.9: Copilot CLI usage line counts cached input once
+- because: T-20261116-11. Copilot's inputTokens already includes cache reads and writes, so score showed cached input both as input and as cache read.
+- files: scripts/tw.py (_copilot_event), tests/test_tw.py.
+
 ### C-20261116-5 · 2026-11-16 · Version 0.3.8: token estimates at the measured 2.3 characters a token
 - because: T-20261116-10. Current models bill about 2.3 characters a token for tool output, so chars/4 showed every sink about 75% too small. The meter keeps its old pace (about 100k characters a note).
 - files: scripts/tw.py (CHARS_PER_TOKEN, METER_STEP_TOKENS), SKILL.md, README.md, tests/test_tw.py, TESTS.md.

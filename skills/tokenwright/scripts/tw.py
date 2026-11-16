@@ -29,7 +29,7 @@ import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
-VERSION = "0.3.8"
+VERSION = "0.3.9"
 CHARS_PER_TOKEN = 2.3        # measured 2026-11-16 on Opus 5.5, Fable 5.2, Sonnet 5 tool output (T-20261116-10)
 BIG_FILE_LINES = 400        # a whole read of a file this long, used for a few lines, is a sink
 BIG_OUTPUT_CHARS = 20000    # a tool result this long is a sink unless it was the point
@@ -138,7 +138,9 @@ def _copilot_event(rec, seen):
     t = rec.get("type")
     if t == "session.usage_record":
         u = d.get("usage") or {}
-        return "usage", {"input_tokens": u.get("inputTokens"), "output_tokens": (u.get("outputTokens") or 0)
+        # inputTokens includes cache reads and writes (T-20261116-11); report the uncached rest like Claude's input_tokens
+        rest = (u.get("inputTokens") or 0) - (u.get("cacheReadTokens") or 0) - (u.get("cacheWriteTokens") or 0)
+        return "usage", {"input_tokens": max(0, rest), "output_tokens": (u.get("outputTokens") or 0)
                          + (u.get("reasoningTokens") or 0), "cache_read_input_tokens": u.get("cacheReadTokens"),
                          "cache_creation_input_tokens": u.get("cacheWriteTokens")}
     cid = d.get("toolCallId")
