@@ -243,7 +243,9 @@ class TestUsageBudgetOffload(Base):
         self.assertEqual((b["codex"]["budget"], b["codex"]["unit"]), (400, "tokens"))
         skills = tidy.scan("claude", self.proj)
         line = sum(len("- :  (file: )") + len(s["name"]) + len(s["desc"]) + len(s["path"]) for s in tidy.listed(skills))
-        self.assertEqual(b["codex"]["used"], tidy.est_tokens(line))
+        self.assertEqual(b["codex"]["used"], tidy.codex_tokens(line))
+        self.assertEqual(tidy.est_tokens(2300), 1000)  # measured rate, T-20261116-10
+        self.assertEqual(tidy.codex_tokens(4000), 1000)  # Codex counts bytes / 4
         fallback = tidy.budgets(skills, 0)["codex"]
         self.assertEqual((fallback["budget"], fallback["unit"], fallback["used"]), (8000, "chars", line))
 

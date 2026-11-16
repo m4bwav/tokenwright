@@ -36,7 +36,7 @@ import sys
 import tempfile
 import time
 
-VERSION = "0.3.11"  # tokenwright release, bumped with tw.py
+VERSION = "0.3.12"  # tokenwright release, bumped with tw.py
 HERE = os.path.dirname(os.path.abspath(__file__))
 NL = chr(10)
 AGENTS = ["claude", "codex", "copilot", "cursor", "all"]
@@ -80,7 +80,15 @@ def today():
     return _dt.date.today().isoformat()
 
 
+CHARS_PER_TOKEN = 2.3  # measured 2026-11-16 (tokenwright T-20261116-10); same rate as tw.py
+
+
 def est_tokens(chars):
+    return int(math.ceil(round(chars / CHARS_PER_TOKEN, 6)))
+
+
+def codex_tokens(chars):
+    """Codex's own skill-listing budget counts bytes / 4; emulate it exactly."""
     return int(math.ceil(chars / 4.0))
 
 
@@ -1117,7 +1125,7 @@ def budgets(skills, window):
     chars = sum(s["listed_chars"] for s in ls)
     # Codex renders "- name: description (file: path)" and charges the whole line; the 2% is in tokens (bytes / 4).
     codex_chars = sum(len("- :  (file: )") + len(s["name"]) + len(s["desc"]) + len(s["path"]) for s in ls)
-    codex_budget, codex_used = (int(window * 0.02), est_tokens(codex_chars)) if window else (8000, codex_chars)
+    codex_budget, codex_used = (int(window * 0.02), codex_tokens(codex_chars)) if window else (8000, codex_chars)
     cb, src = claude_char_budget(window)
     return {
         "skills_listed": len(ls), "listing_chars": chars, "listing_tokens_est": est_tokens(chars),

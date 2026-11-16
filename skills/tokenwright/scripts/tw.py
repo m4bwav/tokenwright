@@ -29,7 +29,7 @@ import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
-VERSION = "0.3.11"
+VERSION = "0.3.12"
 CHARS_PER_TOKEN = 2.3        # measured 2026-11-16 on Opus 5.5, Fable 5.2, Sonnet 5 tool output (T-20261116-10)
 BIG_FILE_LINES = 400        # a whole read of a file this long, used for a few lines, is a sink
 BIG_OUTPUT_CHARS = 20000    # a tool result this long is a sink unless it was the point
