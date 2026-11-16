@@ -209,3 +209,7 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 - chars/4 vs real usage (g302e75, T-20261116-10): newest 500 local sessions, 1,141 single tool results of 3k+ chars. Real rate 2.28 chars a token (Opus 5.5 2.31, Fable 5.2 2.16, Sonnet 5 2.26; code 2.02, Markdown 2.41). chars/4 under-counted every tw.py figure by ~75%. tw.py now uses 2.3; the meter step went to 43k tokens to keep its ~100k-char pace (small ruling). Released 0.3.8.
 - So the 2026-11-16 parking figure (51 parked skills, ~10.6K tokens) is really ~18K tokens a session.
 - Left for a ledger item: tidy.py still estimates at /4 (its Codex bytes/4 emulation must stay; ST016's 5K-token check would fire more). budget.py keeps bytes/4 as its fixed unit (small ruling).
+
+## 2026-11-16 Grind session 10
+
+- Copilot CLI cache reads (gc0e1f0, T-20261116-11): in 3,229 local usage records `inputTokens` includes cache reads and writes (reads a median 98% of it on cache hits, never above it). tw.py counted cached input twice; now input = inputTokens less reads and writes. Released 0.3.9.

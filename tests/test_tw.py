@@ -337,7 +337,8 @@ class CopilotCli(unittest.TestCase):
             p.write_text("\n".join(json.dumps(r) for r in recs), encoding="utf-8")
             sinks, usage, n = tw.score(p)
             self.assertEqual(n, 1)
-            self.assertEqual(usage["input_tokens"], 100)
+            # Copilot inputTokens includes cache reads and writes (T-20261116-11); input is the uncached rest
+            self.assertEqual(usage["input_tokens"], 45)
             self.assertEqual(usage["output_tokens"], 12)
             self.assertEqual(usage["cache_read_input_tokens"], 50)
             self.assertTrue(any(s[0] == "big-output" and "Bash" in s[3] for s in sinks))

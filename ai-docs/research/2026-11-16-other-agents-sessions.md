@@ -76,6 +76,7 @@ Copilot CLI `events.jsonl`, one object per line:
 - `{..., type:"tool.execution_start", data:{toolCallId, toolName, arguments}}`
 - `{..., type:"tool.execution_complete", data:{toolCallId, success, result:{content, detailedContent}}}`
 - `{..., type:"session.usage_record", data:{usage:{model, inputTokens, outputTokens, cacheReadTokens, cacheWriteTokens, reasoningTokens}}}`
+  - `inputTokens` is the whole prompt: it includes `cacheReadTokens` and `cacheWriteTokens` (T-20261116-11, 3,229 local records). Uncached input is inputTokens less both.
 
 Gemini CLI chat JSONL:
 
