@@ -246,6 +246,21 @@ class Hook(unittest.TestCase):
                 os.environ.pop("TOKENWRIGHT_HOOKS", None)
                 os.environ.pop("TOKENWRIGHT_METER_DIR", None)
 
+    def test_meter_skips_subagent_tool_output(self):
+        # T-20261116-7: a subagent's tool output never enters the main context
+        with tempfile.TemporaryDirectory() as d:
+            os.environ["TOKENWRIGHT_HOOKS"] = "warn"
+            os.environ["TOKENWRIGHT_METER_DIR"] = d
+            try:
+                ev = {"session_id": "s3", "agent_id": "a1", "tool_name": "Grep", "tool_response": "x" * 120000}
+                sys.stdin = io.StringIO(json.dumps(ev))
+                out = run("hook", "post")
+                self.assertNotIn("meter", out)
+                self.assertEqual(run("meter", "s3").strip(), "tw ~0k")
+            finally:
+                os.environ.pop("TOKENWRIGHT_HOOKS", None)
+                os.environ.pop("TOKENWRIGHT_METER_DIR", None)
+
     def test_meter_speaks_once_per_step(self):
         with tempfile.TemporaryDirectory() as d:
             os.environ["TOKENWRIGHT_HOOKS"] = "warn"
