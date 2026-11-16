@@ -43,13 +43,13 @@ Example `score` output on a real 187-turn session: about 28,000 avoidable tokens
 
 Measured on the eval fixtures: finding one function in a 2,690-line file costs about 21,400 tokens by a whole read and 56 by `grep -n -A4`. Counting errors in a 4,000-line log costs about 61,600 tokens whole and under 50 with `grep | sort | uniq -c`.
 
-Token counts are estimates (characters / 4). They rank sinks; they do not bill.
+Token counts are estimates (characters / 2.3, measured on current Claude models). They rank sinks; they do not bill.
 
 ## Hooks (off by default)
 
 The plugin installs two hooks that do nothing until you set `TOKENWRIGHT_HOOKS`:
 
-- `warn`: a note to the agent when it reads a large file whole, or a tool returns very large output, and a meter note each time the session's tool output passes another 25k tokens.
+- `warn`: a note to the agent when it reads a large file whole, or a tool returns very large output, and a meter note each time the session's tool output passes another ~43k tokens (about 100k characters).
 - `block`: also denies whole reads of large files, so the agent searches and reads a range instead.
 
 ## Works with

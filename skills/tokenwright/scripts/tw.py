@@ -6,7 +6,7 @@ Commands
   score [transcript]      rank the token sinks in a Claude Code transcript (JSONL) and name the fix
   repeats <transcripts..> find command sequences repeated across sessions: script candidates
   skill <dir>             token cost of a skill or plugin: what loads always, on trigger, on demand
-  estimate <paths...>     rough token count of files (chars / 4)
+  estimate <paths...>     rough token count of files (chars / 2.3)
   catalog <args...>       the whole skill catalog: forwards to tokenwright-catalog's tidy.py (lint, conflicts, park...)
   hook <pre|post>         hook entry point (reads the hook JSON on stdin); off unless TOKENWRIGHT_HOOKS is set
   note --saved N --why W --how H   record, in the transcript, why and how tokenwright was used and the tokens
@@ -24,12 +24,13 @@ if sys.argv[1:2] == ["hook"] and os.environ.get("TOKENWRIGHT_HOOKS", "").lower()
 import argparse
 import hashlib
 import json
+import math
 import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
-VERSION = "0.3.7"
-CHARS_PER_TOKEN = 4
+VERSION = "0.3.8"
+CHARS_PER_TOKEN = 2.3        # measured 2026-11-16 on Opus 5.5, Fable 5.2, Sonnet 5 tool output (T-20261116-10)
 BIG_FILE_LINES = 400        # a whole read of a file this long, used for a few lines, is a sink
 BIG_OUTPUT_CHARS = 20000    # a tool result this long is a sink unless it was the point
 POLL_RUNS = 3               # the same shell command run this often is polling
@@ -38,12 +39,12 @@ SNAP_DIR_DEFAULT = ".tokenwright/snapshots"
 SNAP_MAX_BYTES = 2_000_000
 IMAGE_TOKENS = 1600         # a full-size image costs roughly this much; resize to cut it
 IMAGE_EXT = (".png", ".jpg", ".jpeg", ".gif", ".webp", ".bmp")
-METER_STEP_TOKENS = 25000   # the hook meter speaks once per this many tokens of tool output
+METER_STEP_TOKENS = 43000   # the hook meter speaks once per this many tokens of tool output (~100k chars)
 COMPARE_MIN_CALLS = 10      # past sessions shorter than this are not compared
 
 
 def tokens(n_chars):
-    return (n_chars + CHARS_PER_TOKEN - 1) // CHARS_PER_TOKEN
+    return int(math.ceil(round(n_chars / CHARS_PER_TOKEN, 6)))
 
 
 def out(text):
@@ -247,7 +248,7 @@ def score(path):
         name, inp, text = u["name"], u["input"], d["text"]
         size = len(text)
         if name == "Read" and str(inp.get("file_path") or "").lower().endswith(IMAGE_EXT):
-            size = IMAGE_TOKENS * CHARS_PER_TOKEN
+            size = int(IMAGE_TOKENS * CHARS_PER_TOKEN)
         fp = _norm_path(inp.get("file_path") or inp.get("path") or inp.get("notebook_path"))
         if name in ("Edit", "Write", "MultiEdit", "NotebookEdit") and fp:
             edits[fp].append(i)
@@ -552,7 +553,7 @@ def cmd_hook(a):
         size = len(json.dumps(resp)) if resp is not None else 0
         if name == "Read" and ((isinstance(resp, dict) and resp.get("type") == "image")
                                or str(inp.get("file_path") or "").lower().endswith(IMAGE_EXT)):
-            size = IMAGE_TOKENS * CHARS_PER_TOKEN   # base64 length is not the image's token cost
+            size = int(IMAGE_TOKENS * CHARS_PER_TOKEN)   # base64 length is not the image's token cost
         if size >= BIG_OUTPUT_CHARS and name != "Read":
             msg = ("tokenwright: that %s output was ~%d tokens. Next time trim at the source (head, --stat, -q, "
                    "head_limit) or hand the sweep to a subagent." % (name, tokens(size)))

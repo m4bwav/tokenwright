@@ -67,7 +67,7 @@ The report names each sink by its kind of waste, after lean manufacturing ([refe
 | `estimate <paths>` | Rough tokens of files before loading them |
 | `catalog <tidy args>` | The whole skill catalog: forwards to tokenwright-catalog's tidy.py |
 
-Token counts are estimates (characters / 4). Use them to rank, not to bill. For exact counts use the API's token counting endpoint.
+Token counts are estimates (characters / 2.3, measured on current Claude models; T-20261116-10). Use them to rank, not to bill. For exact counts use the API's token counting endpoint.
 
 ## Claude Code levers
 
@@ -75,7 +75,7 @@ See [references/levers.md](references/levers.md): prompt cache and its TTL, `/co
 
 ## Hooks (off by default)
 
-`hooks/hooks.json` warns on a whole read of a large file and on very large tool output, and keeps a session meter that speaks once per 25k tokens of tool output. They do nothing until `TOKENWRIGHT_HOOKS=warn` (or `block`, which denies whole reads of large files) is set in the environment.
+`hooks/hooks.json` warns on a whole read of a large file and on very large tool output, and keeps a session meter that speaks once per ~43k tokens (about 100k characters) of tool output. They do nothing until `TOKENWRIGHT_HOOKS=warn` (or `block`, which denies whole reads of large files) is set in the environment.
 
 ## Neighbours
 
