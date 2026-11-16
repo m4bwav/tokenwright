@@ -233,3 +233,8 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 - gf4d6d4 subagent 1-hour TTL (R-20261116-2): subagents default to 5 min; 1-hour writes cost 2x base input vs 1.25x. No habit.
 - Next picks: live check g272313 (from 2026-11-17), delegation break-even g79cddf (needs an A/B, not a scan), wiki refresh gd596be.
 - 2026-11-16: finwright PR #21 merged by the owner (19:35 UTC); check PR state with gh before repeating a wait from HANDOFF.
+
+## 2026-11-16 Grind session 14
+
+- Wiki refresh (gd596be): ran ai-docs/notes/2026-10-30-wiki-verify.py at WIKI_TAG v0.3.2 and v0.3.12 and `wikiwright.py diffout`; 13 of 18 sections changed, all from the 2.3 chars-a-token rate or the version. Pages now describe 0.3.12: score reads subagents and Copilot CLI, `note --saved` is checked, the hook sizes Bash by stdout and stderr, the meter skips subagents and steps at 43k, Versions entries 0.3.3 to 0.3.12. check 0 errors, outputs 14 checked 0 missing, live 9 pages 0 failures. Wiki commit 660c558.
+- grw.py offers the dated live check g272313 before its date and `session end` refuses while it is selectable; ended with --force. Its wait-machine has no date option.
