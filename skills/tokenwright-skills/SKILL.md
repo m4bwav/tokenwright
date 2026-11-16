@@ -18,7 +18,7 @@ A skill costs in three tiers. Fix the most-paid tier first.
 
 ## Steps
 
-1. Measure: `python ../tokenwright/scripts/tw.py skill <skill-or-plugin-dir>`. It prints the three tiers per skill and ranked findings.
+1. Measure: `python "${CLAUDE_SKILL_DIR}/../tokenwright/scripts/tw.py" skill <skill-or-plugin-dir>`. It prints the three tiers per skill and ranked findings.
 2. Walk the checklist below for what the script cannot judge.
 3. Report the savings largest first, each with the tokens saved and where they are saved (always, trigger, demand). Weigh "always" savings by how many skills a user has installed; a 100-token cut in a description beats a 1,000-token cut in a reference.
 4. Edit only if asked. Never cut a trigger phrase that evals show the skill needs; re-run the trigger evals after a description change.

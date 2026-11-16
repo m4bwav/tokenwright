@@ -12,7 +12,7 @@ A script pays when a job will run again. The agent's part shrinks to: run it, re
 
 ## Find the candidate
 
-- **Repeats across sessions**: `python ../tokenwright/scripts/tw.py repeats --last 50` lists command sequences seen in several sessions.
+- **Repeats across sessions**: `python "${CLAUDE_SKILL_DIR}/../tokenwright/scripts/tw.py" repeats --last 50` lists command sequences seen in several sessions.
 - **Solved once**: the commands that worked in this session. Take them from the transcript, not from memory: the failed attempts are not part of the script.
 - Worth it when: the job will run again, it has three or more steps, or its output needs trimming to be read.
 - Not worth it when: it is a one-off, or each run needs fresh judgement at every step.

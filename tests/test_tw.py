@@ -371,5 +371,18 @@ class TokenRate(unittest.TestCase):
         self.assertAlmostEqual(tw.METER_STEP_TOKENS * tw.CHARS_PER_TOKEN, 100000, delta=2000)
 
 
+class SkillPaths(unittest.TestCase):
+    """T-20261116-13: SKILL.md bodies name tw.py by an absolute path in Claude Code."""
+
+    def test_skill_bodies_use_skill_dir(self):
+        root = os.path.join(os.path.dirname(__file__), "..", "skills")
+        for name in ("tokenwright", "tokenwright-skills", "tokenwright-script"):
+            body = open(os.path.join(root, name, "SKILL.md"), encoding="utf-8").read()
+            self.assertIn("${CLAUDE_SKILL_DIR}", body, name)
+            self.assertNotIn("python ../tokenwright/scripts/tw.py", body, name)
+            self.assertNotIn("`python scripts/tw.py", body, name)
+
+
 if __name__ == "__main__":
     unittest.main()
+
