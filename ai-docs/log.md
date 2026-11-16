@@ -199,3 +199,7 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 - Live check g053f05 (T-20261116-8): with 0.3.7 installed, a subagent Bash call left the main meter unchanged. Done.
 - 2026-11-16: on this PC `python3` resolves to the WindowsApps Store stub; any hook launcher that tries python3 first pays ~170 ms a call.
 - 2026-11-16: 0.3.7 shipped with tw.py and tidy.py still saying 0.3.6 (suite red on main); fixed in PR #68, no re-release (cosmetic, small ruling).
+
+## 2026-11-16 Grind session 8
+
+- Hook value (g2c0e48, T-20261116-9): scan of tool results 5 before and 5 after each hook note (613 hooked sessions, 1,400 control). Neither the big-output note nor the meter note changes the share of 20k+ results that follow (11.5% to 12.6%; 24.4% to 23.2%); controls move the same way. The notes pay as a study tool, not as a nudge. Nothing cut (hooks are opt-in; changes are a stop point).
