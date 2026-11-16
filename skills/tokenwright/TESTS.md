@@ -9,6 +9,13 @@ Test runs for [SKILL.md](SKILL.md). Cases live in `evals/evals.json`. Unit tests
 
 ## Runs
 
+### T-20261116-10 · 2026-11-16 · transcript scan: real tokens per tool result vs chars/4, newest 500 local sessions · Windows · study (estimate accuracy)
+- Why: improvement study seed 6 (ledger g302e75). How far is tw.py's chars/4 from what the model bills?
+- Method: for each user turn holding one tool result of 3,000+ chars, real tokens = (input + cache creation + cache read) of the next assistant message, less the same for the previous one, less its output tokens. Main sessions only, images skipped.
+- Result (n=1,141): median 2.28 chars a token (p25 2.07, p75 2.48). By model: Opus 5.5 2.31 (n=937), Fable 5.2 2.16 (n=180), Sonnet 5 2.26 (n=28). By kind: shell text 2.29, Markdown reads 2.41, JSON 2.22, code reads 2.02. A fit of tokens on chars gives the same slope (2.30 for shell text) with a small intercept (about 150 tokens), so per-turn overhead does not explain it. Stable across sizes (2.23 at 3-6k chars, 2.38 at 15-40k).
+- Verdict: ship. chars/4 under-counted every tw.py token figure by about 75%. CHARS_PER_TOKEN is now 2.3; the meter step moves to 43k tokens so it still speaks every ~100k characters. tidy.py is left for its own item (its 5K-token spec check would fire more often; Codex's bytes/4 rule must stay). budget.py keeps bytes/4 as its fixed unit.
+- Limit: one maintainer's sessions, mostly English and code.
+
 ### T-20261116-9 · 2026-11-16 · transcript scan: tool results 5 before and 5 after each hook note, main sessions over 50 KB · Windows · study (hook value)
 - Why: improvement study seed 5 (ledger g2c0e48). Does the agent change what it pulls into context after a meter or big-output note?
 - Data: 613 sessions with hook notes, 1,400 without (control: the same event, a non-Read result of 20k+ chars or a 25k-token step, in sessions with no hook).

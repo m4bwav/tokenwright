@@ -203,3 +203,9 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 ## 2026-11-16 Grind session 8
 
 - Hook value (g2c0e48, T-20261116-9): scan of tool results 5 before and 5 after each hook note (613 hooked sessions, 1,400 control). Neither the big-output note nor the meter note changes the share of 20k+ results that follow (11.5% to 12.6%; 24.4% to 23.2%); controls move the same way. The notes pay as a study tool, not as a nudge. Nothing cut (hooks are opt-in; changes are a stop point).
+
+## 2026-11-16 Grind session 9
+
+- chars/4 vs real usage (g302e75, T-20261116-10): newest 500 local sessions, 1,141 single tool results of 3k+ chars. Real rate 2.28 chars a token (Opus 5.5 2.31, Fable 5.2 2.16, Sonnet 5 2.26; code 2.02, Markdown 2.41). chars/4 under-counted every tw.py figure by ~75%. tw.py now uses 2.3; the meter step went to 43k tokens to keep its ~100k-char pace (small ruling). Released 0.3.8.
+- So the 2026-11-16 parking figure (51 parked skills, ~10.6K tokens) is really ~18K tokens a session.
+- Left for a ledger item: tidy.py still estimates at /4 (its Codex bytes/4 emulation must stay; ST016's 5K-token check would fire more). budget.py keeps bytes/4 as its fixed unit (small ruling).

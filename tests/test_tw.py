@@ -96,7 +96,7 @@ class Score(unittest.TestCase):
             self.assertEqual(kinds, {"whole-read", "repeat read", "shell-cat", "retry", "big-output"})
             self.assertEqual(usage["turns"], 6)
             big = [s for s in sinks if s[0] == "big-output"][0]
-            self.assertEqual(big[1], 7500)
+            self.assertEqual(big[1], tw.tokens(30000))
 
     def test_carried_cost_counts_later_turns(self):
         with tempfile.TemporaryDirectory() as d:
@@ -153,7 +153,7 @@ class Score(unittest.TestCase):
             data = json.loads(run("score", str(main), "--json"))
             self.assertEqual(data["subagents"]["count"], 1)
             self.assertEqual(data["subagents"]["usage"]["output_tokens"], 5)
-            self.assertEqual(data["subagents"]["waste_tokens"], 10000)
+            self.assertEqual(data["subagents"]["waste_tokens"], tw.tokens(40000))
             self.assertTrue(any(s["what"].startswith("[subagent a1]") for s in data["sinks"]))
             text = run("score", str(main))
             self.assertIn("subagents 1:", text)
@@ -268,11 +268,11 @@ class Hook(unittest.TestCase):
             try:
                 ev = {"session_id": "s1", "tool_name": "Read", "tool_response": "x" * 60000}
                 sys.stdin = io.StringIO(json.dumps(ev))
-                self.assertEqual(run("hook", "post"), "")   # ~15k tokens, below the first step
+                self.assertEqual(run("hook", "post"), "")   # ~26k tokens, below the first step
                 sys.stdin = io.StringIO(json.dumps(ev))
-                out = json.loads(run("hook", "post"))       # ~30k, crosses 25k
-                self.assertIn("meter: ~30k", out["hookSpecificOutput"]["additionalContext"])
-                self.assertEqual(run("meter", "s1").strip(), "tw ~30k")
+                out = json.loads(run("hook", "post"))       # ~52k, crosses 43k
+                self.assertIn("meter: ~52k", out["hookSpecificOutput"]["additionalContext"])
+                self.assertEqual(run("meter", "s1").strip(), "tw ~52k")
             finally:
                 os.environ.pop("TOKENWRIGHT_HOOKS", None)
                 os.environ.pop("TOKENWRIGHT_METER_DIR", None)
@@ -341,6 +341,17 @@ class CopilotCli(unittest.TestCase):
             self.assertEqual(usage["output_tokens"], 12)
             self.assertEqual(usage["cache_read_input_tokens"], 50)
             self.assertTrue(any(s[0] == "big-output" and "Bash" in s[3] for s in sinks))
+
+
+class TokenRate(unittest.TestCase):
+    def test_measured_rate(self):
+        # T-20261116-10: current models bill about 2.3 characters a token for tool output, not 4
+        self.assertEqual(tw.tokens(2300), 1000)
+        self.assertEqual(tw.tokens(1), 1)
+
+    def test_meter_step_keeps_its_character_count(self):
+        # the meter was tuned at 25k tokens of chars/4, about 100k characters
+        self.assertAlmostEqual(tw.METER_STEP_TOKENS * tw.CHARS_PER_TOKEN, 100000, delta=2000)
 
 
 if __name__ == "__main__":

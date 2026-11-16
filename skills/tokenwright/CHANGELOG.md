@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261116-5 · 2026-11-16 · Version 0.3.8: token estimates at the measured 2.3 characters a token
+- because: T-20261116-10. Current models bill about 2.3 characters a token for tool output, so chars/4 showed every sink about 75% too small. The meter keeps its old pace (about 100k characters a note).
+- files: scripts/tw.py (CHARS_PER_TOKEN, METER_STEP_TOKENS), SKILL.md, README.md, tests/test_tw.py, TESTS.md.
+
 ### C-20261116-4 · 2026-11-16 · Version 0.3.7: the meter leaves subagent output out
 - because: T-20261116-7. A subagent's hooks carry the parent's session_id, so its tool output went onto the main session's meter, which then said it rides along every later turn. It never enters the main context. Hook input inside a subagent carries agent_id; the meter now skips it. The big-output nudge still goes to the subagent. Also T-20261116-4 (history-free change-check A/B, no saving), T-20261116-5 (session-start loads are used, no habit) and T-20261116-6 (hook start times) recorded; the new eval case ab-regen-changed is kept for later A/Bs.
 - files: scripts/tw.py (hook post), tests/test_tw.py, TESTS.md, evals/cases/ab-regen-changed.
