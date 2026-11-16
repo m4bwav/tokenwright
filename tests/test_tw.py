@@ -164,6 +164,12 @@ class Score(unittest.TestCase):
             data = json.loads(run("score", str(self.transcript(d)), "--json"))
             self.assertIn("carried_cache_read_tokens", data)
 
+    def test_cache_read_rates_named(self):
+        with tempfile.TemporaryDirectory() as d:
+            text = run("score", str(self.transcript(d)))
+            self.assertIn("0.025x Fable", text)
+            self.assertNotIn("a tenth of input", text)
+
 
 class Repeats(unittest.TestCase):
     def test_sequence_across_sessions(self):
@@ -288,6 +294,38 @@ class Compare(unittest.TestCase):
             os.utime(Path(d, "old.jsonl"), (1, 1))
             out = run("score", str(now), "--compare", "5")
             self.assertIn("best of 1 past sessions here ~0 (old.jsonl)", out)
+
+
+
+class Versions(unittest.TestCase):
+    def test_tidy_follows_plugin_version(self):
+        import re
+        root = Path(tw.__file__).resolve().parents[3]
+        tidy = (root / "skills" / "tokenwright-catalog" / "scripts" / "tidy.py").read_text(encoding="utf-8")
+        self.assertEqual(re.search(r'^VERSION = "([^"]+)"', tidy, re.M).group(1), tw.VERSION)
+        manifest = json.loads((root / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["version"], tw.VERSION)
+
+
+class CopilotCli(unittest.TestCase):
+    def test_copilot_events_are_scored(self):
+        big = "x" * 40000
+        recs = [{"type": "user.message", "data": {"content": "hi"}},
+                {"type": "session.usage_record", "data": {"usage": {"inputTokens": 100, "outputTokens": 10,
+                 "cacheReadTokens": 50, "cacheWriteTokens": 5, "reasoningTokens": 2}}},
+                {"type": "tool.execution_start", "data": {"toolCallId": "c1", "toolName": "bash",
+                 "arguments": {"command": "make test"}}},
+                {"type": "tool.execution_complete", "data": {"toolCallId": "c1", "success": True,
+                 "result": {"content": big}}}]
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / "events.jsonl"
+            p.write_text("\n".join(json.dumps(r) for r in recs), encoding="utf-8")
+            sinks, usage, n = tw.score(p)
+            self.assertEqual(n, 1)
+            self.assertEqual(usage["input_tokens"], 100)
+            self.assertEqual(usage["output_tokens"], 12)
+            self.assertEqual(usage["cache_read_input_tokens"], 50)
+            self.assertTrue(any(s[0] == "big-output" and "Bash" in s[3] for s in sinks))
 
 
 if __name__ == "__main__":

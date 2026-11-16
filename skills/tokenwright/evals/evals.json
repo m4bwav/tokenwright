@@ -110,6 +110,19 @@
       "evidence": "tw.py skill in the trace",
       "baseline": true,
       "runs": 3
+    },
+    {
+      "id": "multiturn-long-job",
+      "kind": "outcome",
+      "prompt": "Triage the CI runs in runs/ one at a time: per run count WARN lines and the top warning code in build.log, count failed tests in tests.log, find the slowest probe's endpoint in probes.log; write report.csv and say which run looks worst.",
+      "reference": "rows from make_fixture.py answers (run-01,1181,W1201,54,/api/profile ... run-05,1228,W4520,149,/api/orders)",
+      "expectations": [
+        "report.csv has the header and all five rows exactly",
+        "the with arm spends fewer tokens and dollars than the without arm at the same score"
+      ],
+      "evidence": "regex graders on report.csv; per-arm tokens and cost from the eval JSON",
+      "baseline": true,
+      "runs": 3
     }
   ]
 }

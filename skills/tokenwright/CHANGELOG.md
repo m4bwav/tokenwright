@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261116-1 · 2026-11-16 · Version 0.3.4: score reads Copilot CLI sessions; current cache rates; tidy version
+- because: the owner set "finished" as working and measured on Codex, Copilot, Cursor and Gemini too. Research (ai-docs/research/2026-11-16-other-agents-sessions.md) found Copilot CLI the easiest first reader; all 34 local sessions parse. R-20261115-2 named lower cache-read rates. tidy.py still printed 0.2.4. T-20261116-1: a long-session A/B showed no saving (the bare model already filters long output), so no habit changed.
+- files: scripts/tw.py (Copilot CLI `events.jsonl` events mapped onto score's tool and usage shapes; rate line), tidy.py (follows plugin version), tests/test_tw.py (three tests), evals case multiturn-long-job.
+
 ### C-20261115-2 · 2026-11-15 · Version 0.3.3: score reads subagent transcripts; idle hook 5x faster; note checks --saved
 - because: a scan of 1,917 local sessions over 30 days found subagent transcripts held 33.9% of cost-weighted spend (median 56% in the 288 sessions with subagents), and `score` read none of them. The hook process took about 139 ms a call even when off, since it loaded every module before checking `TOKENWRIGHT_HOOKS`; now 26 ms off and 71 ms on. `note --saved lots` was accepted.
 - files: scripts/tw.py (`score` adds `<session>/subagents/**/*.jsonl` with tagged sinks and a usage line, `--no-subagents`; early exit for an idle hook and lazy imports; `--saved` must be a count), tests/test_tw.py (three tests). Ships C-20261115-1 (refresh, levers).

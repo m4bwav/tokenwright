@@ -1,0 +1,11 @@
+schema_version: "1.1"
+name: multiturn-long-job
+description: The same three-step triage (build warnings, failed tests, slowest probe) over five CI runs of about 8,000 log lines each, in one session; the A/B measure is tokens and cost at equal correctness (L-004)
+execution:
+  max_turns: 40
+  timeout_seconds: 900
+  allowed_tools: [Bash, Write, Edit, Read, Glob, Grep, Skill]
+  runs: 3
+context:
+  scaffold_script: fixture.sh
+graders: []

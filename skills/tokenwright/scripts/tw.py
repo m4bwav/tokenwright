@@ -28,7 +28,7 @@ import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
-VERSION = "0.3.3"
+VERSION = "0.3.4"
 CHARS_PER_TOKEN = 4
 BIG_FILE_LINES = 400        # a whole read of a file this long, used for a few lines, is a sink
 BIG_OUTPUT_CHARS = 20000    # a tool result this long is a sink unless it was the point
@@ -125,6 +125,43 @@ def _content_text(c):
     return "" if c is None else str(c)
 
 
+# GitHub Copilot CLI events.jsonl (ai-docs/research/2026-11-16-other-agents-sessions.md)
+_COPILOT_PREFIXES = ("tool.execution_", "session.usage_record")
+# best-effort mapping; names not listed keep their own name
+_COPILOT_TOOLS = {"bash": "Bash", "powershell": "PowerShell", "view": "Read", "read": "Read", "edit": "Edit",
+                  "create": "Write", "write": "Write", "grep": "Grep", "rg": "Grep", "glob": "Glob", "web_fetch": "WebFetch"}
+
+
+def _copilot_event(rec, seen):
+    d = rec.get("data") or {}
+    t = rec.get("type")
+    if t == "session.usage_record":
+        u = d.get("usage") or {}
+        return "usage", {"input_tokens": u.get("inputTokens"), "output_tokens": (u.get("outputTokens") or 0)
+                         + (u.get("reasoningTokens") or 0), "cache_read_input_tokens": u.get("cacheReadTokens"),
+                         "cache_creation_input_tokens": u.get("cacheWriteTokens")}
+    cid = d.get("toolCallId")
+    if not cid or (t, cid) in seen:
+        return None
+    seen.add((t, cid))
+    if t == "tool.execution_start":
+        args = d.get("arguments") or {}
+        if isinstance(args, str):
+            try:
+                args = json.loads(args)
+            except ValueError:
+                args = {"command": args}
+        if isinstance(args, dict) and "path" in args and "file_path" not in args:
+            args = dict(args, file_path=args["path"])
+        name = d.get("toolName") or "?"
+        return "use", {"id": cid, "name": _COPILOT_TOOLS.get(name, name), "input": args if isinstance(args, dict) else {}}
+    if t == "tool.execution_complete":
+        r = d.get("result") or {}
+        text = r.get("content") if isinstance(r, dict) else r
+        return "result", {"id": cid, "text": _content_text(text), "error": d.get("success") is False}
+    return None
+
+
 def load_events(path):
     """Yield (kind, data) in order: ('use', {id,name,input}), ('result', {id,text,error}), ('usage', usage)."""
     seen_req, seen_block = set(), set()
@@ -133,6 +170,11 @@ def load_events(path):
             try:
                 rec = json.loads(line)
             except ValueError:
+                continue
+            if isinstance(rec, dict) and str(rec.get("type", "")).startswith(_COPILOT_PREFIXES):
+                ev = _copilot_event(rec, seen_block)
+                if ev:
+                    yield ev
                 continue
             msg = rec.get("message") if isinstance(rec, dict) else None
             if not isinstance(msg, dict):
@@ -305,7 +347,7 @@ def cmd_score(a):
         out("no sinks found")
         return 0
     out("estimated avoidable ~%d tokens entered context; carried on later turns as ~%d cache-read tokens "
-        "(billed at about a tenth of input)" % (total_waste, carried))
+        "(billed at 0.1x input or less: 0.05x Opus and Sonnet 5.5, 0.025x Fable 5.x)" % (total_waste, carried))
     for k, t in by_kind.most_common():
         out("  %-22s ~%d" % (k, t))
     out("top sinks:")
