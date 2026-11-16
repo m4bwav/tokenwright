@@ -9,6 +9,13 @@ Test runs for [SKILL.md](SKILL.md). Cases live in `evals/evals.json`. Unit tests
 
 ## Runs
 
+### T-20261116-9 · 2026-11-16 · transcript scan: tool results 5 before and 5 after each hook note, main sessions over 50 KB · Windows · study (hook value)
+- Why: improvement study seed 5 (ledger g2c0e48). Does the agent change what it pulls into context after a meter or big-output note?
+- Data: 613 sessions with hook notes, 1,400 without (control: the same event, a non-Read result of 20k+ chars or a 25k-token step, in sessions with no hook).
+- Big-output note (n=437): share of the next 5 results at 20k+ chars 11.5% before, 12.6% after; median 2,158 to 1,131 chars. Control (n=129): 21.1% to 19.5%, median 695 to 678.
+- Meter note (n=117): 24.4% to 23.2%, median 3,409 to 2,251. Control (n=2,546): 41.1% to 40.8%, median 2,947 to 2,736.
+- Verdict: no measurable change in big pulls after either note. Medians fall after a note but the control falls too, and the big-pull share does not move. The notes have earned their keep as a study tool (sinks and bugs found), not as an in-session nudge. Not cut: hooks are opt-in and cheap; changing them is a stop point. Script kept out of the repo (it reads local transcripts).
+
 ### T-20261116-7 · 2026-11-16 · live probe in Claude Code (VS Code) plus unit test · Windows · bug found and fixed
 - Why: gf6bd83, does the hook meter count subagent tool output?
 - Probe: a subagent made one Grep (a tool the main session had not used). The main session's meter file gained a Grep entry of 975 chars, so subagent output was added to the main meter. Unit test test_meter_skips_subagent_tool_output failed first, passes after the fix (55 of 55).
