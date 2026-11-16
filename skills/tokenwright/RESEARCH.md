@@ -15,6 +15,12 @@ Topic: ways an AI agent spends fewer tokens on the same result: Claude Code and 
 
 ## Findings
 
+### R-20261116-1 · subject · magnitude 0.1
+Effort change and the cache (ledger g966cd0, beat claim of +31.9%). Primary source confirms it: changing `output_config.effort` can invalidate message blocks, and on some models the tool and system caches too; setting effort to the model's default equals omitting it; on models with per-message effort, an effort change sent as a `role: "system"` message inside `messages` keeps the cached prefix (platform.claude.com/docs/en/build-with-claude/prompt-caching, "What invalidates the cache", checked 2026-11-16). Local scan: zero mid-session `/effort` changes in all local Claude Code transcripts, so a habit row would almost never fire. Ruled out as a habit; kept here as a fact for refreshes. Open: whether Claude Code sends `/effort` the per-message way.
+
+### R-20261116-2 · subject · magnitude 0
+Subagent 1-hour TTL "doubles cost" (ledger gf4d6d4). Subagents default to the 5-minute TTL (R-20261115-1 b); 1 hour applies only when `subagentPromptCacheTtl` is set. A 1-hour cache write costs 2x base input against 1.25x for 5 minutes (prompt-caching page), so writes cost 1.6x more, and the gain depends on reuse after 5 minutes. Since 2.1.318 backgrounds subagent shell commands after 3 minutes to keep the cache alive, no habit; nothing to change.
+
 ### R-20261115-1 · subject · magnitude 0.1
 Volatile claims re-checked 2026-11-15, all hold. (a) Description plus `when_to_use` cut at 1,536 characters in the skill listing (code.claude.com/docs/en/skills). (b) Main conversation 1 h on a subscription within plan usage, 5 min for subagents, forks, compaction, API keys, cloud and usage credits; `promptCacheTtl`, `subagentPromptCacheTtl` and their env vars (code.claude.com/docs/en/prompt-caching). (c) Bash 30,000 characters by default, now settable up to 150,000 (`bashOutputMaxChars` or `BASH_MAX_OUTPUT_LENGTH`; code.claude.com/docs/en/env-vars); MCP warning at 10k tokens, cap 25k, text results over 50,000 characters saved to a file (code.claude.com/docs/en/mcp). Fixed: the costs page's PreToolUse example keeps the last 100 lines of test output, not only failures (code.claude.com/docs/en/costs). applied: C-20261115-1.
 

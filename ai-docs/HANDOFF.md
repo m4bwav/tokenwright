@@ -1,6 +1,6 @@
 # Handoff: tokenwright
 
-Updated 2026-11-16 (after grind session 12). Status: in progress (improvement grind). Continue with [plans/2026-11-15-tokenwright-improve-continue-prompt.md](plans/2026-11-15-tokenwright-improve-continue-prompt.md). It replaces the 2026-10-30 build prompt, whose list was finished at session 30.
+Updated 2026-11-16 (after grind session 13). Status: in progress (improvement grind). Continue with [plans/2026-11-15-tokenwright-improve-continue-prompt.md](plans/2026-11-15-tokenwright-improve-continue-prompt.md). It replaces the 2026-10-30 build prompt, whose list was finished at session 30.
 
 ## State
 
@@ -23,6 +23,7 @@ Updated 2026-11-16 (after grind session 12). Status: in progress (improvement gr
 - Session 6 ruled out: change-check in one turn (T-20261116-4, case ab-regen-changed) and a habit for session-start loads (T-20261116-5, loads are used). Hook times in T-20261116-6.
 - Session 7: live meter check passed (T-20261116-8). finwright guard PR #21 (~470 to ~210 ms a call) waits on the owner. Next picks: the ledger (`grw.py next`).
 - Session 8: hook notes do not change what the agent pulls next (T-20261116-9).
+- Session 13: effort-change and subagent-TTL claims verified from docs, no habit (R-20261116-1, -2); second-baseline item dropped (stop point). Next picks: live check g272313 from 2026-11-17, delegation break-even g79cddf (A/B), wiki gd596be.
 - Session 12: see log. Next picks: the three verify items from the beat scan (effort change and cache, subagent 1-hour TTL, delegation break-even); live check g272313 from 2026-11-17.
 - Session 11: the post hook counted Bash's bashEditDiff (never in context), so sed or script edits raised false big-output notes (T-20261116-12); fixed in 0.3.10. Live check: from 2026-11-17, Bash edits should no longer raise ~30k notes. Next pick: the ledger (beat rescan g81ef2d, tw.py discoverability gf74a42).
 - Session 10: Copilot inputTokens includes cache reads and writes (T-20261116-11); fixed in 0.3.9. Next pick: the beat rescan (g81ef2d), then the ledger.
