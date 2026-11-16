@@ -49,7 +49,7 @@ Ship means: failing test first, the change, a CHANGELOG entry with its reason, b
 
 - Batches go to subagents: a research sweep, a transcript scan, an eval run. Hand over data as a file path and keep only the short report. Hand on to the next session when context runs low, not after each batch.
 - Real transcripts are read on this machine only. Counts and aggregates may enter the repository. Transcript content, session names and local paths may not.
-- Practise the plugin. Before hand-over run `tw.py score` on this session. A sink it finds is a study finding and goes in the ledger. Write `tw.py note` when tokenwright changed what you did.
+- Practise the plugin. Before hand-over run `tw.py score` on this session. A sink it finds is a study finding and goes in the ledger.
 - Small rulings are decided and flagged in one line. Work found and left for later goes in with `grw.py add`, not only in HANDOFF.
 
 ## Stop points (ask the owner, on an askwright page)

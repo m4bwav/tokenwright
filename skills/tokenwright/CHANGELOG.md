@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261116-3 · 2026-11-16 · Version 0.3.6: stop asking agents to write tw.py note
+- because: session 4 found no real use of `tw.py note` in 294 sessions since 0.3.0. The owner ruled on askwright set note-2026-11-16: keep the command, drop the lines asking agents to use it.
+- files: SKILL.md (note row now says what it records and that it is optional). The command and its tests stay.
+
 ### C-20261116-2 · 2026-11-16 · Version 0.3.5: habit audit over 400 sessions; one row cut
 - because: T-20261116-3 ran `tw.py score` on the newest 400 local sessions over 50 KB (30 days, 8,420 tool calls). Waste by kind: big output 1.22M tokens (101 sessions), whole read 352k (19), repeat read 255k (43), shell cat 100k (61), retry, debug loop and poll under 3k each, re-read after own edit 223 tokens in 1 session. The harness system prompt already forbids re-reading after an edit, so the row repeated it at no gain. About 70% of big-output tokens came in a session's first five calls (state loads), a new ledger item.
 - files: references/habits.md (row "No re-read after own edit" removed). The score kind stays.
