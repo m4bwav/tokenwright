@@ -6,6 +6,11 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 
 Entries before C-20261030-1 were written in the skill-tidy repository (m4bwav/skill-tidy); their paths are relative to that layout (the skill folder was `skills/skill-tidy`).
 
+### C-20261116-1 · 2026-11-16 · Version 0.3.12: token estimates at the measured 2.3 chars a token; Codex budget keeps bytes / 4
+- because: tokenwright T-20261116-10 (real rate 2.28 chars a token; chars/4 under-counts by ~75%).
+- files: scripts/tidy.py (est_tokens, codex_tokens, budgets, ST016), tests/test_tidy.py, references/rules.md (ST016).
+- Display and ST016 figures use 2.3. Codex's listing budget is still emulated at bytes / 4, as Codex counts it. On the owner's catalog ST016 now flags 12 skill bodies instead of 1 (bodies over ~11.5K chars cost over 5K real tokens when they load); kept as a warning, small ruling.
+
 ### C-20261114-1 · 2026-11-14 · budget honours SLASH_COMMAND_TOOL_CHAR_BUDGET
 - because: user request (the env override was ignored, so `budget` reported OVER at 1% of the window)
 - files: scripts/tidy.py (claude_char_budget, budgets, cmd_budget), ../../tests/test_tidy.py (test_claude_budget_honours_char_budget_override)

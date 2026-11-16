@@ -19,7 +19,7 @@
 | ST013 | warn | more than 12 quoted trigger phrases | skill-creator (no ever-expanding query lists), skillscheck keyword stuffing |
 | ST014 | info | first sentence opens generically ("This skill", "Helps") | Claude Code and Codex: key use case first |
 | ST015 | warn | steering phrases ("always use this", "prefer this skill") | arXiv 2609.02035: shaping moves selection 15% to 64% |
-| ST016 | warn | body over 500 lines or about 5K tokens | spec guidance; move detail to references/ |
+| ST016 | warn | body over 500 lines or about 5K tokens (at 2.3 chars a token, ~11.5K chars) | spec guidance; move detail to references/ |
 | ST017 | error | `compatibility` over 500 chars | spec |
 | ST018 | info | triggers kept in `when_to_use` | only Claude Code reads it |
 | ST019 | warn | similarity 0.45+ to another listed skill and no boundary sentence | 2601.04748, 2605.24050, 2606.10388; the threshold is inference (R-20260926-1) |
