@@ -217,3 +217,11 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 ## 2026-11-16 Grind session 11
 
 - Bash hook sizing (g7102dd, T-20261116-12): Bash tool_response carries `bashEditDiff`, a diff of files the command edited that never reaches the model. Across 5,954 local Bash results, 100 of 172 that the hook sized at 20k+ chars were over twice their context size from it. The hook now counts stdout plus stderr for Bash. Seen live this session: a sed edit was reported as ~30k tokens. Released 0.3.10.
+
+## 2026-11-16 Grind session 12
+
+- tw.py discoverability (gf74a42, T-20261116-13): real transcripts show 6 not-found tw.py calls in 32 sessions (one each), not the 2-5 the eval traces suggested. SKILL.md bodies now use ${CLAUDE_SKILL_DIR}; released 0.3.11. Live check from 2026-11-17 (g272313).
+- tidy.py estimates (g067149): display and ST016 at 2.3 chars a token, Codex budget kept at bytes/4. ST016 now flags 12 bodies instead of 1 on the owner's catalog (kept as warn, small ruling). Released 0.3.12.
+- Overlap check (gc48d31): no description pair >= 0.45 with context-health or repo-traffic; no change.
+- token-saving beat rescanned (561 items, 4 notes). No new habit; three single-source claims went to the ledger to verify: effort change clears cache, 1-hour TTL on subagents, delegation break-even.
+- Lesson: scan real transcripts before trusting a cost seen in eval traces.
