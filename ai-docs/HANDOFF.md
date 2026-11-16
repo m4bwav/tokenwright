@@ -21,7 +21,7 @@ Updated 2026-11-16 (after grind session 13). Status: in progress (improvement gr
 - Per-agent: table in [research/2026-11-16-other-agents-sessions.md](research/2026-11-16-other-agents-sessions.md). Copilot CLI read by score. Next readers: Gemini CLI, then Codex (zstd). Cursor has no local data.
 - A/B: T-20261116-1 (long job) and T-20261116-2 (history cases, stub-plugin arm) showed no saving. `scripts/ab_eval.py` now runs any A/B with tokens per arm. History cases leak the plugin into the stub arm, so the next case needs no history (ledger item). Ledger also holds: tw.py discoverability (bare `tw.py` costs 2-5 calls).
 - Session 6 ruled out: change-check in one turn (T-20261116-4, case ab-regen-changed) and a habit for session-start loads (T-20261116-5, loads are used). Hook times in T-20261116-6.
-- Session 7: live meter check passed (T-20261116-8). finwright guard PR #21 (~470 to ~210 ms a call) waits on the owner. Next picks: the ledger (`grw.py next`).
+- Session 7: live meter check passed (T-20261116-8). finwright guard PR #21 (~470 to ~210 ms a call) merged 2026-11-16. Next picks: the ledger (`grw.py next`).
 - Session 8: hook notes do not change what the agent pulls next (T-20261116-9).
 - Session 13: effort-change and subagent-TTL claims verified from docs, no habit (R-20261116-1, -2); second-baseline item dropped (stop point). Next picks: live check g272313 from 2026-11-17, delegation break-even g79cddf (A/B), wiki gd596be.
 - Session 12: see log. Next picks: the three verify items from the beat scan (effort change and cache, subagent 1-hour TTL, delegation break-even); live check g272313 from 2026-11-17.
@@ -33,7 +33,6 @@ Updated 2026-11-16 (after grind session 13). Status: in progress (improvement gr
 ## Waits on the owner
 
 - Nothing open on askwright.
-- Review https://github.com/m4bwav/finwright/pull/21 (guard launcher speed-up; touches the permission guard, so not self-merged).
 - Unattended running is not agreed. No hours or budget are granted, so sessions run attended.
 
 ## Grants
