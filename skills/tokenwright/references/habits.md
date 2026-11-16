@@ -7,7 +7,6 @@ Each habit: when it applies, how, and the saving. "Measured" numbers come from `
 | Habit | When | How | Saving |
 |---|---|---|---|
 | Search, then ranged read | You need a few lines of a file over about 200 lines | `Grep -n -C 3 pattern file`, then Read `offset`/`limit` | Measured payload (fixture `inventory.py`, 2,690 lines): about 21,400 tokens whole, 56 for `grep -n -A4` of the function. A 4,000-line log: about 61,600 whole (past the Read cap), under 50 for `grep ERROR \| sort \| uniq -c` |
-| No re-read after own edit | Right after Edit or Write | Trust the tool; it errors on failure | The whole file each time |
 | Skip unchanged re-reads | Checking whether a file you read earlier changed (another process, a build, the user) | `tw.py changed <paths>`; in a repo `git diff --stat` | Unchanged: one line. Changed: diff only |
 | Trim output at the source | Any command that can print a lot | `head`, `tail -n 40`, `--stat`, `--oneline`, `-q`, Grep `head_limit`, `files_with_matches`, `jq '.field'`; runners: `pytest -q --tb=short`, `npm --silent`, `dotnet test -v q` | Bash caps at 30k chars; trimming keeps it near the few hundred you need. |
 | Outline first | Long documents, books, big code files | Headings (`grep -n '^#'`), a symbol list, a TOC; readwright for books and PDFs; then the biggest part that fits (Berryman ch. 6) | Most never loads |

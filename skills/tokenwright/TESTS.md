@@ -1,6 +1,11 @@
 # Tests: tokenwright
 
-Test runs for [SKILL.md](SKILL.md). Cases live in `evals/evals.json`. Unit tests for tw.py are in the repository's `tests/`. A test passes on evidence (a tool call in the trace, a file, a marker), never on the transcript's claim. Entry shape: `### T-YYYYMMDD-n · date · harness · env · passed/total`. Newest first.
+Test runs for [SKILL.md](SKILL.md). Cases live in `evals/evals.json`. Unit tests for tw.py are in the repository's `tests/`. A test passes on evidence (a tool call in the trace, a file, a marker), never on the transcript's claim. Entry shape: `### T-20261116-3 · 2026-11-16 · transcript scan: `tw.py score --json` on the newest 400 local sessions over 50 KB (30 days) · Windows · habit audit
+- Waste tokens by kind (sessions): big output 1,219,450 (101), whole read 352,170 (19), repeat read 255,080 (43), shell cat 99,839 (61), retry 2,536 (6), debug loop 875 (4), poll 473 (3), re-read after own edit 223 (1). 8,420 tool calls.
+- Big output by call number: calls 1 to 5 hold about 841k of the 1.22M, mostly whole-file `cat` of handoff, log and plan files at session or subagent start.
+- Verdict: cut the habit row "No re-read after own edit" (the harness already says it; 1 hit in 400). Session-start loads become a ledger item.
+
+### T-YYYYMMDD-n · date · harness · env · passed/total`. Newest first.
 
 ## Runs
 
