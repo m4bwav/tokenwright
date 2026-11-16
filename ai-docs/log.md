@@ -198,3 +198,4 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 - finwright guard launcher (g714968): the cost was the launcher, not fw_guard.py. It tried the WindowsApps python3 Store stub (~170 ms to fail) and started Python twice. PR m4bwav/finwright#21 (one start, stubs skipped, launcher tests): ~470 ms to ~210 ms a call. Left open for the owner (permission guard).
 - Live check g053f05 (T-20261116-8): with 0.3.7 installed, a subagent Bash call left the main meter unchanged. Done.
 - 2026-11-16: on this PC `python3` resolves to the WindowsApps Store stub; any hook launcher that tries python3 first pays ~170 ms a call.
+- 2026-11-16: 0.3.7 shipped with tw.py and tidy.py still saying 0.3.6 (suite red on main); fixed in PR #68, no re-release (cosmetic, small ruling).
