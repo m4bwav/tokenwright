@@ -182,3 +182,12 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 
 - Owner answered note-2026-11-16: keep-quiet. `tw.py note` stays; SKILL.md no longer asks agents to write it, and the continue prompt line asking for it is gone. Released 0.3.6 (PR #64), installed.
 - Next ledger pick: gc83186 (history-free A/B case for change-check), then gc8bfe9 (platform levers research) and ga1faf8 (big output at session start).
+
+## 2026-11-16 Grind session 6
+
+- History-free change-check A/B (T-20261116-4, new case ab-regen-changed): no saving. Both arms copy the file to $TMPDIR, run the script and diff, in three calls. Ruled out in a single turn.
+- Session-start big output (T-20261116-5, subagent scan of 400 sessions plus 602 subagent transcripts): logs are already tailed, and in 47 of 65 long state cats the session later used text from before the last 100 lines. No habit. The lever is shorter state docs (everlast, chainwright), not tokenwright.
+- Hook start times (T-20261116-6): finwright's PreToolUse guard takes 423 ms a call, far above the others (62-122 ms, 32 ms spawn floor). Ledger item for a finwright PR.
+- Bug (T-20261116-7): the meter added subagent tool output to the main session. Fixed with an agent_id skip; released 0.3.7.
+- Platform-levers research lowered to value 2 and folded into the 2026-11-24 hub refresh, since the 2026-11-15 refresh already added six levers (small ruling).
+- 2026-11-16: kept eval sandboxes under ~/evaltmp in WSL have read-only sealed/config/out folders; plain rm -rf fails. Use chmod -R u+w first.

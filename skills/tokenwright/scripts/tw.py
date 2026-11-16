@@ -556,7 +556,9 @@ def cmd_hook(a):
         if size >= BIG_OUTPUT_CHARS and name != "Read":
             msg = ("tokenwright: that %s output was ~%d tokens. Next time trim at the source (head, --stat, -q, "
                    "head_limit) or hand the sweep to a subagent." % (name, tokens(size)))
-        note = meter_add(ev.get("session_id"), name, size)
+        # A subagent's hooks carry the parent's session_id plus agent_id; its output never reaches
+        # the main context, so it stays off the main meter (T-20261116-7).
+        note = None if ev.get("agent_id") else meter_add(ev.get("session_id"), name, size)
         if note:
             msg = msg + " " + note if msg else note
     if msg:

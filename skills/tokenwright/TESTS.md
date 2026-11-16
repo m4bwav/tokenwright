@@ -9,6 +9,26 @@ Test runs for [SKILL.md](SKILL.md). Cases live in `evals/evals.json`. Unit tests
 
 ## Runs
 
+### T-20261116-7 · 2026-11-16 · live probe in Claude Code (VS Code) plus unit test · Windows · bug found and fixed
+- Why: gf6bd83, does the hook meter count subagent tool output?
+- Probe: a subagent made one Grep (a tool the main session had not used). The main session's meter file gained a Grep entry of 975 chars, so subagent output was added to the main meter. Unit test test_meter_skips_subagent_tool_output failed first, passes after the fix (55 of 55).
+- Live check owed: after installing 0.3.7, repeat the probe; the main meter must not change.
+
+### T-20261116-6 · 2026-11-16 · hook start time, 7 runs each through Git Bash with a sample event · Windows · study
+- Median wall time per call: finwright PreToolUse guard (Bash, PowerShell, MCP) 423 ms; tokenwright post 122 ms, pre 114 ms; quirkwright 90 ms; evergreen PostToolUse 62 ms; a bare `true` 32 ms (the spawn floor). finwright's guard is the outlier: about 390 ms over the floor on every shell or MCP call. Ledger item for a PR on finwright; tokenwright makes no change.
+
+### T-20261116-5 · 2026-11-16 · transcript scan (400 newest main sessions over 50 KB plus 602 subagent transcripts) · Windows · study, no change
+- Why: ga1faf8. Big output in calls 1-5 looked like state loading that a habit could cut.
+- Result: 131 results of 20k chars or more in calls 1-5, about 787k tokens. Compound `cd && cat` of whole state markdown (HANDOFF, continue prompt, plan, SKILL.md) 51 calls, 306k; compound ranged reads (head, sed -n, tail) 40 calls, 235k; whole cats of other markdown 19 calls, 119k; the rest under 50k each. Only one call cat a whole log.md: tailing logs saves about 0.
+- Use check: in 47 of 65 long cats the session later used at least three identifiers found only before the last 100 lines. The loads were mostly read for a reason, so "outline then range" would add calls more than it saves; the 318k upper bound (keep 25%) does not hold.
+- Verdict: no new habit. Logs are already tailed and the loaded state is used. The cost lever lies with the docs being loaded (HANDOFF length, prompts that stack several files), which belongs to everlast and chainwright, not to tokenwright.
+
+### T-20261116-4 · 2026-11-16 · claude plugin eval (scripts/ab_eval.py, 3 runs each arm, plugin vs stub) · WSL2 Ubuntu · no saving
+- Why: gc83186. The history-free change-check case, so the stub arm cannot learn tw.py from a recorded turn 1. Case ab-regen-changed: regen.sh swaps a 1,500-line settings.py for a version with two settings changed; no git, no saved copy; the agent writes changes.txt.
+- Result: both arms 3/3. With $0.120 mean (cache read 91.8k, output 210), stub $0.115 (92.4k, 113). Every run in both arms did the same three calls: `cp settings.py $TMPDIR/...`, run regen.sh, `diff`, then write the answer. No arm read the file whole or used tw.py changed.
+- Verdict: ruled out as a saving over the bare model in a single turn. `tw.py changed` only pays when the snapshot must outlive the turn or the session (a file edited by someone else between sessions), which no eval has shown yet.
+- Spend: about $0.70.
+
 ### T-20261116-2 · 2026-11-16 · claude plugin eval 2.1.316 (3 runs each arm, --ablation none twice: plugin vs a stub plugin with no skills or hooks, --keep-temp) · WSL2 Ubuntu · no saving
 - Why: the history cases (multiturn-reread, multiturn-changed) were single-arm, so they had never been A/B tested. The stub copy (plugin.json with an empty skills folder and no hooks) gives them a without arm. Token counts come from each kept sandbox's out/trace.jsonl (message.usage), which fills the "cost only" gap of T-20261116-1.
 - multiturn-reread: both arms 3/3, one Grep, about 64.8k cache read and 81k cache write a run, $0.171 with and $0.169 without. The bare model already answers from a targeted Grep and never re-reads the whole file.
