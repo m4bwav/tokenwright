@@ -246,6 +246,22 @@ class Hook(unittest.TestCase):
                 os.environ.pop("TOKENWRIGHT_HOOKS", None)
                 os.environ.pop("TOKENWRIGHT_METER_DIR", None)
 
+    def test_bash_counts_only_stdout_and_stderr(self):
+        # T-20261116-12: bashEditDiff (files a command edited) is in tool_response but not in context
+        with tempfile.TemporaryDirectory() as d:
+            os.environ["TOKENWRIGHT_HOOKS"] = "warn"
+            os.environ["TOKENWRIGHT_METER_DIR"] = d
+            try:
+                ev = {"session_id": "s4", "tool_name": "Bash", "tool_input": {"command": "sed -i x f"},
+                      "tool_response": {"stdout": "ok", "stderr": "", "interrupted": False,
+                                        "bashEditDiff": "d" * 120000}}
+                sys.stdin = io.StringIO(json.dumps(ev))
+                self.assertEqual(run("hook", "post"), "")
+                self.assertEqual(run("meter", "s4").strip(), "tw ~0k")
+            finally:
+                os.environ.pop("TOKENWRIGHT_HOOKS", None)
+                os.environ.pop("TOKENWRIGHT_METER_DIR", None)
+
     def test_meter_skips_subagent_tool_output(self):
         # T-20261116-7: a subagent's tool output never enters the main context
         with tempfile.TemporaryDirectory() as d:

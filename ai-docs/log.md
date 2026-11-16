@@ -213,3 +213,7 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 ## 2026-11-16 Grind session 10
 
 - Copilot CLI cache reads (gc0e1f0, T-20261116-11): in 3,229 local usage records `inputTokens` includes cache reads and writes (reads a median 98% of it on cache hits, never above it). tw.py counted cached input twice; now input = inputTokens less reads and writes. Released 0.3.9.
+
+## 2026-11-16 Grind session 11
+
+- Bash hook sizing (g7102dd, T-20261116-12): Bash tool_response carries `bashEditDiff`, a diff of files the command edited that never reaches the model. Across 5,954 local Bash results, 100 of 172 that the hook sized at 20k+ chars were over twice their context size from it. The hook now counts stdout plus stderr for Bash. Seen live this session: a sed edit was reported as ~30k tokens. Released 0.3.10.

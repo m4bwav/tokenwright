@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261116-7 · 2026-11-16 · Version 0.3.10: the hook sizes Bash output by stdout and stderr
+- because: T-20261116-12. Bash's tool_response carries bashEditDiff (files the command edited), which the model never sees; it made 100 of 172 large Bash results look over twice their size.
+- files: scripts/tw.py (cmd_hook), tests/test_tw.py, TESTS.md.
+
 ### C-20261116-6 · 2026-11-16 · Version 0.3.9: Copilot CLI usage line counts cached input once
 - because: T-20261116-11. Copilot's inputTokens already includes cache reads and writes, so score showed cached input both as input and as cache read.
 - files: scripts/tw.py (_copilot_event), tests/test_tw.py.

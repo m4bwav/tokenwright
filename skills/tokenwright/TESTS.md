@@ -9,6 +9,13 @@ Test runs for [SKILL.md](SKILL.md). Cases live in `evals/evals.json`. Unit tests
 
 ## Runs
 
+### T-20261116-12 · 2026-11-16 · transcript scan: what does the post hook count for Bash? newest 500 local sessions · Windows · study (hook accuracy)
+- Why: ledger g7102dd. In session 9 the big-output note called a ~700-char Bash result ~9.5k tokens.
+- Method: every Bash `toolUseResult` (n=5,954; the same object the PostToolUse hook gets as tool_response) against the tool_result text that entered context.
+- Result: the response also carries `bashEditDiff`, a diff of files the command edited, which never reaches the model (4.5M chars across the set, next to 13.7M of stdout). Of 172 results the hook sized at 20k+ chars, 100 were over twice their context size, all from bashEditDiff (one: 143k counted, 683 in context).
+- Verdict: ship. For Bash the hook now counts stdout plus stderr only, so false big-output notes and meter inflation after sed or script edits stop.
+- Limit: one user's sessions. Other tools still count the JSON of their response.
+
 ### T-20261116-11 · 2026-11-16 · transcript scan: does Copilot CLI inputTokens include cache reads? 34 local sessions · Windows · study (per-agent reader)
 - Why: ledger gc0e1f0. tw.py mapped Copilot `inputTokens` to Claude's `input_tokens`, which counts only uncached input.
 - Method: every `session.usage_record` (n=3,229) in local Copilot CLI events.jsonl; compare inputTokens with cacheReadTokens and cacheWriteTokens.
