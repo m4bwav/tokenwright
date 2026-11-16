@@ -172,3 +172,8 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 
 - 2026-11-16: per-run token counts for evals: run with `--keep-temp`; each kept sandbox holds the run transcript at config/projects/*/*.jsonl (sum message.usage). Jobs started with `( ... &)` inside `wsl -e bash -lc` die when that call returns; run the eval in the foreground of a background tool call. `--eval-dir` may not point inside skills/.
 - 2026-11-16: eval runs drop their session transcripts (00000000-*.jsonl, ~1.3 MB) into multiturn case folders; they are gitignored but turn budget.py RED on installed KB. Delete them after a run.
+
+## 2026-11-16 Grind session 4
+
+- Habit audit (T-20261116-3): `tw.py score` on the newest 400 local sessions over 50 KB. Waste tokens: big output 1.22M (101 sessions), whole read 352k, repeat read 255k, shell cat 100k; retry, debug loop, poll and re-read after own edit together under 5k. About 70% of big output falls in calls 1 to 5 (state loads at session or subagent start): new ledger item ga1faf8. Cut the habit row "No re-read after own edit" (1 hit; the harness already says it), L-005. Released 0.3.5, installed.
+- tw.py note adoption: 294 sessions since 0.3.0, no real use (only help or docs text; one --saved 0). Cutting it is a stop point: askwright set note-2026-11-16 (in the vault's private ask folder) asks the owner, guess cut.
