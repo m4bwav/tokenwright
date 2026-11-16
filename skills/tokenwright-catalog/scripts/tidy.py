@@ -36,7 +36,7 @@ import sys
 import tempfile
 import time
 
-VERSION = "0.3.3"  # tokenwright release, bumped with tw.py
+VERSION = "0.3.4"  # tokenwright release, bumped with tw.py
 HERE = os.path.dirname(os.path.abspath(__file__))
 NL = chr(10)
 AGENTS = ["claude", "codex", "copilot", "cursor", "all"]

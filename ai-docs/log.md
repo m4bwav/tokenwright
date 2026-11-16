@@ -162,4 +162,10 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 - outcome-catalog re-run in WSL with TMPDIR on a real disk: with 1.00, without 0.80. Block cleared. An earlier attempt died on the 5-hour usage limit, not the sandbox.
 - Wiki brought to 0.3.2 (commit 4dd7e89). `note --saved` now must be a count.
 - Released 0.3.3.
-- 2026-11-16: tw.py score reads Copilot CLI events.jsonl (34 local sessions, 0 errors). Open: whether Copilot inputTokens already include cache reads.
+
+## 2026-11-16 Grind session 2
+
+- Owner answered road-2026-11-15: finished means reach (works and measured on Codex, Copilot, Cursor, Gemini CLI); the only milestone kept is the long-session A/B. Small ruling: per-agent support stays as a milestone because it is the finish line. The worth verdict was lowered.
+- Other agents: research note research/2026-11-16-other-agents-sessions.md with a support table. Copilot CLI is the best first reader. `tw.py score` now reads Copilot CLI `events.jsonl`: 34 of 34 local sessions parse, 4,778 tool calls, 331 repeat reads, 29 polls. Open: whether Copilot inputTokens already include cache reads.
+- Long-session A/B (T-20261116-1, case multiturn-long-job, about $1): both arms 3/3, mean cost $0.165 with and $0.164 without. No saving: the bare model already filters long output with commands. Next A/B needs a job the bare model handles wastefully, and token counts per arm (the eval JSON gives only cost).
+- Small fixes: score names current cache-read rates; tidy.py follows the plugin version. Released 0.3.4.
