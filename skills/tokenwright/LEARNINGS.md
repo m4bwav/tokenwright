@@ -21,3 +21,7 @@ Write an entry the moment a real signal happens: a user correction, the same err
 ### L-004 · 2026-11-01 · A short repeated job is answered, not scripted, and that is right
 - Trigger: T-20261101-2: a third 'same again' for a two-command summary cost $0.05 and two turns; no description wording woke tokenwright-script.
 - Hypothesis: a script case needs a job of three or more steps with output that needs trimming. Build that case before claiming a scripting saving.
+
+### L-005 · 2026-11-16 · A habit the harness already states never fires
+- Trigger: T-20261116-3 found "re-read after own edit" once in 400 sessions; the Claude Code system prompt already forbids it.
+- Hypothesis: before adding or keeping a habit row, check whether the harness system prompt already says it; such rows cost tokens and change nothing.
