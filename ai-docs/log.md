@@ -232,3 +232,4 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 - g966cd0 effort change and cache (R-20261116-1): the prompt-caching docs confirm that changing effort can clear the message cache, and on some models the tool and system caches too. Zero mid-session /effort changes in local transcripts, so no habit. The only grep hit was this session's own command: exclude the current transcript in local scans.
 - gf4d6d4 subagent 1-hour TTL (R-20261116-2): subagents default to 5 min; 1-hour writes cost 2x base input vs 1.25x. No habit.
 - Next picks: live check g272313 (from 2026-11-17), delegation break-even g79cddf (needs an A/B, not a scan), wiki refresh gd596be.
+- 2026-11-16: finwright PR #21 merged by the owner (19:35 UTC); check PR state with gh before repeating a wait from HANDOFF.
