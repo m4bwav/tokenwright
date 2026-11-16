@@ -13,7 +13,7 @@ tokenwright: a cross-agent plugin for spending fewer tokens on the same result. 
 - A saving claimed in the habits catalogue is measured (cite the eval or the source) or labelled an estimate.
 - Book ideas are paraphrased with chapter citations; quotes stay under about ten words; no local paths to books.
 - The hub is an evergreen unit. Before editing it read `skills/tokenwright/evergreen.json`; if `next_due` has passed or `contradiction` is set, say so and refresh after the task. Log every change in the skill's `CHANGELOG.md` with its reason; lessons go to `LEARNINGS.md`. The everscout beat `token-saving` feeds refreshes as leads.
-- A release bumps the version in `.claude-plugin/plugin.json`, `plugin.json`, `VERSION` in `tw.py`, `metadata.version` in each SKILL.md and the CHANGELOG together, then tags `vX.Y.Z` and publishes a GitHub Release.
+- A release bumps the version in `.claude-plugin/plugin.json`, `plugin.json`, `VERSION` in `tw.py` and `tidy.py`, `metadata.version` in each SKILL.md and the CHANGELOG together, then tags `vX.Y.Z` and publishes a GitHub Release.
 - tokenwright-catalog is a second evergreen unit with its own companions and `evergreen.json`; its eval cases sit with the hub's in `skills/tokenwright/evals/cases` (trigger-4, trigger-5, decoy-3, decoy-4, action-catalog, outcome-catalog). Changes to tidy.py get a test in `tests/test_tidy.py`.
 - Neighbours: context-health, local-delegate, readwright, evergreen-wrapup (calls `tw.py score`). Link, never copy.
 - This is a public repository: no person named other than the author credit and published authors, no machine, no absolute local path, no credential, no transcript content. Plain short sentences, no em dashes, relative markdown links, never wikilinks.

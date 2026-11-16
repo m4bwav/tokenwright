@@ -164,6 +164,12 @@ class Score(unittest.TestCase):
             data = json.loads(run("score", str(self.transcript(d)), "--json"))
             self.assertIn("carried_cache_read_tokens", data)
 
+    def test_cache_read_rates_named(self):
+        with tempfile.TemporaryDirectory() as d:
+            text = run("score", str(self.transcript(d)))
+            self.assertIn("0.025x Fable", text)
+            self.assertNotIn("a tenth of input", text)
+
 
 class Repeats(unittest.TestCase):
     def test_sequence_across_sessions(self):
@@ -288,6 +294,17 @@ class Compare(unittest.TestCase):
             os.utime(Path(d, "old.jsonl"), (1, 1))
             out = run("score", str(now), "--compare", "5")
             self.assertIn("best of 1 past sessions here ~0 (old.jsonl)", out)
+
+
+
+class Versions(unittest.TestCase):
+    def test_tidy_follows_plugin_version(self):
+        import re
+        root = Path(tw.__file__).resolve().parents[3]
+        tidy = (root / "skills" / "tokenwright-catalog" / "scripts" / "tidy.py").read_text(encoding="utf-8")
+        self.assertEqual(re.search(r'^VERSION = "([^"]+)"', tidy, re.M).group(1), tw.VERSION)
+        manifest = json.loads((root / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["version"], tw.VERSION)
 
 
 if __name__ == "__main__":

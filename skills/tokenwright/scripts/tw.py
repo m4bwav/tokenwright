@@ -305,7 +305,7 @@ def cmd_score(a):
         out("no sinks found")
         return 0
     out("estimated avoidable ~%d tokens entered context; carried on later turns as ~%d cache-read tokens "
-        "(billed at about a tenth of input)" % (total_waste, carried))
+        "(billed at 0.1x input or less: 0.05x Opus and Sonnet 5.5, 0.025x Fable 5.x)" % (total_waste, carried))
     for k, t in by_kind.most_common():
         out("  %-22s ~%d" % (k, t))
     out("top sinks:")
