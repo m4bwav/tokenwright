@@ -169,3 +169,6 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 - Other agents: research note research/2026-11-16-other-agents-sessions.md with a support table. Copilot CLI is the best first reader. `tw.py score` now reads Copilot CLI `events.jsonl`: 34 of 34 local sessions parse, 4,778 tool calls, 331 repeat reads, 29 polls. Open: whether Copilot inputTokens already include cache reads.
 - Long-session A/B (T-20261116-1, case multiturn-long-job, about $1): both arms 3/3, mean cost $0.165 with and $0.164 without. No saving: the bare model already filters long output with commands. Next A/B needs a job the bare model handles wastefully, and token counts per arm (the eval JSON gives only cost).
 - Small fixes: score names current cache-read rates; tidy.py follows the plugin version. Released 0.3.4.
+
+- 2026-11-16: per-run token counts for evals: run with `--keep-temp`; each kept sandbox holds the run transcript at config/projects/*/*.jsonl (sum message.usage). Jobs started with `( ... &)` inside `wsl -e bash -lc` die when that call returns; run the eval in the foreground of a background tool call. `--eval-dir` may not point inside skills/.
+- 2026-11-16: eval runs drop their session transcripts (00000000-*.jsonl, ~1.3 MB) into multiturn case folders; they are gitignored but turn budget.py RED on installed KB. Delete them after a run.

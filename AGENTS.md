@@ -26,6 +26,7 @@ tokenwright: a cross-agent plugin for spending fewer tokens on the same result. 
 - Score the newest session: `python skills/tokenwright/scripts/tw.py score`
 - Plugin manifest: `claude plugin validate .`
 - Evals: `claude plugin eval . --no-publish --trust-plugin --case "trigger-*"`
+- A/B with tokens per arm (also history cases): in WSL, `python3 scripts/ab_eval.py "<case glob>"`.
 - Bash evals (Windows cannot grant Bash): in WSL, `TMPDIR=$HOME/evaltmp claude plugin eval . --no-publish --trust-plugin --scaffold --allow-tools Bash Write Edit --case "outcome-*"`. TMPDIR must be off tmpfs or the sandbox is read-only. `--case` keeps only its last value: one glob per run
 
 ## everlast (session knowledge, load on demand)

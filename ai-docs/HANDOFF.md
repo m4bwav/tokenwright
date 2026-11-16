@@ -1,6 +1,6 @@
 # Handoff: tokenwright
 
-Updated 2026-11-16 (after grind session 2). Status: in progress (improvement grind). Continue with [plans/2026-11-15-tokenwright-improve-continue-prompt.md](plans/2026-11-15-tokenwright-improve-continue-prompt.md). It replaces the 2026-10-30 build prompt, whose list was finished at session 30.
+Updated 2026-11-16 (after grind session 3). Status: in progress (improvement grind). Continue with [plans/2026-11-15-tokenwright-improve-continue-prompt.md](plans/2026-11-15-tokenwright-improve-continue-prompt.md). It replaces the 2026-10-30 build prompt, whose list was finished at session 30.
 
 ## State
 
@@ -19,7 +19,7 @@ Updated 2026-11-16 (after grind session 2). Status: in progress (improvement gri
 - Grind state: everlast vault, `projects/tokenwright/private/grind` (pass as `--state`). Session 1 finished seven items; the ledger ranks the rest.
 - Road confirmed 2026-11-16 (askwright road-2026-11-15 answered): finished = reach, works and is measured on Codex, Copilot, Cursor and Gemini CLI as well as Claude Code. Milestones: the long-session A/B, and per-agent support.
 - Per-agent: table in [research/2026-11-16-other-agents-sessions.md](research/2026-11-16-other-agents-sessions.md). Copilot CLI read by score. Next readers: Gemini CLI, then Codex (zstd). Cursor has no local data.
-- A/B: T-20261116-1 showed no saving on a filter-able long job. Next case must target waste a bare model really makes, with token counts per arm.
+- A/B: T-20261116-1 (long job) and T-20261116-2 (history cases, stub-plugin arm) showed no saving. `scripts/ab_eval.py` now runs any A/B with tokens per arm. History cases leak the plugin into the stub arm, so the next case needs no history (ledger item). Ledger also holds: tw.py discoverability (bare `tw.py` costs 2-5 calls).
 - Live-use check in flight: from 2026-11-16, compare hook start time and `score` output on sessions with subagents against the numbers in log.md.
 
 ## Waits on the owner
@@ -36,3 +36,7 @@ Updated 2026-11-16 (after grind session 2). Status: in progress (improvement gri
 - Every score-kind idea from the book notes is added or ruled out (R-20261030-9 to R-20261101-2). Do not retest them without new data.
 - Owed eval case: a job of three or more steps with long output, to test scripting for real (L-004). It is seed 1 in the study note.
 - Thresholds rest on one maintainer's transcripts. A second baseline needs another user's data.
+
+## 2026-11-16 Grind session 3
+
+- Stub-plugin A/B of multiturn-reread and multiturn-changed with tokens from kept sandboxes (T-20261116-2): no saving. Reread: both arms one Grep. Changed: both arms used tw.py (history teaches it); the with arm spent more finding tw.py. Added scripts/ab_eval.py and the AGENTS.md line. No release (eval tooling and records only).
