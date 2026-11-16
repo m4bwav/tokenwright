@@ -177,3 +177,8 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 
 - Habit audit (T-20261116-3): `tw.py score` on the newest 400 local sessions over 50 KB. Waste tokens: big output 1.22M (101 sessions), whole read 352k, repeat read 255k, shell cat 100k; retry, debug loop, poll and re-read after own edit together under 5k. About 70% of big output falls in calls 1 to 5 (state loads at session or subagent start): new ledger item ga1faf8. Cut the habit row "No re-read after own edit" (1 hit; the harness already says it), L-005. Released 0.3.5, installed.
 - tw.py note adoption: 294 sessions since 0.3.0, no real use (only help or docs text; one --saved 0). Cutting it is a stop point: askwright set note-2026-11-16 (in the vault's private ask folder) asks the owner, guess cut.
+
+## 2026-11-16 Grind session 5
+
+- Owner answered note-2026-11-16: keep-quiet. `tw.py note` stays; SKILL.md no longer asks agents to write it, and the continue prompt line asking for it is gone. Released 0.3.6 (PR #64), installed.
+- Next ledger pick: gc83186 (history-free A/B case for change-check), then gc8bfe9 (platform levers research) and ga1faf8 (big output at session start).

@@ -1,10 +1,10 @@
 # Handoff: tokenwright
 
-Updated 2026-11-16 (after grind session 4). Status: in progress (improvement grind). Continue with [plans/2026-11-15-tokenwright-improve-continue-prompt.md](plans/2026-11-15-tokenwright-improve-continue-prompt.md). It replaces the 2026-10-30 build prompt, whose list was finished at session 30.
+Updated 2026-11-16 (after grind session 5). Status: in progress (improvement grind). Continue with [plans/2026-11-15-tokenwright-improve-continue-prompt.md](plans/2026-11-15-tokenwright-improve-continue-prompt.md). It replaces the 2026-10-30 build prompt, whose list was finished at session 30.
 
 ## State
 
-- Public: https://github.com/m4bwav/tokenwright. v0.3.5 released (habit audit; re-read-after-edit row cut).
+- Public: https://github.com/m4bwav/tokenwright. v0.3.6 released (tw.py note kept, no longer requested).
 - Four skills (tokenwright, tokenwright-script, tokenwright-skills, tokenwright-catalog), `tw.py` and `tidy.py`. 54 unit tests pass.
 - Budget GREEN. habits.md is the largest reference at 2,498 tokens, right at the line.
 - Evergreen: hub refreshed 2026-11-15, due 2026-11-24. Catalog unit due 2026-11-21.
@@ -20,12 +20,12 @@ Updated 2026-11-16 (after grind session 4). Status: in progress (improvement gri
 - Road confirmed 2026-11-16 (askwright road-2026-11-15 answered): finished = reach, works and is measured on Codex, Copilot, Cursor and Gemini CLI as well as Claude Code. Milestones: the long-session A/B, and per-agent support.
 - Per-agent: table in [research/2026-11-16-other-agents-sessions.md](research/2026-11-16-other-agents-sessions.md). Copilot CLI read by score. Next readers: Gemini CLI, then Codex (zstd). Cursor has no local data.
 - A/B: T-20261116-1 (long job) and T-20261116-2 (history cases, stub-plugin arm) showed no saving. `scripts/ab_eval.py` now runs any A/B with tokens per arm. History cases leak the plugin into the stub arm, so the next case needs no history (ledger item). Ledger also holds: tw.py discoverability (bare `tw.py` costs 2-5 calls).
-- Session 4: habit audit over 400 sessions (T-20261116-3). Biggest open lead: big output at session start (ledger ga1faf8).
+- Next pick: gc83186 (history-free change-check A/B). Session 4: habit audit over 400 sessions (T-20261116-3). Biggest open lead: big output at session start (ledger ga1faf8).
 - Live-use check in flight: from 2026-11-16, compare hook start time and `score` output on sessions with subagents against the numbers in log.md.
 
 ## Waits on the owner
 
-- askwright set note-2026-11-16 (vault private ask folder): cut tw.py note? Guess: cut. Act on the answer first.
+- Nothing open on askwright (note-2026-11-16 answered keep-quiet, applied in 0.3.6).
 - Unattended running is not agreed. No hours or budget are granted, so sessions run attended.
 
 ## Grants
