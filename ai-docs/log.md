@@ -225,3 +225,10 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 - Overlap check (gc48d31): no description pair >= 0.45 with context-health or repo-traffic; no change.
 - token-saving beat rescanned (561 items, 4 notes). No new habit; three single-source claims went to the ledger to verify: effort change clears cache, 1-hour TTL on subagents, delegation break-even.
 - Lesson: scan real transcripts before trusting a cost seen in eval traces.
+
+## 2026-11-16 Grind session 13
+
+- Dropped gdd53fc (second threshold baseline): needs another person's transcripts, a stop point.
+- g966cd0 effort change and cache (R-20261116-1): the prompt-caching docs confirm that changing effort can clear the message cache, and on some models the tool and system caches too. Zero mid-session /effort changes in local transcripts, so no habit. The only grep hit was this session's own command: exclude the current transcript in local scans.
+- gf4d6d4 subagent 1-hour TTL (R-20261116-2): subagents default to 5 min; 1-hour writes cost 2x base input vs 1.25x. No habit.
+- Next picks: live check g272313 (from 2026-11-17), delegation break-even g79cddf (needs an A/B, not a scan), wiki refresh gd596be.
