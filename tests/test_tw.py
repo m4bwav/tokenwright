@@ -307,5 +307,26 @@ class Versions(unittest.TestCase):
         self.assertEqual(manifest["version"], tw.VERSION)
 
 
+class CopilotCli(unittest.TestCase):
+    def test_copilot_events_are_scored(self):
+        big = "x" * 40000
+        recs = [{"type": "user.message", "data": {"content": "hi"}},
+                {"type": "session.usage_record", "data": {"usage": {"inputTokens": 100, "outputTokens": 10,
+                 "cacheReadTokens": 50, "cacheWriteTokens": 5, "reasoningTokens": 2}}},
+                {"type": "tool.execution_start", "data": {"toolCallId": "c1", "toolName": "bash",
+                 "arguments": {"command": "make test"}}},
+                {"type": "tool.execution_complete", "data": {"toolCallId": "c1", "success": True,
+                 "result": {"content": big}}}]
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / "events.jsonl"
+            p.write_text("\n".join(json.dumps(r) for r in recs), encoding="utf-8")
+            sinks, usage, n = tw.score(p)
+            self.assertEqual(n, 1)
+            self.assertEqual(usage["input_tokens"], 100)
+            self.assertEqual(usage["output_tokens"], 12)
+            self.assertEqual(usage["cache_read_input_tokens"], 50)
+            self.assertTrue(any(s[0] == "big-output" and "Bash" in s[3] for s in sinks))
+
+
 if __name__ == "__main__":
     unittest.main()

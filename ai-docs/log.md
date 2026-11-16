@@ -162,3 +162,4 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 - outcome-catalog re-run in WSL with TMPDIR on a real disk: with 1.00, without 0.80. Block cleared. An earlier attempt died on the 5-hour usage limit, not the sandbox.
 - Wiki brought to 0.3.2 (commit 4dd7e89). `note --saved` now must be a count.
 - Released 0.3.3.
+- 2026-11-16: tw.py score reads Copilot CLI events.jsonl (34 local sessions, 0 errors). Open: whether Copilot inputTokens already include cache reads.
