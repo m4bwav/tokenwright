@@ -9,6 +9,13 @@ Test runs for [SKILL.md](SKILL.md). Cases live in `evals/evals.json`. Unit tests
 
 ## Runs
 
+### T-20261116-13 · 2026-11-16 · transcript scan: does bare tw.py cost calls? newest 1,500 local sessions · Windows · study (discoverability)
+- Why: ledger gf74a42. Eval traces in T-20261116-2 showed 2-5 calls spent finding tw.py.
+- Method: every Bash or PowerShell call naming tw.py (179 calls, 32 sessions) and whether its result said the file was not found; then whether skill bodies loaded in 800 sessions still held a literal ${CLAUDE_SKILL_DIR}.
+- Result: 6 not-found calls in 6 sessions, one each, so real use costs about one call in five sessions, less than the evals suggested. 218 of 219 loaded bodies had the variable substituted.
+- Verdict: ship. The three bodies name tw.py as ${CLAUDE_SKILL_DIR}/scripts/tw.py (zero added tokens); unit test SkillPaths. Live check: from 2026-11-17, not-found tw.py calls should drop to zero.
+- Limit: one user's sessions; other agents still read the relative path.
+
 ### T-20261116-12 · 2026-11-16 · transcript scan: what does the post hook count for Bash? newest 500 local sessions · Windows · study (hook accuracy)
 - Why: ledger g7102dd. In session 9 the big-output note called a ~700-char Bash result ~9.5k tokens.
 - Method: every Bash `toolUseResult` (n=5,954; the same object the PostToolUse hook gets as tool_response) against the tool_result text that entered context.
