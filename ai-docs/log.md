@@ -171,3 +171,4 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 - Small fixes: score names current cache-read rates; tidy.py follows the plugin version. Released 0.3.4.
 
 - 2026-11-16: per-run token counts for evals: run with `--keep-temp`; each kept sandbox holds the run transcript at config/projects/*/*.jsonl (sum message.usage). Jobs started with `( ... &)` inside `wsl -e bash -lc` die when that call returns; run the eval in the foreground of a background tool call. `--eval-dir` may not point inside skills/.
+- 2026-11-16: eval runs drop their session transcripts (00000000-*.jsonl, ~1.3 MB) into multiturn case folders; they are gitignored but turn budget.py RED on installed KB. Delete them after a run.
