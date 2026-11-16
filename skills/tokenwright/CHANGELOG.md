@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261116-2 · 2026-11-16 · Version 0.3.5: habit audit over 400 sessions; one row cut
+- because: T-20261116-3 ran `tw.py score` on the newest 400 local sessions over 50 KB (30 days, 8,420 tool calls). Waste by kind: big output 1.22M tokens (101 sessions), whole read 352k (19), repeat read 255k (43), shell cat 100k (61), retry, debug loop and poll under 3k each, re-read after own edit 223 tokens in 1 session. The harness system prompt already forbids re-reading after an edit, so the row repeated it at no gain. About 70% of big-output tokens came in a session's first five calls (state loads), a new ledger item.
+- files: references/habits.md (row "No re-read after own edit" removed). The score kind stays.
+
 ### C-20261116-1 · 2026-11-16 · Version 0.3.4: score reads Copilot CLI sessions; current cache rates; tidy version
 - because: the owner set "finished" as working and measured on Codex, Copilot, Cursor and Gemini too. Research (ai-docs/research/2026-11-16-other-agents-sessions.md) found Copilot CLI the easiest first reader; all 34 local sessions parse. R-20261115-2 named lower cache-read rates. tidy.py still printed 0.2.4. T-20261116-1: a long-session A/B showed no saving (the bare model already filters long output), so no habit changed.
 - files: scripts/tw.py (Copilot CLI `events.jsonl` events mapped onto score's tool and usage shapes; rate line), tidy.py (follows plugin version), tests/test_tw.py (three tests), evals case multiturn-long-job.
