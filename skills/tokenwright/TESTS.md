@@ -9,6 +9,12 @@ Test runs for [SKILL.md](SKILL.md). Cases live in `evals/evals.json`. Unit tests
 
 ## Runs
 
+### T-20261117-3 · 2026-11-17 · scripts/ab_eval.py, claude plugin eval (3 runs each arm, stub arm = no skills) · WSL · A/B, no saving
+- outcome-release-script (tokenwright-script): with 0.78, stub 0.67; cost $0.212 vs $0.166 (+28%), cache read 204k vs 148k. The plugin arm passed all checks once; both arms usually miss one check (dry run or second-run guard).
+- outcome-skill-review (tokenwright-skills): 1.00 both arms; cost $0.198 vs $0.167 (+19%), 9 turns vs 4, cache read 188k vs 81k. Bare Claude reviews a small skill well without tw.py skill.
+- Harness: the new cases had only evals.json rows, which `claude plugin eval` does not read; added case folders under each skill's evals/cases. ab_eval.py stub now copies every skill's evals folder.
+- led to: ledger items (skill-review path costs more than baseline; script arm's quality edge needs more runs).
+
 ### T-20261117-2 · 2026-11-17 · evergreen-worth --lite on all four skills, plus a transcript count of tw.py and tidy.py calls over 60 days · Windows · study (worth lite scan)
 - Lite verdicts: tokenwright UNPROVEN, tokenwright-catalog UNPROVEN, tokenwright-skills UNPROVEN, tokenwright-script SUSPECT (19% of sentences specific, no value cases). All four flagged "mode 1 never fires": no Skill call in 60 days.
 - Mode 1 is wrong for this plugin. Over 60 days 57 sessions ran tw.py or tidy.py (score 59, note 19, skill 18, skills 14, catalog 11, tidy conflicts 10, others under 10), but none started from the Skill tool: prompts, hand-over rules and hooks call the scripts directly. The worth tool counts only Skill calls, so it undercounts any skill used through its scripts.
