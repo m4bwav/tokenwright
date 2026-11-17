@@ -29,7 +29,7 @@ import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
-VERSION = "0.4.0"
+VERSION = "0.4.1"
 CHARS_PER_TOKEN = 2.3        # measured 2026-11-16 on Opus 5.5, Fable 5.2, Sonnet 5 tool output (T-20261116-10)
 BIG_FILE_LINES = 400        # a whole read of a file this long, used for a few lines, is a sink
 BIG_OUTPUT_CHARS = 20000    # a tool result this long is a sink unless it was the point
@@ -303,6 +303,34 @@ def score(path):
     return sinks, usage, n
 
 
+LONG_CONTEXT = 400000       # requests above this context size cost more per token on long-context pricing
+
+
+def context_sizes(path):
+    """Context tokens sent per request (input + cache read + cache write), in order."""
+    return [int(d.get("input_tokens") or 0) + int(d.get("cache_read_input_tokens") or 0)
+            + int(d.get("cache_creation_input_tokens") or 0) for k, d in load_events(path) if k == "usage"]
+
+
+def window_replay(sizes, window):
+    """Context tokens if the session had compacted at `window`: each time the context passes it,
+    it drops back to the first request's size (system prompt and tools). Rough: the summary is ignored.
+    Idea from tokendoctor (https://github.com/localixai/tokendoctor, MIT), re-implemented."""
+    if not sizes:
+        return 0
+    base, drop, total = sizes[0], 0, 0
+    for c in sizes:
+        if c - drop > window:
+            drop = max(0, c - base)
+        total += c - drop
+    return total
+
+
+def long_share(sizes, limit=LONG_CONTEXT):
+    total = sum(sizes)
+    return (100.0 * sum(c for c in sizes if c > limit) / total) if total else 0.0
+
+
 def subagent_files(path):
     """Subagent transcripts of a session: <session>/subagents/**/*.jsonl beside <session>.jsonl."""
     d = path.with_suffix("") / "subagents"
@@ -327,8 +355,13 @@ def cmd_score(a):
         by_kind[k] += t
     total_waste = sum(by_kind.values())
     carried = sum(s[5] for s in sinks)
+    sizes = context_sizes(path)
+    ctx = {"context_tokens": sum(sizes), "long_context_share_pct": round(long_share(sizes), 1)}
+    if a.window:
+        ctx["window"] = a.window
+        ctx["context_tokens_at_window"] = window_replay(sizes, a.window)
     if a.json:
-        out(json.dumps({"transcript": str(path), "tool_calls": n, "waste_per_100_calls": _rate(total_waste, n + (sub["tool_calls"] if sub else 0)), "usage": usage, "waste_by_kind": by_kind,
+        out(json.dumps({"transcript": str(path), "tool_calls": n, **ctx, "waste_per_100_calls": _rate(total_waste, n + (sub["tool_calls"] if sub else 0)), "usage": usage, "waste_by_kind": by_kind,
                         **({"subagents": sub} if sub else {}),
                         "carried_cache_read_tokens": carried,
                         "sinks": [dict(zip(("kind", "tokens", "call", "what", "fix", "carried"), s)) for s in
@@ -341,6 +374,13 @@ def cmd_score(a):
         out("turns %d, tool calls %d; input %d, cache read %d, cache write %d, output %d tokens" % (
             usage["turns"], n, usage["input_tokens"], usage["cache_read_input_tokens"],
             usage["cache_creation_input_tokens"], usage["output_tokens"]))
+    if sizes:
+        out("context sent %d tokens; %.0f%% of it in requests above %dK context" % (
+            ctx["context_tokens"], ctx["long_context_share_pct"], LONG_CONTEXT // 1000))
+    if a.window and sizes:
+        w = ctx["context_tokens_at_window"]
+        out("if compacted at %dK: ~%d context tokens (%+.0f%%; rough, summary ignored)" % (
+            a.window // 1000, w, 100.0 * (w - ctx["context_tokens"]) / max(1, ctx["context_tokens"])))
     if sub:
         u = sub["usage"]
         out("subagents %d: turns %d; input %d, cache read %d, cache write %d, output %d tokens (not in the line above)" % (
@@ -674,6 +714,8 @@ def main(argv=None):
     s.add_argument("--no-subagents", action="store_true", help="score the main transcript only")
     s.add_argument("--compare", type=int, default=0, metavar="N",
                    help="compare with the best of the newest N past sessions in the same project")
+    s.add_argument("--window", type=int, default=0, metavar="N",
+                   help="replay the session as if it compacted at N context tokens")
     s.set_defaults(fn=cmd_score)
     s = sub.add_parser("repeats", help="command sequences repeated across sessions")
     s.add_argument("transcripts", nargs="*")

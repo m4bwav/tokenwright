@@ -31,6 +31,7 @@ Read [references/habits.md](references/habits.md) for each habit's when, how and
 - Before re-reading to check for changes, run `tw.py changed <paths>`: unchanged files cost one line, changed ones only their diff. `git diff --stat` does the same inside a repo.
 - Trim command output at the source: `head`, `tail -n`, `--stat`, `-q`, `--oneline`, Grep `head_limit` and `files_with_matches`, `jq` field picks.
 - Outline before sections: headings, `grep -n '^#'`, symbol lists, then one section (readwright for books and PDFs).
+- Set a read budget per task and keep a list of the sections already read; read the whole source only when the budgeted evidence fails (idea from [SparseRead](https://huggingface.co/papers/2608.22237), authors' benchmark numbers, not measured here).
 - Shrink images before reading them; one 1568 px image is about 1,600 tokens.
 - Send big mechanical reads (logs, long diffs, many files) to a subagent or local-delegate so only the answer returns. It raises total tokens (cold start, no shared cache), so skip it for small lookups and coupled work.
 
@@ -59,7 +60,7 @@ The report names each sink by its kind of waste, after lean manufacturing ([refe
 | Command | Use |
 |---|---|
 | `changed <paths> [--quiet]` | Before a re-read. Prints `unchanged` or a diff. First call stores a snapshot in `.tokenwright/snapshots` |
-| `score [transcript] [--json] [--compare N] [--no-subagents]` | After a session or when it felt expensive. Ranks sinks by carried cost, subagent transcripts included; `--compare` sets it against the best of the newest N past sessions in the same project |
+| `score [transcript] [--json] [--compare N] [--window N] [--no-subagents]` | After a session or when it felt expensive. Ranks sinks by carried cost, subagent transcripts included, and gives the share of context sent above 400K; `--compare` sets it against the best of the newest N past sessions in the same project; `--window` replays it as if compacted at N tokens (idea from [tokendoctor](https://github.com/localixai/tokendoctor)) |
 | `note --saved N --why W --how H` | Records one line of why, how and a rough tokens-saved count in the transcript, for cost reports that read it (chainwright). Optional |
 | `meter [session]` | Tool output so far in a session, counted by the post hook; short enough for a status line |
 | `repeats [transcripts] [--last N]` | Find command sequences repeated across sessions: script candidates |
