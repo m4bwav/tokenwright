@@ -1,6 +1,15 @@
 # Tests: tokenwright
 
-Test runs for [SKILL.md](SKILL.md). Cases live in `evals/evals.json`. Unit tests for tw.py are in the repository's `tests/`. A test passes on evidence (a tool call in the trace, a file, a marker), never on the transcript's claim. Entry shape: `### T-20261117-4 · 2026-11-17 · scripts/ab_eval.py outcome-skill-review (3 runs each arm) · WSL · A/B after python3 fix
+Test runs for [SKILL.md](SKILL.md). Cases live in `evals/evals.json`. Unit tests for tw.py are in the repository's `tests/`. A test passes on evidence (a tool call in the trace, a file, a marker), never on the transcript's claim. Entry shape: `T-YYYYMMDD-n · date · harness · env · passed/total`. Newest first.
+
+## Runs
+
+### T-20261117-5 · 2026-11-17 · tw.py skill on a 12-skill plugin (g70942a, first rung) · Windows
+- New case tokenwright-skills/outcome-large-plugin; fixture.sh builds 12 skills with three planted costs (skill-07 long description, skill-03 120-line code block, skill-11 unlinked reference).
+- All three found, but the per-skill "15 numbered steps" line repeated 12 times and buried the unlinked finding past line 30, where a `head` read missed it. Fixed by folding a finding repeated in 3+ skills into one line (unit test). The with-versus-without A/B on this case is still owed (ledger).
+- led to: C-20261117-2 (0.3.15).
+
+### T-20261117-4 · 2026-11-17 · scripts/ab_eval.py outcome-skill-review (3 runs each arm) · WSL · A/B after python3 fix
 - Session-17 traces: the 5 extra plugin-arm turns were the Skill load, a `python` command not found then a `python3` retry (2 of 3 runs), a directory hunt, and the fixture reads the checklist needs anyway.
 - After naming python3 for macOS and Linux: with 1.00, 7.3 turns (8, 8, 6), $0.183, cache read 143k; stub 1.00, 4 turns, $0.164, 78k. Cost gap +12% (was +19%). The rest is the skill load and tw.py output on top of the same reads; on a skill this small the bare model needs no measurement. Not cut: the value of tw.py skill shows on large plugins, which this case does not test.
 - led to: C-20261117-1 (0.3.14).
@@ -9,10 +18,6 @@ Test runs for [SKILL.md](SKILL.md). Cases live in `evals/evals.json`. Unit tests
 - Waste tokens by kind (sessions): big output 1,219,450 (101), whole read 352,170 (19), repeat read 255,080 (43), shell cat 99,839 (61), retry 2,536 (6), debug loop 875 (4), poll 473 (3), re-read after own edit 223 (1). 8,420 tool calls.
 - Big output by call number: calls 1 to 5 hold about 841k of the 1.22M, mostly whole-file `cat` of handoff, log and plan files at session or subagent start.
 - Verdict: cut the habit row "No re-read after own edit" (the harness already says it; 1 hit in 400). Session-start loads become a ledger item.
-
-### T-YYYYMMDD-n · date · harness · env · passed/total`. Newest first.
-
-## Runs
 
 ### T-20261117-3 · 2026-11-17 · scripts/ab_eval.py, claude plugin eval (3 runs each arm, stub arm = no skills) · WSL · A/B, no saving
 - outcome-release-script (tokenwright-script): with 0.78, stub 0.67; cost $0.212 vs $0.166 (+28%), cache read 204k vs 148k. The plugin arm passed all checks once; both arms usually miss one check (dry run or second-run guard).

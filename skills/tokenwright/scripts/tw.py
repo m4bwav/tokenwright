@@ -29,7 +29,7 @@ import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
-VERSION = "0.3.14"
+VERSION = "0.3.15"
 CHARS_PER_TOKEN = 2.3        # measured 2026-11-16 on Opus 5.5, Fable 5.2, Sonnet 5 tool output (T-20261116-10)
 BIG_FILE_LINES = 400        # a whole read of a file this long, used for a few lines, is a sink
 BIG_OUTPUT_CHARS = 20000    # a tool result this long is a sink unless it was the point
@@ -501,7 +501,19 @@ def cmd_skill(a):
     for r in reps:
         out("%-28s %8d %9d %10d" % (r["skill"][:28], r["always_tokens"], r["trigger_tokens"], r["on_demand_tokens"]))
     out("always = name + description, paid by every session where the skill is listed")
-    allf = sorted(((t, r["skill"], m) for r in reps for t, m in r["findings"]), key=lambda x: -x[0])
+    # the same finding in 3+ skills folds into one line, so it cannot bury the rest (T-20261117-5)
+    groups = {}
+    for r in reps:
+        for t, m in r["findings"]:
+            groups.setdefault(re.sub(r"\d+", "N", m), []).append((t, r["skill"], m))
+    allf = []
+    for g in groups.values():
+        if len(g) >= 3:
+            names = ", ".join(s for _, s, _ in g[:4]) + (", ..." if len(g) > 4 else "")
+            allf.append((sum(t for t, _, _ in g), "%d skills (%s)" % (len(g), names), g[0][2]))
+        else:
+            allf.extend(g)
+    allf.sort(key=lambda x: -x[0])
     if allf:
         out("\nsavings, largest first:")
         for t, s, m in allf:

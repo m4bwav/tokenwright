@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261117-2 · 2026-11-17 · Version 0.3.15: tw.py skill folds a finding repeated in 3+ skills into one line
+- because: T-20261117-5. On a 12-skill fixture the same "15 numbered steps" line printed 12 times and pushed the unlinked-file finding past the first 30 lines.
+- files: scripts/tw.py, tests/test_tw.py, ../tokenwright-skills/evals/cases/outcome-large-plugin/.
+
 ### C-20261117-1 · 2026-11-17 · Version 0.3.14: SKILL.md bodies say python3 on macOS and Linux
 - because: T-20261117-4. In the skill-review A/B, 2 of 3 plugin runs called `python` in a Linux sandbox, got command not found and retried; the bodies named only `python`. After the change the plugin arm took 7.3 turns (was 9) and cost +12% over the bare arm (was +19%), score 1.00 both.
 - files: SKILL.md, ../tokenwright-skills/SKILL.md, ../tokenwright-script/SKILL.md.

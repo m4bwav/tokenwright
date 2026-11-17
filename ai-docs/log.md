@@ -266,3 +266,8 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 - grw.py 0.19.0: `add` takes the title as a positional argument, not --title.
 - Eval runs leave evals/results/ in the worktree; delete before commit.
 - Version bump must include VERSION in tw.py and tidy.py (test_tidy_follows_plugin_version); session 18 merged PR #83 red because `gh pr merge` ran after a failed `checks --watch` (no required checks on main). Fixed in PR #84.
+
+## 2026-11-17 Grind session 19
+
+- g70942a (T-20261117-5): new case tokenwright-skills/outcome-large-plugin, fixture.sh generates a 12-skill plugin with three planted costs. `tw.py skill` finds all three, but the repeated per-skill steps line buried the unlinked-file finding past line 30. Repeated findings (3+ skills) now fold into one line. Released 0.3.15. A/B on the case is ledger item ge30c4c.
+- TESTS.md (hub) had two run entries pasted inside its header sentence; moved under Runs.
