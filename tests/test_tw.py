@@ -396,6 +396,29 @@ class SkillPaths(unittest.TestCase):
             self.assertNotIn("`python scripts/tw.py", body, name)
 
 
+class Window(unittest.TestCase):
+    def test_replay_and_long_share(self):
+        sizes = [100, 300, 500, 700]
+        self.assertEqual(tw.window_replay(sizes, 1000), 1600)
+        self.assertEqual(tw.window_replay(sizes, 400), 100 + 300 + 100 + 300)
+        self.assertAlmostEqual(tw.long_share(sizes, 400), 75.0)
+
+    def test_score_window_json(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / "s.jsonl"
+            recs = []
+            for i, cr in enumerate((1000, 300000, 500000)):
+                recs.append(line({"type": "assistant", "requestId": "w%d" % i, "message": {"id": "w%d" % i,
+                                  "usage": {"input_tokens": 0, "output_tokens": 1, "cache_read_input_tokens": cr},
+                                  "content": []}}))
+            p.write_text("".join(recs), encoding="utf-8")
+            data = json.loads(run("score", str(p), "--json", "--window", "200000"))
+            self.assertEqual(data["context_tokens"], 801000)
+            self.assertEqual(data["context_tokens_at_window"], 3000)
+            self.assertAlmostEqual(data["long_context_share_pct"], 62.4)
+            self.assertIn("if compacted at 200K", run("score", str(p), "--window", "200000"))
+
+
 if __name__ == "__main__":
     unittest.main()
 
