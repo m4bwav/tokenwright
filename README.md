@@ -11,7 +11,6 @@ Every token in an agent's context is re-sent on each later turn. A 3,000-token f
 | Skill | Use it when |
 |---|---|
 | `tokenwright` | "this is expensive", "context is filling", "why did that cost so much". Habits in four families with measured savings, Claude Code and API levers, a waste vocabulary |
-| `tokenwright-script` | A job keeps coming back, or you just solved something fiddly. Turns it into a script with a dry run and a short result |
 | `tokenwright-skills` | Writing or reviewing one skill or plugin. Ranks its token savings by where they are paid |
 | `tokenwright-catalog` | The wrong skill fires, descriptions overlap, or the whole catalog costs too much. Lints descriptions, checks a rewrite keeps every trigger, splits long bodies, parks rarely used skills, audits startup files. Formerly [skill-tidy](https://github.com/m4bwav/skill-tidy) |
 

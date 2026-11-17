@@ -389,7 +389,7 @@ class SkillPaths(unittest.TestCase):
 
     def test_skill_bodies_use_skill_dir(self):
         root = os.path.join(os.path.dirname(__file__), "..", "skills")
-        for name in ("tokenwright", "tokenwright-skills", "tokenwright-script"):
+        for name in ("tokenwright", "tokenwright-skills"):
             body = open(os.path.join(root, name, "SKILL.md"), encoding="utf-8").read()
             self.assertIn("${CLAUDE_SKILL_DIR}", body, name)
             self.assertNotIn("python ../tokenwright/scripts/tw.py", body, name)

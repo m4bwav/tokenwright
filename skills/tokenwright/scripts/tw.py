@@ -29,7 +29,7 @@ import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
-VERSION = "0.3.15"
+VERSION = "0.4.0"
 CHARS_PER_TOKEN = 2.3        # measured 2026-11-16 on Opus 5.5, Fable 5.2, Sonnet 5 tool output (T-20261116-10)
 BIG_FILE_LINES = 400        # a whole read of a file this long, used for a few lines, is a sink
 BIG_OUTPUT_CHARS = 20000    # a tool result this long is a sink unless it was the point
@@ -417,7 +417,7 @@ def cmd_repeats(a):
         kept.append((g, c))
     out("%d transcripts scanned; %d sequences repeat in >= %d sessions" % (len(files), len(kept), a.min_sessions))
     for g, c in kept[:a.top]:
-        out("\n%d sessions, %d steps -> script candidate (see tokenwright-script):" % (c, len(g)))
+        out("\n%d sessions, %d steps -> script candidate (see tokenwright references/scripting.md):" % (c, len(g)))
         for cmd in g:
             out("    " + cmd)
     return 0
@@ -470,7 +470,7 @@ def skill_report(sdir):
     steps = len(re.findall(r"^\s*\d+\.\s", body, re.M))
     if steps >= 15 and not (sdir / "scripts").exists():
         findings.append((tokens(len(body)) // 4, "%d numbered steps and no scripts/: a fixed procedure this long "
-                         "is a script candidate (tokenwright-script)" % steps))
+                         "is a script candidate (tokenwright references/scripting.md)" % steps))
     # a file is findable if SKILL.md names it, or an index SKILL.md names does
     names = re.compile(r"[\w./-]+\.(?:md|py|json|txt|sh|ps1)")
     named = {Path(x).name for x in names.findall(body)}

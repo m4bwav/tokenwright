@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261117-3 · 2026-11-17 · Version 0.4.0: tokenwright-script cut; its procedure is now references/scripting.md
+- because: T-20261117-3 and T-20261117-8. Two A/B runs of its value case showed no gain (6 runs: 0.67 both, +19% cost), and its description cost tokens in every session. The owner chose cut on askwright set script-skill-2026-11-17. The checklist and templates moved to the hub's references, loaded only when a script is being written; the eval case outcome-release-script moved to the hub.
+- files: references/scripting.md, references/script-templates.md, SKILL.md, references/habits.md, scripts/tw.py, evals/, ../tokenwright-skills/SKILL.md, ../../AGENTS.md, ../../README.md, ../../tests/test_tw.py.
+
 ### C-20261117-2 · 2026-11-17 · Version 0.3.15: tw.py skill folds a finding repeated in 3+ skills into one line
 - because: T-20261117-5. On a 12-skill fixture the same "15 numbered steps" line printed 12 times and pushed the unlinked-file finding past the first 30 lines.
 - files: scripts/tw.py, tests/test_tw.py, ../tokenwright-skills/evals/cases/outcome-large-plugin/.

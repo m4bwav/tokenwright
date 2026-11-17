@@ -16,7 +16,7 @@ Scripts: `python "${CLAUDE_SKILL_DIR}/scripts/tw.py" <command>` (standard librar
 
 1. Measure: `tw.py score` (newest transcript) or `tw.py score <file.jsonl>`. It ranks sinks by carried cost and names the fix.
 2. Fix the largest sink only. Savings elsewhere do little while one sink dominates.
-3. If the same sink comes back across sessions, make the fix structural: a script (tokenwright-script), a hook (`hooks/`), or a skill change (tokenwright-skills).
+3. If the same sink comes back across sessions, make the fix structural: a script ([references/scripting.md](references/scripting.md)), a hook (`hooks/`), or a skill change (tokenwright-skills).
 4. Measure again.
 
 Never cut a check that prevents a retry: a failed attempt costs more than the check.
@@ -43,10 +43,10 @@ Read [references/habits.md](references/habits.md) for each habit's when, how and
 - Pick the smallest model and effort that does the step (Haiku or a local model for mechanical work).
 
 **3. Script a process that repeats**
-- When a multi-step job recurs (`tw.py repeats` finds them across sessions), a script does the steps and prints only what the agent must judge. See tokenwright-script.
+- When a multi-step job recurs (`tw.py repeats` finds them across sessions), a script does the steps and prints only what the agent must judge. See [references/scripting.md](references/scripting.md).
 
 **4. Script what you solved the first time**
-- After working something out, save the commands that worked as a script with a dry run, so the next run is one command, not a session. See tokenwright-script.
+- After working something out, save the commands that worked as a script with a dry run, so the next run is one command, not a session. See [references/scripting.md](references/scripting.md).
 
 **Output side**: say it once, short. No recap of what the user can see, no file dumps in replies. Output tokens cost about five times input.
 
