@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261117-1 · 2026-11-17 · Version 0.3.14: SKILL.md bodies say python3 on macOS and Linux
+- because: T-20261117-4. In the skill-review A/B, 2 of 3 plugin runs called `python` in a Linux sandbox, got command not found and retried; the bodies named only `python`. After the change the plugin arm took 7.3 turns (was 9) and cost +12% over the bare arm (was +19%), score 1.00 both.
+- files: SKILL.md, ../tokenwright-skills/SKILL.md, ../tokenwright-script/SKILL.md.
+
 ### C-20261116-9 · 2026-11-16 · Version 0.3.13: delegation habit names its break-even
 - because: T-20261116-14. In 1,157 local subagent runs delegation paid in 85-100% of runs that read 5k+ tokens and about a third below that; forks paid in 12%.
 - files: references/habits.md.

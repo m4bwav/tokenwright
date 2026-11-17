@@ -258,3 +258,10 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 - A/B ga1100f (T-20261117-3): tokenwright-script outcome-release-script with 0.78 vs stub 0.67 at +28% cost; tokenwright-skills outcome-skill-review 1.00 both at +19% cost (9 turns vs 4). No saving shown; two ledger items follow.
 - `claude plugin eval` reads only evals/cases/<id>/ folders, not evals.json rows: the session-16 value cases never ran until case folders were added. ab_eval.py stub now copies every skill's evals folder.
 - grw.py `done` needs --oracle from a fixed list (tests, human, ...).
+
+## 2026-11-17 Grind session 18
+
+- gb65a31 (T-20261117-4): session-17 plugin-arm traces showed `python` command not found in the Linux sandbox (2 of 3 runs) plus a retry. Bodies now say python3 on macOS and Linux; rerun: 7.3 turns vs 9, cost +12% vs +19% over bare, score 1.00 both. Released 0.3.14. Wiki unchanged (wording only, small ruling).
+- On this Windows host `python3` is the Store stub and `python` works, so the note names both by OS.
+- grw.py 0.19.0: `add` takes the title as a positional argument, not --title.
+- Eval runs leave evals/results/ in the worktree; delete before commit.
