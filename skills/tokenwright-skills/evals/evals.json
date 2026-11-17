@@ -1,0 +1,29 @@
+{
+  "skill": "tokenwright-skills",
+  "_format": "skill-creator evals.json plus evergreen fields. Fixture evals/fixtures/bloated-skill is a copy of the hub's; keep them the same.",
+  "evals": [
+    {
+      "id": "trigger-1",
+      "kind": "trigger",
+      "prompt": "Review evals/fixtures/bloated-skill for token cost and tell me the biggest savings.",
+      "expectations": [
+        "the tokenwright-skills or tokenwright skill is invoked"
+      ],
+      "runs": 3
+    },
+    {
+      "id": "outcome-skill-review",
+      "kind": "outcome",
+      "prompt": "Review evals/fixtures/bloated-skill for token cost. Rank the savings, biggest first, with rough token numbers.",
+      "reference": "description far too long (paid every session) ranks first; 30 manual steps and the 40-line code block should be a script; notes.md is unlinked",
+      "expectations": [
+        "the description is ranked first or second",
+        "suggests a script for the steps",
+        "notes.md flagged as unlinked"
+      ],
+      "evidence": "tw.py skill in the trace",
+      "baseline": true,
+      "runs": 3
+    }
+  ]
+}

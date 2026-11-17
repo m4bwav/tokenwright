@@ -122,7 +122,16 @@
       ],
       "evidence": "regex graders on report.csv; per-arm tokens and cost from the eval JSON",
       "baseline": true,
-      "runs": 3
+      "runs": 3,
+      "tools": [
+        "Read",
+        "Glob",
+        "Grep",
+        "Write",
+        "Edit",
+        "Bash"
+      ],
+      "max_turns": 20
     }
   ]
 }

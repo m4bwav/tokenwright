@@ -244,3 +244,10 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 - Delegation break-even (g79cddf, T-20261116-14): 1,157 local subagent runs linked to their parents by toolUseId. Charging inline work with main's context on every turn, delegation paid in 87% of runs; 32% under 5k tokens read, 85% at 5-20k, 96%+ above; forks 12%. A model charging inline only for the carried read gives 10%, so the truth sits between, and the size floor holds in both. habits.md row now names the 5k floor and forks. Released 0.3.13.
 - The scan excluded this session's own transcript (lesson from session 13).
 - tw.py score on this session: no sinks.
+
+## 2026-11-17 Grind session 16
+
+- Live check g272313 (T-20261117-1): 1 session used tw.py since 0.3.11, 3 calls, 0 not-found. Too small; recheck from 2026-11-24 (gae64c5, on hold).
+- Worth lite scan gf7e6ad (T-20261117-2): three UNPROVEN, tokenwright-script SUSPECT. Every skill flagged "never fires", yet tw.py or tidy.py ran in 57 sessions in 60 days, all called directly, none by the Skill tool. evergreen worth counts only Skill calls. Case lint fixed in both evals.json files.
+- grw.py: `hold` needs --evidence; `next --claim` claims a dated item before its date, so hold it at once.
+- Value cases (g12645e): tokenwright-script got evals.json with a release-script outcome case (fixture evals/fixtures/release); tokenwright-skills got its own copy of the hub's skill-review case and fixture. Lint clean; the A/B is a ledger item. No release: evals only (small ruling).

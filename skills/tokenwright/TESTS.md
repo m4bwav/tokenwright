@@ -9,6 +9,16 @@ Test runs for [SKILL.md](SKILL.md). Cases live in `evals/evals.json`. Unit tests
 
 ## Runs
 
+### T-20261117-2 · 2026-11-17 · evergreen-worth --lite on all four skills, plus a transcript count of tw.py and tidy.py calls over 60 days · Windows · study (worth lite scan)
+- Lite verdicts: tokenwright UNPROVEN, tokenwright-catalog UNPROVEN, tokenwright-skills UNPROVEN, tokenwright-script SUSPECT (19% of sentences specific, no value cases). All four flagged "mode 1 never fires": no Skill call in 60 days.
+- Mode 1 is wrong for this plugin. Over 60 days 57 sessions ran tw.py or tidy.py (score 59, note 19, skill 18, skills 14, catalog 11, tidy conflicts 10, others under 10), but none started from the Skill tool: prompts, hand-over rules and hooks call the scripts directly. The worth tool counts only Skill calls, so it undercounts any skill used through its scripts.
+- Fixed the case lint: outcome-catalog and multiturn-long-job now list Edit and Bash with 20 turns (the A/B runs already granted them by harness flag), and outcome-catalog names its file checks. Left multiturn-reread: its prompt asks a question, so the lint's "asks for changes" is a false positive.
+- "No baseline ever run" is also stale: T-20261115-1 and T-20261116-1 ran both arms, but no run was recorded with `worth --results --record`.
+- Verdict: no cut. Ledger items: value cases for tokenwright-script and tokenwright-skills; an evergreen pull request so worth counts script calls; record past A/B results into evergreen.json.
+
+### T-20261117-1 · 2026-11-17 · live check after 0.3.11 · Windows · 1 session, 3 tw.py calls, 0 not-found
+- Since v0.3.11 (2026-11-16 20:44 UTC) one session called tw.py three times; none failed to find the script. The baseline was 6 not-found calls in 32 sessions, so one session cannot tell. Recheck from 2026-11-24 (ledger gae64c5).
+
 ### T-20261116-14 · 2026-11-16 · transcript scan: when does a subagent pay? 1,157 local subagent runs · Windows · study (delegation break-even)
 - Why: ledger g79cddf. A single-source claim (token-saving beat, r/ClaudeCode) said subagents cost 14-30% more on a ~10k-line codebase and save 53% on big doc checks.
 - Method: each subagent transcript linked to its parent by toolUseId. Delegated cost = the subagent's own usage (input 1x, cache write 1.25x, cache read 0.1x, output 5x) plus its report riding in main. Inline cost = the same turns re-reading main's context at spawn instead of the subagent's base, plus the read riding in main (0.1x per later main turn). Reads at 2.3 chars a token. A model that charges inline only for the carried read (no extra re-reads) gives 10% paying: the bound on the other side.
