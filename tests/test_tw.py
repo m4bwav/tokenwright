@@ -204,6 +204,19 @@ class Skill(unittest.TestCase):
             self.assertIn("orphan.md", text)
             self.assertNotIn("linked.md (", text)
 
+    def test_repeated_findings_fold_into_one_line(self):
+        with tempfile.TemporaryDirectory() as d:
+            body = "\n".join("%d. step" % i for i in range(20))
+            for i in range(5):
+                s = Path(d, "s%d" % i)
+                s.mkdir()
+                s.joinpath("SKILL.md").write_text("---\nname: s%d\ndescription: x\n---\n%s\n" % (i, body))
+            Path(d, "s4", "orphan.md").write_text("z" * 3000)
+            out = run("skill", d)
+            self.assertEqual(out.count("script candidate"), 1)
+            self.assertIn("5 skills", out)
+            self.assertIn("orphan.md", out)
+
 
 class Catalog(unittest.TestCase):
     def test_forwards_to_tidy(self):
