@@ -265,3 +265,4 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 - On this Windows host `python3` is the Store stub and `python` works, so the note names both by OS.
 - grw.py 0.19.0: `add` takes the title as a positional argument, not --title.
 - Eval runs leave evals/results/ in the worktree; delete before commit.
+- Version bump must include VERSION in tw.py and tidy.py (test_tidy_follows_plugin_version); session 18 merged PR #83 red because `gh pr merge` ran after a failed `checks --watch` (no required checks on main). Fixed in PR #84.
