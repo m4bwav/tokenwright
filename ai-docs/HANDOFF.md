@@ -1,6 +1,6 @@
 # Handoff: tokenwright
 
-Updated 2026-11-17 (after grind session 22). Status: in progress (improvement grind). Continue with [plans/2026-11-15-tokenwright-improve-continue-prompt.md](plans/2026-11-15-tokenwright-improve-continue-prompt.md). It replaces the 2026-10-30 build prompt, whose list was finished at session 30.
+Updated 2026-11-17 (after grind session 23). Status: in progress (improvement grind). Continue with [plans/2026-11-15-tokenwright-improve-continue-prompt.md](plans/2026-11-15-tokenwright-improve-continue-prompt.md). It replaces the 2026-10-30 build prompt, whose list was finished at session 30.
 
 ## State
 
@@ -23,6 +23,7 @@ Updated 2026-11-17 (after grind session 22). Status: in progress (improvement gr
 - Session 6 ruled out: change-check in one turn (T-20261116-4, case ab-regen-changed) and a habit for session-start loads (T-20261116-5, loads are used). Hook times in T-20261116-6.
 - Session 7: live meter check passed (T-20261116-8). finwright guard PR #21 (~470 to ~210 ms a call) merged 2026-11-16. Next picks: the ledger (`grw.py next`).
 - Session 8: hook notes do not change what the agent pulls next (T-20261116-9).
+- Session 23: evergreen worth counts script calls, PR m4bwav/evergreen-protocol#47 (1.1.2) open for the owner. Rest of the ledger waits on the owner or on 2026-11-24 (live check gae64c5, levers gc8bfe9 with the hub refresh). Next picks: the script-skill answer, then 2026-11-24 items.
 - Session 22: 6-run rerun (T-20261117-8): tokenwright-script no gain, +19% cost; cut asked on askwright script-skill-2026-11-17. Next picks: apply the answer when it comes, else the ledger.
 - Session 21: worth now reads ab_eval.py runs (merged/ folder); hub recorded UNPROVEN (T-20261117-7). Next picks: 6-run rerun g8744fe (run ab_eval.py, then worth --results ~/ab/merged), then the ledger.
 - Session 20: A/B on outcome-large-plugin (T-20261117-6): plugin -15% cost at equal score, the first measured saving. Next picks: the ledger (evergreen worth PR g59611d, 6-run rerun of the script case).
@@ -40,6 +41,8 @@ Updated 2026-11-17 (after grind session 22). Status: in progress (improvement gr
 - Live-use check in flight: from 2026-11-16, compare hook start time and `score` output on sessions with subagents against the numbers in log.md.
 
 ## Waits on the owner
+
+- evergreen-protocol PR #47 (worth counts script calls): review and merge, then rerun worth lite on tokenwright.
 
 - askwright set script-skill-2026-11-17 (vault projects/tokenwright/private/ask): cut or keep tokenwright-script.
 - Unattended running is not agreed. No hours or budget are granted, so sessions run attended.

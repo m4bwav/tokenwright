@@ -284,3 +284,10 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 
 - g8744fe (T-20261117-8): 6-run A/B on outcome-release-script: 0.67 both, plugin +19% cost ($0.199 vs $0.167). The 3-run quality edge was noise. ab_eval.py takes --runs. Cut question on askwright set script-skill-2026-11-17. No release (dev script and docs only).
 - Python on Windows writes CRLF: a python rewrite of an LF file showed the whole file changed; strip carriage returns with sed before committing.
+
+## 2026-11-17 Grind session 23
+
+- g59611d: evergreen worth now counts a skill's script calls (Bash or PowerShell running a script in its scripts/ folder or named in its SKILL.md) as use; mode 1 "never fires" needs neither. Opened as evergreen-protocol PR #47 (1.1.2), left open for the owner (another plugin's repo is a stop point). On tokenwright: 276 to 342 script calls per skill in 60 days, 0 Skill calls. Shared hub scripts count for every skill naming them, so it is an upper bound.
+- Script-skill answer not in yet (g76a32d waits). gae64c5 and gc8bfe9 skipped to 2026-11-24 (date gate; folds into the hub refresh). tw.py score on this session: no sinks.
+- Bash heredocs with doubled backslashes are blocked by a hook; use the Edit tool for regex code.
+- grw.py 0.19.0: `done` needs --evidence as well as --oracle; `wait-human g76a32d --set ...` still left the item first in `session check` (possible grindwright bug, unconfirmed).
