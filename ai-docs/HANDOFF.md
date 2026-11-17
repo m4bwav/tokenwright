@@ -1,6 +1,6 @@
 # Handoff: tokenwright
 
-Updated 2026-11-16 (after grind session 15). Status: in progress (improvement grind). Continue with [plans/2026-11-15-tokenwright-improve-continue-prompt.md](plans/2026-11-15-tokenwright-improve-continue-prompt.md). It replaces the 2026-10-30 build prompt, whose list was finished at session 30.
+Updated 2026-11-17 (after grind session 16). Status: in progress (improvement grind). Continue with [plans/2026-11-15-tokenwright-improve-continue-prompt.md](plans/2026-11-15-tokenwright-improve-continue-prompt.md). It replaces the 2026-10-30 build prompt, whose list was finished at session 30.
 
 ## State
 
@@ -8,7 +8,7 @@ Updated 2026-11-16 (after grind session 15). Status: in progress (improvement gr
 - Four skills (tokenwright, tokenwright-script, tokenwright-skills, tokenwright-catalog), `tw.py` and `tidy.py`. 59 unit tests pass.
 - Budget GREEN. habits.md is the largest reference at 2,498 tokens, right at the line.
 - Evergreen: hub refreshed 2026-11-15, due 2026-11-24. Catalog unit due 2026-11-21.
-- Evals: hub 10 of 10, catalog 5 of 5; outcome-catalog unblocked (with 1.00, without 0.80, T-20261115-1).
+- Evals: hub 10 of 10, catalog 5 of 5, script and skills suites written 2026-11-17 (not yet run); outcome-catalog unblocked (with 1.00, without 0.80, T-20261115-1).
 - Wiki at 0.3.12 (commit 660c558), refreshed in session 14.
 - Hook meter live since 2026-11-01 (`TOKENWRIGHT_HOOKS=warn`), step kept at 25k after two looks.
 - everscout beat `token-saving` feeds refreshes. Harvest targets are in `skills/tokenwright/harvest.json`.
@@ -23,6 +23,7 @@ Updated 2026-11-16 (after grind session 15). Status: in progress (improvement gr
 - Session 6 ruled out: change-check in one turn (T-20261116-4, case ab-regen-changed) and a habit for session-start loads (T-20261116-5, loads are used). Hook times in T-20261116-6.
 - Session 7: live meter check passed (T-20261116-8). finwright guard PR #21 (~470 to ~210 ms a call) merged 2026-11-16. Next picks: the ledger (`grw.py next`).
 - Session 8: hook notes do not change what the agent pulls next (T-20261116-9).
+- Session 16: live check g272313 too small (1 session, 0 not-found; recheck gae64c5 from 2026-11-24, on hold). Worth lite scan (T-20261117-2): no cut; "never fires" is wrong because tw.py is called directly (57 sessions in 60 days, 0 Skill calls). All four skills now have value cases. Next picks: worth --ab on the new cases, the evergreen worth PR (count script calls), then the ledger.
 - Session 15: delegation break-even scanned and shipped in 0.3.13 (T-20261116-14). Next picks: live check g272313 from 2026-11-17, worth lite scan gf7e6ad, then the ledger. Wiki is at 0.3.12; 0.3.13 changed only habits.md wording, so no wiki change (small ruling).
 - Session 14: wiki refreshed to 0.3.12 (gd596be). Next picks: live check g272313 (only from 2026-11-17; grw.py offers it earlier, so skip it until then), delegation break-even g79cddf (A/B), worth lite scan gf7e6ad.
 - Session 13: effort-change and subagent-TTL claims verified from docs, no habit (R-20261116-1, -2); second-baseline item dropped (stop point). Next picks: live check g272313 from 2026-11-17, delegation break-even g79cddf (A/B), wiki gd596be.
