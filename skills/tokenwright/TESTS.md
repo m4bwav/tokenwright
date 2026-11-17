@@ -9,6 +9,12 @@ Test runs for [SKILL.md](SKILL.md). Cases live in `evals/evals.json`. Unit tests
 
 ## Runs
 
+### T-20261116-14 · 2026-11-16 · transcript scan: when does a subagent pay? 1,157 local subagent runs · Windows · study (delegation break-even)
+- Why: ledger g79cddf. A single-source claim (token-saving beat, r/ClaudeCode) said subagents cost 14-30% more on a ~10k-line codebase and save 53% on big doc checks.
+- Method: each subagent transcript linked to its parent by toolUseId. Delegated cost = the subagent's own usage (input 1x, cache write 1.25x, cache read 0.1x, output 5x) plus its report riding in main. Inline cost = the same turns re-reading main's context at spawn instead of the subagent's base, plus the read riding in main (0.1x per later main turn). Reads at 2.3 chars a token. A model that charges inline only for the carried read (no extra re-reads) gives 10% paying: the bound on the other side.
+- Result: delegation paid in 87% of runs (1.13B vs 1.80B input-token equivalents). By tokens read: under 5k 32%, 5-20k 85%, 20-50k 96%, 50k+ 99-100%. Forks 12% (they copy the main context). Few main turns after the spawn (0-10) still 78%.
+- Verdict: ship as wording. habits.md row Delegate big reads gains the 5k floor and the fork note (no added rows; reference stays under 2,500 tokens). The claim's 14-30% loss is not seen at the read sizes this machine delegates.
+
 ### T-20261116-13 · 2026-11-16 · transcript scan: does bare tw.py cost calls? newest 1,500 local sessions · Windows · study (discoverability)
 - Why: ledger gf74a42. Eval traces in T-20261116-2 showed 2-5 calls spent finding tw.py.
 - Method: every Bash or PowerShell call naming tw.py (179 calls, 32 sessions) and whether its result said the file was not found; then whether skill bodies loaded in 800 sessions still held a literal ${CLAUDE_SKILL_DIR}.
