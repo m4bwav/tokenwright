@@ -4,6 +4,12 @@ Test runs for [SKILL.md](SKILL.md). Cases live in `evals/evals.json`. Unit tests
 
 ## Runs
 
+### T-20261117-7 · 2026-11-17 · evergreen worth --results --record on ab_eval.py merged results · local · recorded
+- Why: g7fba08. The T-20261115-1 and T-20261116-1 result files are gone (temp folders), so they cannot be recorded. The four ab_eval.py runs that remain (~/ab, ~/ab17 x2, ~/ab20) were single-arm files worth skips; `ab_eval.py` now also writes `merged/aggregate-result.json` with the stub runs as the "without" arm (test_ab_eval.py).
+- Hub: 3 value cases, 9/9 runs, pass 78% with vs 67% without, score 0.93 vs 0.89, cost x1.06: UNPROVEN, recorded in evergreen.json.
+- tokenwright-skills (outcome-skill-review, 3 runs): 1.00 both, cost x1.12, worth says CUT. tokenwright-script (outcome-release-script, 3 runs): 0.78 vs 0.67, cost x1.28, worth says CUT. Neither skill has an evergreen.json, so nothing was recorded for them.
+- Ruling: no cut. Removing a skill is a stop point, the samples are 3 runs, and outcome-large-plugin (T-20261117-6, -15% cost) is the case tokenwright-skills exists for. The 6-run rerun (g8744fe) decides the script skill.
+
 ### T-20261117-6 · 2026-11-17 · A/B on outcome-large-plugin (ge30c4c) · WSL, ab_eval.py, 3 runs a arm
 - with plugin: score 1.00, cost $0.189, cache read 108k, 5 turns. Stub arm: score 1.00, cost $0.223, cache read 139k, 4.3 turns.
 - First eval where the plugin saves: -15% cost and -22% cache read at equal score. On a large plugin `tw.py skill` beats reading every SKILL.md; on the small case (T-20261117-3) it cost +19%. Verdict: keep; the skill pays as the plugin grows.

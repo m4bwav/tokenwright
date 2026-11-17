@@ -5,7 +5,9 @@
 Arm "with" is this plugin. Arm "stub" is a copy with no skills and no hooks,
 so history cases (which the harness runs single-arm) get a baseline too.
 Both run with --ablation none --keep-temp; tokens come from each kept
-sandbox's out/trace.jsonl. Prints one line per run and a mean per arm.
+sandbox's out/trace.jsonl. Prints one line per run and a mean per arm, and
+writes merged/aggregate-result.json (stub runs as the "without" arm) that
+`evergreen.py worth <skill> --results <runs-dir>/merged --record` reads.
 Caveat (T-20261116-2): a history file that shows the plugin's commands
 teaches them to the stub arm as well.
 """
@@ -66,6 +68,21 @@ def run_arm(arm, plugin, case, out, max_cost):
     return rows
 
 
+def merge(with_js, stub_js, dst):
+    """One with-without aggregate from the two single-arm results, so worth can record it."""
+    w, st = json.load(open(with_js)), json.load(open(stub_js))
+    stub_runs = {c["name"]: list(c["arms"].values())[0] for c in st.get("cases", [])}
+    cases = []
+    for c in w.get("cases", []):
+        if c["name"] in stub_runs:
+            c = dict(c, arms={"with": list(c["arms"].values())[0], "without": stub_runs[c["name"]]})
+            cases.append(c)
+    out = dict(w, cases=cases, suite=dict(w.get("suite") or {}, ablation="with-without"))
+    os.makedirs(dst, exist_ok=True)
+    json.dump(out, open(os.path.join(dst, "aggregate-result.json"), "w"), indent=1)
+    return len(cases)
+
+
 def main():
     a = argparse.ArgumentParser()
     a.add_argument("case")
@@ -85,6 +102,8 @@ def main():
             m = {k: round(sum(r[k] or 0 for r in rs) / len(rs), 3) for k in ("score", "cost", "cache_read", "output")}
             print(arm, "mean", json.dumps(m))
     json.dump(rows, open(os.path.join(o.runs_dir, "ab.json"), "w"), indent=1)
+    merge(os.path.join(o.runs_dir, "with.json"), os.path.join(o.runs_dir, "stub.json"),
+          os.path.join(o.runs_dir, "merged"))
 
 
 if __name__ == "__main__":

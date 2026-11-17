@@ -75,5 +75,31 @@
     "beat": "token-saving",
     "status": "linked",
     "date": "2026-10-30"
+  },
+  "worth": {
+    "checked": "2026-11-17",
+    "skills": {
+      "tokenwright": {
+        "verdict": "UNPROVEN",
+        "why": "no gain beyond noise (+11 points (noise margin 42)) at about the same cost; add runs or sharper cases before deciding",
+        "body_tokens": 1519,
+        "listing_tokens": 96,
+        "specific_share": 0.55,
+        "delta": 0.11,
+        "cost_ratio": 1.06,
+        "modes": [
+          1,
+          3
+        ],
+        "gaps": 0,
+        "checked": "2026-11-17",
+        "uses": {
+          "days": 60,
+          "interactive": 0,
+          "subagent": 0,
+          "headless": 0
+        }
+      }
+    }
   }
 }
