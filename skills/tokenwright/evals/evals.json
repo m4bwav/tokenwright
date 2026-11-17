@@ -34,7 +34,7 @@
       "kind": "trigger",
       "prompt": "We keep doing the same release dance every week. Turn it into one command.",
       "expectations": [
-        "the tokenwright-script skill is invoked"
+        "the tokenwright skill is invoked and points to references/scripting.md"
       ],
       "runs": 3
     },

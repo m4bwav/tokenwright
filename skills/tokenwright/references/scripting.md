@@ -1,18 +1,12 @@
----
-name: tokenwright-script
-description: Turn a repeating or already-solved agent process into a script, so the next run is one command: finds candidates (tw.py repeats) and writes the script with inputs, a dry run and idempotence. Use on 'script this', 'we keep doing this', 'make this one command', 'automate what you just did', 'next time this should be quick', or when tokenwright names a repeat.
-license: MIT
-metadata:
-  version: 0.3.7
----
+# Scripting a repeating or solved job
 
-# tokenwright-script
+Loaded on demand from the hub (habits 'script what repeats' and 'script what you solved once'). Was the tokenwright-script skill until 0.4.0; cut after two A/B runs showed no gain (T-20261117-8).
 
 A script pays when a job will run again. The agent's part shrinks to: run it, read a few lines, judge.
 
 ## Find the candidate
 
-- **Repeats across sessions**: `python "${CLAUDE_SKILL_DIR}/../tokenwright/scripts/tw.py" repeats --last 50` (`python3` on macOS and Linux) lists command sequences seen in several sessions.
+- **Repeats across sessions**: `python "${CLAUDE_SKILL_DIR}/scripts/tw.py" repeats --last 50` (`python3` on macOS and Linux) lists command sequences seen in several sessions.
 - **Solved once**: the commands that worked in this session. Take them from the transcript, not from memory: the failed attempts are not part of the script.
 - Worth it when: the job will run again, it has three or more steps, or its output needs trimming to be read.
 - Not worth it when: it is a one-off, or each run needs fresh judgement at every step.
@@ -30,7 +24,7 @@ Checklist, in order:
 7. **Record it** where the next session looks: the project's AGENTS.md commands list, the skill's SKILL.md, or the handoff. A script nobody can find saves nothing.
 8. **Run it once for real** and compare the result with the manual run.
 
-Templates: [references/templates.md](references/templates.md) (Python and shell skeletons with the dry run, fail-fast and short-output parts already in place).
+Templates: [script-templates.md](script-templates.md) (Python and shell skeletons with the dry run, fail-fast and short-output parts already in place).
 
 ## Judge the result, not the steps
 

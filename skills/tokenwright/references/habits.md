@@ -44,11 +44,11 @@ Each habit: when it applies, how, and the saving. "Measured" numbers come from `
 
 ## Family 3: script a process that repeats
 
-When the same multi-step job comes back (`tw.py repeats` lists command sequences seen in several sessions), write a script that runs the steps and prints only what needs judgement: a pass or fail line, a short table, the one number. The agent reads ten lines instead of re-deriving the job. Procedure: tokenwright-script.
+When the same multi-step job comes back (`tw.py repeats` lists command sequences seen in several sessions), write a script that runs the steps and prints only what needs judgement: a pass or fail line, a short table, the one number. The agent reads ten lines instead of re-deriving the job. Procedure: [scripting.md](scripting.md).
 
 ## Family 4: script what you solved the first time
 
-The first run of a fiddly job (a release, a migration, a data fix) is exploration. Once it works, save the commands that worked, with a dry run and a check, beside the project, and note the script in the docs the next session reads. Next time it costs one command. Procedure: tokenwright-script.
+The first run of a fiddly job (a release, a migration, a data fix) is exploration. Once it works, save the commands that worked, with a dry run and a check, beside the project, and note the script in the docs the next session reads. Next time it costs one command. Procedure: [scripting.md](scripting.md).
 
 ## Output side
 
