@@ -251,3 +251,4 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 - Worth lite scan gf7e6ad (T-20261117-2): three UNPROVEN, tokenwright-script SUSPECT. Every skill flagged "never fires", yet tw.py or tidy.py ran in 57 sessions in 60 days, all called directly, none by the Skill tool. evergreen worth counts only Skill calls. Case lint fixed in both evals.json files.
 - grw.py: `hold` needs --evidence; `next --claim` claims a dated item before its date, so hold it at once.
 - Value cases (g12645e): tokenwright-script got evals.json with a release-script outcome case (fixture evals/fixtures/release); tokenwright-skills got its own copy of the hub's skill-review case and fixture. Lint clean; the A/B is a ledger item. No release: evals only (small ruling).
+- 2026-11-17: grw.py `hold` also needs --person; `session release` (no id) gives a wrongly claimed dated item back. Session 16 ended with --force with ga1100f (A/B) still selectable.
