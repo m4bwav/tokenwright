@@ -291,3 +291,9 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 - Script-skill answer not in yet (g76a32d waits). gae64c5 and gc8bfe9 skipped to 2026-11-24 (date gate; folds into the hub refresh). tw.py score on this session: no sinks.
 - Bash heredocs with doubled backslashes are blocked by a hook; use the Edit tool for regex code.
 - grw.py 0.19.0: `done` needs --evidence as well as --oracle; `wait-human g76a32d --set ...` still left the item first in `session check` (possible grindwright bug, unconfirmed).
+
+## 2026-11-17 Grind session 24
+
+- g76a32d: owner chose cut on askwright script-skill-2026-11-17. tokenwright-script removed; its procedure and templates now hub references/scripting.md and script-templates.md; eval case outcome-release-script moved to the hub. Released 0.4.0 (PR #90), installed, wiki at 0.4.0. 62 tests pass, budget green (descriptions 1,108 chars).
+- The mark-local marketplace reads the shared clone: `claude plugin update` reports no new version until the shared clone is pulled (`git pull --ff-only` there, then update).
+- Discovery pass: tw.py repeats over 60 sessions found none; score on this session found no sinks. Ledger left: date-gated items from 2026-11-24 and evergreen-protocol PR #47.
