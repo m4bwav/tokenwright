@@ -279,3 +279,8 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 ## 2026-11-17 Grind session 21
 
 - g7fba08 (T-20261117-7): the old A/B result files are gone; ab_eval.py now writes a with-without merged aggregate so `evergreen.py worth --results <runs>/merged --record` works. Hub recorded UNPROVEN (0.93 vs 0.89, cost x1.06). worth calls tokenwright-skills and -script CUT on 3-run samples; no cut (stop point; g8744fe rerun decides script).
+
+## 2026-11-17 Grind session 22
+
+- g8744fe (T-20261117-8): 6-run A/B on outcome-release-script: 0.67 both, plugin +19% cost ($0.199 vs $0.167). The 3-run quality edge was noise. ab_eval.py takes --runs. Cut question on askwright set script-skill-2026-11-17. No release (dev script and docs only).
+- Python on Windows writes CRLF: a python rewrite of an LF file showed the whole file changed; strip carriage returns with sed before committing.

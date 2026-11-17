@@ -30,3 +30,17 @@ class MergeTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class RunsFlagTest(unittest.TestCase):
+    def test_runs_passed_to_plugin_eval(self):
+        seen = []
+        real = ab.subprocess.run
+        ab.subprocess.run = lambda cmd, **k: seen.append(cmd)
+        try:
+            with tempfile.TemporaryDirectory() as d:
+                json.dump({"cases": []}, open(os.path.join(d, "with.json"), "w"))
+                ab.run_arm("with", d, "x", d, 1, runs=6)
+        finally:
+            ab.subprocess.run = real
+        self.assertEqual(seen[0][-2:], ["--runs", "6"])

@@ -1,6 +1,6 @@
 """A/B eval with token counts per arm. Run in WSL (Bash cases need Linux).
 
-  python3 scripts/ab_eval.py "<case glob>" [--runs-dir ~/ab] [--max-cost 3]
+  python3 scripts/ab_eval.py "<case glob>" [--runs-dir ~/ab] [--max-cost 3] [--runs 6]
 
 Arm "with" is this plugin. Arm "stub" is a copy with no skills and no hooks,
 so history cases (which the harness runs single-arm) get a baseline too.
@@ -46,12 +46,12 @@ def tokens(sandbox):
     return t
 
 
-def run_arm(arm, plugin, case, out, max_cost):
+def run_arm(arm, plugin, case, out, max_cost, runs=None):
     js, log = os.path.join(out, arm + ".json"), os.path.join(out, arm + ".log")
     cmd = ["claude", "plugin", "eval", plugin, "--no-publish", "--trust-plugin",
            "--scaffold", "--ablation", "none", "--keep-temp", "--allow-tools",
            "Bash", "Write", "Edit", "--case", case, "--max-cost-usd", str(max_cost),
-           "--json", js]
+           "--json", js] + (["--runs", str(runs)] if runs else [])
     env = dict(os.environ, TMPDIR=os.environ.get("TMPDIR") or os.path.expanduser("~/evaltmp"))
     os.makedirs(env["TMPDIR"], exist_ok=True)
     with open(log, "w") as fh:
@@ -86,14 +86,15 @@ def merge(with_js, stub_js, dst):
 def main():
     a = argparse.ArgumentParser()
     a.add_argument("case")
+    a.add_argument("--runs", type=int, help="override per-case runs")
     a.add_argument("--runs-dir", default=os.path.expanduser("~/ab"))
     a.add_argument("--max-cost", type=float, default=3)
     o = a.parse_args()
     os.makedirs(o.runs_dir, exist_ok=True)
     stub = os.path.join(o.runs_dir, "stub-plugin")
     make_stub(stub)
-    rows = run_arm("with", ROOT, o.case, o.runs_dir, o.max_cost)
-    rows += run_arm("stub", stub, o.case, o.runs_dir, o.max_cost)
+    rows = run_arm("with", ROOT, o.case, o.runs_dir, o.max_cost, o.runs)
+    rows += run_arm("stub", stub, o.case, o.runs_dir, o.max_cost, o.runs)
     for r in rows:
         print(json.dumps(r))
     for arm in ("with", "stub"):
