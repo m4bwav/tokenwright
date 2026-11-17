@@ -275,3 +275,7 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 ## 2026-11-17 Grind session 20
 
 - ge30c4c (T-20261117-6): A/B on outcome-large-plugin, 3 runs a arm: with plugin $0.189 vs stub $0.223 (-15%), cache read 108k vs 139k, score 1.00 both. First measured saving: tw.py skill pays on a 12-skill plugin, costs extra on a small one. No code change, no release.
+
+## 2026-11-17 Grind session 21
+
+- g7fba08 (T-20261117-7): the old A/B result files are gone; ab_eval.py now writes a with-without merged aggregate so `evergreen.py worth --results <runs>/merged --record` works. Hub recorded UNPROVEN (0.93 vs 0.89, cost x1.06). worth calls tokenwright-skills and -script CUT on 3-run samples; no cut (stop point; g8744fe rerun decides script).

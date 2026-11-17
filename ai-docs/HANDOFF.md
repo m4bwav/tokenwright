@@ -1,6 +1,6 @@
 # Handoff: tokenwright
 
-Updated 2026-11-17 (after grind session 20). Status: in progress (improvement grind). Continue with [plans/2026-11-15-tokenwright-improve-continue-prompt.md](plans/2026-11-15-tokenwright-improve-continue-prompt.md). It replaces the 2026-10-30 build prompt, whose list was finished at session 30.
+Updated 2026-11-17 (after grind session 21). Status: in progress (improvement grind). Continue with [plans/2026-11-15-tokenwright-improve-continue-prompt.md](plans/2026-11-15-tokenwright-improve-continue-prompt.md). It replaces the 2026-10-30 build prompt, whose list was finished at session 30.
 
 ## State
 
@@ -23,6 +23,7 @@ Updated 2026-11-17 (after grind session 20). Status: in progress (improvement gr
 - Session 6 ruled out: change-check in one turn (T-20261116-4, case ab-regen-changed) and a habit for session-start loads (T-20261116-5, loads are used). Hook times in T-20261116-6.
 - Session 7: live meter check passed (T-20261116-8). finwright guard PR #21 (~470 to ~210 ms a call) merged 2026-11-16. Next picks: the ledger (`grw.py next`).
 - Session 8: hook notes do not change what the agent pulls next (T-20261116-9).
+- Session 21: worth now reads ab_eval.py runs (merged/ folder); hub recorded UNPROVEN (T-20261117-7). Next picks: 6-run rerun g8744fe (run ab_eval.py, then worth --results ~/ab/merged), then the ledger.
 - Session 20: A/B on outcome-large-plugin (T-20261117-6): plugin -15% cost at equal score, the first measured saving. Next picks: the ledger (evergreen worth PR g59611d, 6-run rerun of the script case).
 - Session 19: large-plugin case built (T-20261117-5); fold fix in 0.3.15. Next picks: A/B on outcome-large-plugin (ge30c4c), 6-run rerun of the script case, then the ledger.
 - Session 18: skill-review gap traced (T-20261117-4): extra turns were the Skill load, `python` not found in Linux then a python3 retry, and the same fixture reads. Named python3 in the bodies (0.3.14): 9 to 7.3 turns, +19% to +12% cost. New ledger item g70942a: a large-plugin case where tw.py skill should beat reading. Next picks: 6-run rerun of the script case, then the ledger.
