@@ -17,8 +17,9 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 def make_stub(dst):
     shutil.rmtree(dst, ignore_errors=True)
     os.makedirs(os.path.join(dst, "noskills"))
-    ev = os.path.join(ROOT, "skills", "tokenwright", "evals")
-    shutil.copytree(ev, os.path.join(dst, "skills", "tokenwright", "evals"))
+    for ev in glob.glob(os.path.join(ROOT, "skills", "*", "evals")):
+        skill = os.path.basename(os.path.dirname(ev))
+        shutil.copytree(ev, os.path.join(dst, "skills", skill, "evals"))
     p = json.load(open(os.path.join(ROOT, "plugin.json"), encoding="utf-8"))
     p.update(name=p["name"] + "-stub", skills="./noskills")
     p.pop("hooks", None)
