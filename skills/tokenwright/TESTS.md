@@ -4,6 +4,11 @@ Test runs for [SKILL.md](SKILL.md). Cases live in `evals/evals.json`. Unit tests
 
 ## Runs
 
+### T-20261117-8 · 2026-11-17 · 6-run rerun of outcome-release-script (g8744fe) · WSL, ab_eval.py --runs 6
+- with plugin: score 0.67 (6/6 runs), cost $0.199, cache read 176k, 7 turns. Stub arm: score 0.67, cost $0.167, cache read 128k, 5.3 turns.
+- The 0.78 vs 0.67 edge of T-20261117-3 did not hold; the plugin costs +19% at equal score. `ab_eval.py` gained `--runs`.
+- Verdict: tokenwright-script shows no value on this case. Cutting a skill is a stop point: askwright set script-skill-2026-11-17 (guess: cut, fold the rule into the hub).
+
 ### T-20261117-7 · 2026-11-17 · evergreen worth --results --record on ab_eval.py merged results · local · recorded
 - Why: g7fba08. The T-20261115-1 and T-20261116-1 result files are gone (temp folders), so they cannot be recorded. The four ab_eval.py runs that remain (~/ab, ~/ab17 x2, ~/ab20) were single-arm files worth skips; `ab_eval.py` now also writes `merged/aggregate-result.json` with the stub runs as the "without" arm (test_ab_eval.py).
 - Hub: 3 value cases, 9/9 runs, pass 78% with vs 67% without, score 0.93 vs 0.89, cost x1.06: UNPROVEN, recorded in evergreen.json.
