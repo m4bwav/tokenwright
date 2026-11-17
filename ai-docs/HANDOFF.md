@@ -1,15 +1,15 @@
 # Handoff: tokenwright
 
-Updated 2026-11-17 (after grind session 23). Status: in progress (improvement grind). Continue with [plans/2026-11-15-tokenwright-improve-continue-prompt.md](plans/2026-11-15-tokenwright-improve-continue-prompt.md). It replaces the 2026-10-30 build prompt, whose list was finished at session 30.
+Updated 2026-11-17 (after grind session 24). Status: in progress (improvement grind). Continue with [plans/2026-11-15-tokenwright-improve-continue-prompt.md](plans/2026-11-15-tokenwright-improve-continue-prompt.md). It replaces the 2026-10-30 build prompt, whose list was finished at session 30.
 
 ## State
 
-- Public: https://github.com/m4bwav/tokenwright. v0.3.15 released (tw.py skill folds findings repeated in 3+ skills, T-20261117-5).
-- Four skills (tokenwright, tokenwright-script, tokenwright-skills, tokenwright-catalog), `tw.py` and `tidy.py`. 60 unit tests pass.
+- Public: https://github.com/m4bwav/tokenwright. v0.4.0 released 2026-11-17: tokenwright-script cut (owner's answer), its procedure is hub references/scripting.md.
+- Three skills (tokenwright, tokenwright-skills, tokenwright-catalog), `tw.py` and `tidy.py`. 62 unit tests pass.
 - Budget GREEN. habits.md is the largest reference at 2,498 tokens, right at the line.
 - Evergreen: hub refreshed 2026-11-15, due 2026-11-24. Catalog unit due 2026-11-21.
 - Evals: hub 10 of 10, catalog 5 of 5, script and skills value cases run as A/B 2026-11-17 (T-20261117-3); outcome-catalog unblocked (with 1.00, without 0.80, T-20261115-1).
-- Wiki at 0.3.12 (commit 660c558), refreshed in session 14.
+- Wiki at 0.4.0 (session 24).
 - Hook meter live since 2026-11-01 (`TOKENWRIGHT_HOOKS=warn`), step kept at 25k after two looks.
 - everscout beat `token-saving` feeds refreshes. Harvest targets are in `skills/tokenwright/harvest.json`.
 
@@ -23,6 +23,7 @@ Updated 2026-11-17 (after grind session 23). Status: in progress (improvement gr
 - Session 6 ruled out: change-check in one turn (T-20261116-4, case ab-regen-changed) and a habit for session-start loads (T-20261116-5, loads are used). Hook times in T-20261116-6.
 - Session 7: live meter check passed (T-20261116-8). finwright guard PR #21 (~470 to ~210 ms a call) merged 2026-11-16. Next picks: the ledger (`grw.py next`).
 - Session 8: hook notes do not change what the agent pulls next (T-20261116-9).
+- Session 24: script skill cut, 0.4.0 released and installed, wiki updated. Ledger now waits on 2026-11-24 (gae64c5, gc8bfe9 with the hub refresh) and PR #47. Next session before 2026-11-24 runs a discovery pass and stops.
 - Session 23: evergreen worth counts script calls, PR m4bwav/evergreen-protocol#47 (1.1.2) open for the owner. Rest of the ledger waits on the owner or on 2026-11-24 (live check gae64c5, levers gc8bfe9 with the hub refresh). Next picks: the script-skill answer, then 2026-11-24 items.
 - Session 22: 6-run rerun (T-20261117-8): tokenwright-script no gain, +19% cost; cut asked on askwright script-skill-2026-11-17. Next picks: apply the answer when it comes, else the ledger.
 - Session 21: worth now reads ab_eval.py runs (merged/ folder); hub recorded UNPROVEN (T-20261117-7). Next picks: 6-run rerun g8744fe (run ab_eval.py, then worth --results ~/ab/merged), then the ledger.
@@ -44,7 +45,6 @@ Updated 2026-11-17 (after grind session 23). Status: in progress (improvement gr
 
 - evergreen-protocol PR #47 (worth counts script calls): review and merge, then rerun worth lite on tokenwright.
 
-- askwright set script-skill-2026-11-17 (vault projects/tokenwright/private/ask): cut or keep tokenwright-script.
 - Unattended running is not agreed. No hours or budget are granted, so sessions run attended.
 
 ## Grants
