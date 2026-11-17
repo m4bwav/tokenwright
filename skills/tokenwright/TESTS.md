@@ -4,6 +4,10 @@ Test runs for [SKILL.md](SKILL.md). Cases live in `evals/evals.json`. Unit tests
 
 ## Runs
 
+### T-20261117-6 · 2026-11-17 · A/B on outcome-large-plugin (ge30c4c) · WSL, ab_eval.py, 3 runs a arm
+- with plugin: score 1.00, cost $0.189, cache read 108k, 5 turns. Stub arm: score 1.00, cost $0.223, cache read 139k, 4.3 turns.
+- First eval where the plugin saves: -15% cost and -22% cache read at equal score. On a large plugin `tw.py skill` beats reading every SKILL.md; on the small case (T-20261117-3) it cost +19%. Verdict: keep; the skill pays as the plugin grows.
+
 ### T-20261117-5 · 2026-11-17 · tw.py skill on a 12-skill plugin (g70942a, first rung) · Windows
 - New case tokenwright-skills/outcome-large-plugin; fixture.sh builds 12 skills with three planted costs (skill-07 long description, skill-03 120-line code block, skill-11 unlinked reference).
 - All three found, but the per-skill "15 numbered steps" line repeated 12 times and buried the unlinked finding past line 30, where a `head` read missed it. Fixed by folding a finding repeated in 3+ skills into one line (unit test). The with-versus-without A/B on this case is still owed (ledger).
