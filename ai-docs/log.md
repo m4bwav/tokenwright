@@ -271,3 +271,7 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 
 - g70942a (T-20261117-5): new case tokenwright-skills/outcome-large-plugin, fixture.sh generates a 12-skill plugin with three planted costs. `tw.py skill` finds all three, but the repeated per-skill steps line buried the unlinked-file finding past line 30. Repeated findings (3+ skills) now fold into one line. Released 0.3.15. A/B on the case is ledger item ge30c4c.
 - TESTS.md (hub) had two run entries pasted inside its header sentence; moved under Runs.
+
+## 2026-11-17 Grind session 20
+
+- ge30c4c (T-20261117-6): A/B on outcome-large-plugin, 3 runs a arm: with plugin $0.189 vs stub $0.223 (-15%), cache read 108k vs 139k, score 1.00 both. First measured saving: tw.py skill pays on a 12-skill plugin, costs extra on a small one. No code change, no release.
