@@ -1,10 +1,10 @@
 # Handoff: tokenwright
 
-Updated 2026-11-17 (after grind session 17). Status: in progress (improvement grind). Continue with [plans/2026-11-15-tokenwright-improve-continue-prompt.md](plans/2026-11-15-tokenwright-improve-continue-prompt.md). It replaces the 2026-10-30 build prompt, whose list was finished at session 30.
+Updated 2026-11-17 (after grind session 18). Status: in progress (improvement grind). Continue with [plans/2026-11-15-tokenwright-improve-continue-prompt.md](plans/2026-11-15-tokenwright-improve-continue-prompt.md). It replaces the 2026-10-30 build prompt, whose list was finished at session 30.
 
 ## State
 
-- Public: https://github.com/m4bwav/tokenwright. v0.3.13 released (0.3.13 delegation habit names its 5k break-even, T-20261116-14).
+- Public: https://github.com/m4bwav/tokenwright. v0.3.14 released (SKILL.md bodies name python3 for macOS and Linux, T-20261117-4).
 - Four skills (tokenwright, tokenwright-script, tokenwright-skills, tokenwright-catalog), `tw.py` and `tidy.py`. 59 unit tests pass.
 - Budget GREEN. habits.md is the largest reference at 2,498 tokens, right at the line.
 - Evergreen: hub refreshed 2026-11-15, due 2026-11-24. Catalog unit due 2026-11-21.
@@ -23,6 +23,7 @@ Updated 2026-11-17 (after grind session 17). Status: in progress (improvement gr
 - Session 6 ruled out: change-check in one turn (T-20261116-4, case ab-regen-changed) and a habit for session-start loads (T-20261116-5, loads are used). Hook times in T-20261116-6.
 - Session 7: live meter check passed (T-20261116-8). finwright guard PR #21 (~470 to ~210 ms a call) merged 2026-11-16. Next picks: the ledger (`grw.py next`).
 - Session 8: hook notes do not change what the agent pulls next (T-20261116-9).
+- Session 18: skill-review gap traced (T-20261117-4): extra turns were the Skill load, `python` not found in Linux then a python3 retry, and the same fixture reads. Named python3 in the bodies (0.3.14): 9 to 7.3 turns, +19% to +12% cost. New ledger item g70942a: a large-plugin case where tw.py skill should beat reading. Next picks: 6-run rerun of the script case, then the ledger.
 - Session 17: A/B on the script and skills value cases (T-20261117-3): no saving; tokenwright-skills costs +19% at equal score, script +28% with a small quality edge. Case folders added (evals.json rows alone never run). Next picks: why skill review takes 9 turns, 6-run rerun of the script case, then the ledger.
 - Session 16: live check g272313 too small (1 session, 0 not-found; recheck gae64c5 from 2026-11-24, on hold). Worth lite scan (T-20261117-2): no cut; "never fires" is wrong because tw.py is called directly (57 sessions in 60 days, 0 Skill calls). All four skills now have value cases. Next picks: worth --ab on the new cases, the evergreen worth PR (count script calls), then the ledger.
 - Session 15: delegation break-even scanned and shipped in 0.3.13 (T-20261116-14). Next picks: live check g272313 from 2026-11-17, worth lite scan gf7e6ad, then the ledger. Wiki is at 0.3.12; 0.3.13 changed only habits.md wording, so no wiki change (small ruling).

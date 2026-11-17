@@ -10,7 +10,7 @@ metadata:
 
 Every token that enters the context is paid again, as cache read, on each later turn until compaction or `/clear`. A 3,000-token file read at turn 20 of a 400-turn session costs about 1.1M cache-read tokens. So the cheapest token is the one never loaded, and early waste costs most.
 
-Scripts: `python "${CLAUDE_SKILL_DIR}/scripts/tw.py" <command>` (standard library, Python 3.9+). Outside Claude Code, the path is relative to this skill's folder. `tw.py` below means this command.
+Scripts: `python "${CLAUDE_SKILL_DIR}/scripts/tw.py" <command>` (standard library, Python 3.9+; `python3` on macOS and Linux, `python` on Windows). Outside Claude Code, the path is relative to this skill's folder. `tw.py` below means this command.
 
 ## Method: find the bottleneck first
 
