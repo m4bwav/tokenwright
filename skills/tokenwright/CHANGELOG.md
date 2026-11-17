@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261116-9 · 2026-11-16 · Version 0.3.13: delegation habit names its break-even
+- because: T-20261116-14. In 1,157 local subagent runs delegation paid in 85-100% of runs that read 5k+ tokens and about a third below that; forks paid in 12%.
+- files: references/habits.md.
+
 ### C-20261116-8 · 2026-11-16 · Version 0.3.11: SKILL.md bodies name tw.py by ${CLAUDE_SKILL_DIR}
 - because: T-20261116-13. In 32 local sessions that ran tw.py, 6 calls failed with file not found (one wasted call each) because the body gave a path relative to the skill folder; Claude Code substitutes ${CLAUDE_SKILL_DIR} in skill bodies (218 of 219 loaded bodies).
 - files: SKILL.md, ../tokenwright-skills/SKILL.md, ../tokenwright-script/SKILL.md, tests/test_tw.py.

@@ -238,3 +238,9 @@ At the owner's request: a README "Works with" section and a Works-With wiki page
 
 - Wiki refresh (gd596be): ran ai-docs/notes/2026-10-30-wiki-verify.py at WIKI_TAG v0.3.2 and v0.3.12 and `wikiwright.py diffout`; 13 of 18 sections changed, all from the 2.3 chars-a-token rate or the version. Pages now describe 0.3.12: score reads subagents and Copilot CLI, `note --saved` is checked, the hook sizes Bash by stdout and stderr, the meter skips subagents and steps at 43k, Versions entries 0.3.3 to 0.3.12. check 0 errors, outputs 14 checked 0 missing, live 9 pages 0 failures. Wiki commit 660c558.
 - grw.py offers the dated live check g272313 before its date and `session end` refuses while it is selectable; ended with --force. Its wait-machine has no date option.
+
+## 2026-11-16 Grind session 15
+
+- Delegation break-even (g79cddf, T-20261116-14): 1,157 local subagent runs linked to their parents by toolUseId. Charging inline work with main's context on every turn, delegation paid in 87% of runs; 32% under 5k tokens read, 85% at 5-20k, 96%+ above; forks 12%. A model charging inline only for the carried read gives 10%, so the truth sits between, and the size floor holds in both. habits.md row now names the 5k floor and forks. Released 0.3.13.
+- The scan excluded this session's own transcript (lesson from session 13).
+- tw.py score on this session: no sinks.

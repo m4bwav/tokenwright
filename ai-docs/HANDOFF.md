@@ -1,10 +1,10 @@
 # Handoff: tokenwright
 
-Updated 2026-11-16 (after grind session 14). Status: in progress (improvement grind). Continue with [plans/2026-11-15-tokenwright-improve-continue-prompt.md](plans/2026-11-15-tokenwright-improve-continue-prompt.md). It replaces the 2026-10-30 build prompt, whose list was finished at session 30.
+Updated 2026-11-16 (after grind session 15). Status: in progress (improvement grind). Continue with [plans/2026-11-15-tokenwright-improve-continue-prompt.md](plans/2026-11-15-tokenwright-improve-continue-prompt.md). It replaces the 2026-10-30 build prompt, whose list was finished at session 30.
 
 ## State
 
-- Public: https://github.com/m4bwav/tokenwright. v0.3.12 released (0.3.11 ${CLAUDE_SKILL_DIR} paths in SKILL.md; 0.3.12 tidy.py at 2.3 chars a token).
+- Public: https://github.com/m4bwav/tokenwright. v0.3.13 released (0.3.13 delegation habit names its 5k break-even, T-20261116-14).
 - Four skills (tokenwright, tokenwright-script, tokenwright-skills, tokenwright-catalog), `tw.py` and `tidy.py`. 59 unit tests pass.
 - Budget GREEN. habits.md is the largest reference at 2,498 tokens, right at the line.
 - Evergreen: hub refreshed 2026-11-15, due 2026-11-24. Catalog unit due 2026-11-21.
@@ -23,6 +23,7 @@ Updated 2026-11-16 (after grind session 14). Status: in progress (improvement gr
 - Session 6 ruled out: change-check in one turn (T-20261116-4, case ab-regen-changed) and a habit for session-start loads (T-20261116-5, loads are used). Hook times in T-20261116-6.
 - Session 7: live meter check passed (T-20261116-8). finwright guard PR #21 (~470 to ~210 ms a call) merged 2026-11-16. Next picks: the ledger (`grw.py next`).
 - Session 8: hook notes do not change what the agent pulls next (T-20261116-9).
+- Session 15: delegation break-even scanned and shipped in 0.3.13 (T-20261116-14). Next picks: live check g272313 from 2026-11-17, worth lite scan gf7e6ad, then the ledger. Wiki is at 0.3.12; 0.3.13 changed only habits.md wording, so no wiki change (small ruling).
 - Session 14: wiki refreshed to 0.3.12 (gd596be). Next picks: live check g272313 (only from 2026-11-17; grw.py offers it earlier, so skip it until then), delegation break-even g79cddf (A/B), worth lite scan gf7e6ad.
 - Session 13: effort-change and subagent-TTL claims verified from docs, no habit (R-20261116-1, -2); second-baseline item dropped (stop point). Next picks: live check g272313 from 2026-11-17, delegation break-even g79cddf (A/B), wiki gd596be.
 - Session 12: see log. Next picks: the three verify items from the beat scan (effort change and cache, subagent 1-hour TTL, delegation break-even); live check g272313 from 2026-11-17.
