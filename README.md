@@ -2,7 +2,7 @@
 
 ![tokenwright banner](.github/images/banner.jpg)
 
-Spend fewer tokens on the same result. A plugin for Claude Code and other agents (Copilot, Codex, Cursor, Gemini CLI read the same skills) that teaches the habits that cut token use, and ships a small CLI that measures where a session's tokens went.
+Spend fewer tokens on the same result. A plugin for AI coding agents (Claude Code, Copilot, Codex, Cursor, Gemini CLI) that teaches the habits that cut token use, and ships a small CLI that measures where a session's tokens went.
 
 Every token in an agent's context is re-sent on each later turn. A 3,000-token file read early in a 300-turn session is paid for again about 300 times as cache reads. So the cheapest token is the one never loaded, and early waste costs the most.
 
