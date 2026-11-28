@@ -36,7 +36,7 @@ import sys
 import tempfile
 import time
 
-VERSION = "0.4.2"  # tokenwright release, bumped with tw.py
+VERSION = "0.4.3"  # tokenwright release, bumped with tw.py
 HERE = os.path.dirname(os.path.abspath(__file__))
 NL = chr(10)
 AGENTS = ["claude", "codex", "copilot", "cursor", "all"]
@@ -168,9 +168,10 @@ def _norm_dir(p):
     return os.path.normcase(os.path.normpath(os.path.abspath(p))) if p else ""
 
 
-def claude_plugin_roots(project=None):
+def claude_plugin_roots(project=None, include_disabled=False):
     """Installed and enabled Claude Code plugins (installed_plugins.json, version 2 shape): user scope, and
-    project scope for this project. Returns [(plugin, skills_glob)]."""
+    project scope for this project; disabled ones too with include_disabled (parked plugins are disabled).
+    Returns [(plugin, skills_glob)]."""
     h = home()
     reg = read_json(os.path.join(claude_dir(), "plugins", "installed_plugins.json"), {}) or {}
     enabled = (read_json(os.path.join(claude_dir(), "settings.json"), {}) or {}).get("enabledPlugins") or {}
@@ -178,7 +179,7 @@ def claude_plugin_roots(project=None):
     out = []
     plugins = reg.get("plugins") if isinstance(reg.get("plugins"), dict) else {}
     for key, entries in plugins.items():
-        if enabled.get(key) is False:
+        if enabled.get(key) is False and not include_disabled:
             continue
         for e in entries if isinstance(entries, list) else []:
             if not isinstance(e, dict) or not e.get("installPath"):
@@ -969,8 +970,30 @@ def link_targets(scope, project=None, hosts=("claude", "codex")):
     return out or [agents]
 
 
+def refresh_plugin_paths(m, project=None):
+    """Point parked plugin entries at the plugin's current install path: an update installs a new versioned
+    cache folder and leaves the old one behind, so a path that still exists can be stale. Returns the names
+    whose path changed."""
+    changed = []
+    for nm, e in m.items():
+        if e.get("mode") != "plugin":
+            continue
+        plugin = nm.split(":")[0]
+        for pl, g in claude_plugin_roots(project, include_disabled=True):
+            cand = os.path.join(os.path.dirname(os.path.dirname(g)), os.path.basename(e.get("path", "")))
+            if pl == plugin and os.path.isfile(os.path.join(cand, "SKILL.md")):
+                if _norm_dir(cand) != _norm_dir(e.get("path")):
+                    s = parse_skill(os.path.join(cand, "SKILL.md"))
+                    e["path"], e["line"] = os.path.abspath(cand), index_line(s["name"], s["desc"])
+                    changed.append(nm)
+                break
+    return changed
+
+
 def reindex(scope, project=None, hosts=("claude", "codex")):
     m = load_manifest(scope, project)
+    if refresh_plugin_paths(m, project):
+        save_manifest(scope, project, m)
     tidy_cmd = "python %s" % os.path.abspath(__file__).replace("\\", "/")
     full, block, big = render_index(m, tidy_cmd)
     d = park_dir(scope, project)
@@ -992,6 +1015,8 @@ def parked_doctor(scope, project=None):
     probs = []
     active = {s["name"] for s in scan("all", project)}
     roots = [_norm_dir(os.path.dirname(os.path.dirname(g))) for _, _, g in roots_for("all", project)]
+    for nm in refresh_plugin_paths(dict((k_, dict(v)) for k_, v in m.items()), project):
+        probs.append("%s: indexed path is an older plugin version; `parked index` re-points it" % nm)
     for nm, e in sorted(m.items()):
         p = e.get("path", "")
         if e["mode"] == "move" and any(_norm_dir(p).startswith(r + os.sep) for r in roots):
@@ -999,8 +1024,8 @@ def parked_doctor(scope, project=None):
         if not os.path.isfile(os.path.join(p, "SKILL.md")):
             if e["mode"] == "plugin":
                 plugin = nm.split(":")[0]
-                new = [g for pl, g in claude_plugin_roots(project) if pl == plugin]
-                probs.append("%s: plugin path moved (update?); `parked index` after re-parking the plugin" % nm if not new else "%s: path gone" % nm)
+                new = [g for pl, g in claude_plugin_roots(project, include_disabled=True) if pl == plugin]
+                probs.append("%s: plugin path moved (update?); `parked index` re-points it" % nm if new else "%s: path gone (plugin uninstalled?)" % nm)
             else:
                 probs.append("%s: %s/SKILL.md is missing" % (nm, p))
         if e["mode"] in ("move", "link") and nm in active:
