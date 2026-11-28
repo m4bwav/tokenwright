@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261128-1 · 2026-11-28 · Version 0.4.4: images cost by pixels in `hook pre` and `tw.py skill`
+- because: L-007. Measured during a technique harvest on a skill that teaches with pictures (https://github.com/kevintngo/paper-city-skill, no licence: only its image sizes were used, nothing copied). `hook pre` sized a 900 by 675 JPEG by its bytes as about 59,020 tokens and advised Grep (block mode denied the read); the pixel estimate is 810. `tw.py skill` left nine pictures (about 10,400 tokens) out of on-demand. Now both read width and height from the PNG, JPEG, GIF, WebP or BMP header and count width x height / 750. An image is never denied and never gets Grep advice; above 3,200 tokens the hook suggests a smaller copy. No cap for host downsizing, because RESEARCH.md states none, so a very large image is overestimated. An unparsable header falls back to the byte count in the hook and to 1,600 in `skill`. Held-out picture (1200 by 900, 270 KB): 117,460 with a warning before, 1,440 and silent after.
+- files: scripts/tw.py, versions, ../../tests/test_tw.py.
+
 ### C-20261127-1 · 2026-11-27 · Version 0.4.2: script-first advice cites SpeedRunner
 - because: harvest improvements study (verified 2026-11-27). SpeedRunner (https://arxiv.org/abs/2608.11338) reports skills as programs give the best cost reduction; cited as the authors' finding, not measured here (L-006).
 - files: references/scripting.md, ../tokenwright-skills/SKILL.md, versions, ../../tests/test_tw.py.

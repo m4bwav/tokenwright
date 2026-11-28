@@ -5,7 +5,7 @@ Updated 2026-11-17 (after grind session 24). Status: in progress (improvement gr
 ## State
 
 - Public: https://github.com/m4bwav/tokenwright. v0.4.0 released 2026-11-17: tokenwright-script cut (owner's answer), its procedure is hub references/scripting.md.
-- Three skills (tokenwright, tokenwright-skills, tokenwright-catalog), `tw.py` and `tidy.py`. 62 unit tests pass.
+- Three skills (tokenwright, tokenwright-skills, tokenwright-catalog), `tw.py` and `tidy.py`. 70 unit tests pass. v0.4.4 (2026-11-28): images cost by pixels in `hook pre` and `tw.py skill` (C-20261128-1); the wiki still describes 0.4.0.
 - Budget GREEN. habits.md is the largest reference at 2,498 tokens, right at the line.
 - Evergreen: hub refreshed 2026-11-15, due 2026-11-24. Catalog unit due 2026-11-21.
 - Evals: hub 10 of 10, catalog 5 of 5, script and skills value cases run as A/B 2026-11-17 (T-20261117-3); outcome-catalog unblocked (with 1.00, without 0.80, T-20261115-1).

@@ -29,3 +29,7 @@ Write an entry the moment a real signal happens: a user correction, the same err
 ### L-006 · 2026-11-27 · Outside evidence for script-first advice is cited, not claimed
 - Trigger: the script-first rule had only our own A/B runs (no gain shown, T-20261117-8); SpeedRunner reports programs as the cheapest skill form.
 - Hypothesis: cite a paper's result as the authors' number beside the rule; claim a saving only after our own eval measures it.
+
+### L-007 · 2026-11-28 · A file's bytes are not its tokens when it is not text
+- Trigger: `hook pre` told an agent a 900 by 675 JPEG was about 59,020 tokens and to Grep it; the real cost is about 810. `tw.py skill` counted no pictures at all.
+- Hypothesis: before sizing a file by bytes, ask what the model receives. An image costs by pixels (width x height / 750), read from its header; any new size check needs a case for each non-text kind it can meet.

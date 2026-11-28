@@ -29,7 +29,7 @@ import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
-VERSION = "0.4.3"
+VERSION = "0.4.4"
 CHARS_PER_TOKEN = 2.3        # measured 2026-11-16 on Opus 5.5, Fable 5.2, Sonnet 5 tool output (T-20261116-10)
 BIG_FILE_LINES = 400        # a whole read of a file this long, used for a few lines, is a sink
 BIG_OUTPUT_CHARS = 20000    # a tool result this long is a sink unless it was the point
@@ -39,6 +39,8 @@ SNAP_DIR_DEFAULT = ".tokenwright/snapshots"
 SNAP_MAX_BYTES = 2_000_000
 IMAGE_TOKENS = 1600         # a full-size image costs roughly this much; resize to cut it
 IMAGE_EXT = (".png", ".jpg", ".jpeg", ".gif", ".webp", ".bmp")
+IMAGE_PX_PER_TOKEN = 750    # an image costs about width x height / 750 tokens
+IMAGE_WARN_TOKENS = 3200    # twice a full-size image: above this the pre hook suggests a smaller size
 METER_STEP_TOKENS = 43000   # the hook meter speaks once per this many tokens of tool output (~100k chars)
 COMPARE_MIN_CALLS = 10      # past sessions shorter than this are not compared
 
@@ -49,6 +51,69 @@ def tokens(n_chars):
 
 def out(text):
     sys.stdout.write(text.rstrip("\n") + "\n")
+
+
+# ---------------------------------------------------------------- images
+
+# harvestwright: kevintngo-paper-city-skill https://github.com/kevintngo/paper-city-skill tier - 2026-11-28
+def image_size(path):
+    """(width, height) read from a PNG, JPEG, GIF, WebP or BMP header, or None when it cannot be parsed."""
+    le = lambda b: int.from_bytes(b, "little")
+    be = lambda b: int.from_bytes(b, "big")
+    try:
+        with open(path, "rb") as f:
+            h = f.read(32)
+            if h[:8] == bytes.fromhex("89504e470d0a1a0a") and h[12:16] == b"IHDR":
+                w, ht = be(h[16:20]), be(h[20:24])
+            elif h[:6] in (b"GIF87a", b"GIF89a"):
+                w, ht = le(h[6:8]), le(h[8:10])
+            elif h[:2] == b"BM" and len(h) >= 26:
+                w, ht = le(h[18:22]), abs(int.from_bytes(h[22:26], "little", signed=True))
+            elif h[:4] == b"RIFF" and h[8:12] == b"WEBP" and len(h) >= 30:
+                kind = h[12:16]
+                if kind == b"VP8 " and h[23:26] == bytes.fromhex("9d012a"):
+                    w, ht = le(h[26:28]) & 0x3FFF, le(h[28:30]) & 0x3FFF
+                elif kind == b"VP8L" and h[20] == 0x2F:
+                    w, ht = (le(h[21:25]) & 0x3FFF) + 1, ((le(h[21:25]) >> 14) & 0x3FFF) + 1
+                elif kind == b"VP8X":
+                    w, ht = le(h[24:27]) + 1, le(h[27:30]) + 1
+                else:
+                    return None
+            elif h[:2] == bytes.fromhex("ffd8"):
+                f.seek(2)
+                while True:     # walk the segments to the frame header (SOF), which holds the size
+                    b = f.read(1)
+                    while b and b[0] != 0xFF:
+                        b = f.read(1)
+                    while b and b[0] == 0xFF:
+                        b = f.read(1)
+                    if not b:
+                        return None
+                    m = b[0]
+                    if m in (0x00, 0x01, 0xD8) or 0xD0 <= m <= 0xD7:
+                        continue
+                    seg = f.read(2)
+                    if len(seg) < 2 or m in (0xD9, 0xDA):
+                        return None
+                    if 0xC0 <= m <= 0xCF and m not in (0xC4, 0xC8, 0xCC):
+                        d = f.read(5)
+                        if len(d) < 5:
+                            return None
+                        w, ht = be(d[3:5]), be(d[1:3])
+                        break
+                    f.seek(max(be(seg) - 2, 0), 1)
+            else:
+                return None
+    except (OSError, IndexError, ValueError):
+        return None
+    return (w, ht) if w > 0 and ht > 0 else None
+
+
+def image_tokens(path):
+    """Tokens an image costs by pixel count, or None when its header cannot be parsed. No cap is applied:
+    the research notes state no size at which a host downsizes, so a very large image is overestimated."""
+    wh = image_size(path)
+    return int(math.ceil(wh[0] * wh[1] / IMAGE_PX_PER_TOKEN)) if wh else None
 
 
 # ---------------------------------------------------------------- changed
@@ -522,9 +587,12 @@ def skill_report(sdir):
         if p.name not in named and p.stat().st_size > 2000:
             findings.append((0, "%s (~%d tokens) is never named in SKILL.md, so the agent cannot find it on "
                              "demand: link it with when to read it, or delete it" % (rel, tokens(p.stat().st_size))))
+    # pictures cost by pixels, not bytes; one whose header cannot be parsed counts as a full-size image
+    pics = [image_tokens(p) or IMAGE_TOKENS for p in sdir.rglob("*") if p.is_file()
+            and p.suffix.lower() in IMAGE_EXT and "evals" not in p.relative_to(sdir).parts]
     return {"skill": fm.get("name", sdir.name), "always_tokens": tokens(len(desc) + len(fm.get("name", ""))),
-            "trigger_tokens": tokens(len(text)),
-            "on_demand_tokens": tokens(sum(p.stat().st_size for p in others)), "findings": findings}
+            "trigger_tokens": tokens(len(text)), "images": len(pics), "image_tokens": sum(pics),
+            "on_demand_tokens": tokens(sum(p.stat().st_size for p in others)) + sum(pics), "findings": findings}
 
 
 def cmd_skill(a):
@@ -541,6 +609,10 @@ def cmd_skill(a):
     for r in reps:
         out("%-28s %8d %9d %10d" % (r["skill"][:28], r["always_tokens"], r["trigger_tokens"], r["on_demand_tokens"]))
     out("always = name + description, paid by every session where the skill is listed")
+    for r in reps:
+        if r["images"]:
+            out("%s: on-demand includes %d image(s), ~%d tokens by pixel size (width x height / %d)"
+                % (r["skill"], r["images"], r["image_tokens"], IMAGE_PX_PER_TOKEN))
     # the same finding in 3+ skills folds into one line, so it cannot bury the rest (T-20261117-5)
     groups = {}
     for r in reps:
@@ -595,7 +667,12 @@ def cmd_hook(a):
             size = os.path.getsize(fp)
         except OSError:
             size = 0
-        if size > BIG_FILE_LINES * 60:
+        est = image_tokens(fp) if str(fp).lower().endswith(IMAGE_EXT) else None
+        if est is not None:     # an image costs by its pixels; searching it or reading a range makes no sense
+            if est > IMAGE_WARN_TOKENS:
+                msg = ("tokenwright: %s is an image of ~%d tokens (width x height / %d). If a smaller copy "
+                       "or a crop shows what you need, read that instead." % (fp, est, IMAGE_PX_PER_TOKEN))
+        elif size > BIG_FILE_LINES * 60:
             msg = ("tokenwright: %s is ~%d tokens. If you need a few lines, Grep -n for them and Read with "
                    "offset/limit instead." % (fp, tokens(size)))
             if mode == "block":
