@@ -25,3 +25,7 @@ Write an entry the moment a real signal happens: a user correction, the same err
 ### L-005 · 2026-11-16 · A habit the harness already states never fires
 - Trigger: T-20261116-3 found "re-read after own edit" once in 400 sessions; the Claude Code system prompt already forbids it.
 - Hypothesis: before adding or keeping a habit row, check whether the harness system prompt already says it; such rows cost tokens and change nothing.
+
+### L-006 · 2026-11-27 · Outside evidence for script-first advice is cited, not claimed
+- Trigger: the script-first rule had only our own A/B runs (no gain shown, T-20261117-8); SpeedRunner reports programs as the cheapest skill form.
+- Hypothesis: cite a paper's result as the authors' number beside the rule; claim a saving only after our own eval measures it.

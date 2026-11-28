@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`. Protocol: MAINTENANCE.md.
 
+### C-20261127-1 · 2026-11-27 · Version 0.4.2: script-first advice cites SpeedRunner
+- because: harvest improvements study (verified 2026-11-27). SpeedRunner (https://arxiv.org/abs/2608.11338) reports skills as programs give the best cost reduction; cited as the authors' finding, not measured here (L-006).
+- files: references/scripting.md, ../tokenwright-skills/SKILL.md, versions, ../../tests/test_tw.py.
+
 ### C-20261117-4 · 2026-11-17 · Version 0.4.1: tw.py score --window N and the 400K-context share; read-budget habit
 - because: technique harvest. tokendoctor (https://github.com/localixai/tokendoctor, MIT) replays sessions at smaller compaction windows and flags spend above 400K context; re-implemented as a rough replay (summary ignored), not compared with tokendoctor. SparseRead (https://huggingface.co/papers/2608.22237) credits a per-task read budget and a record of sections read for its savings; added as a habit, idea only, its numbers are the authors' own (estimate).
 - files: scripts/tw.py, SKILL.md, ../../tests/test_tw.py.
