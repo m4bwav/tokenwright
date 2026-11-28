@@ -6,6 +6,11 @@ Entry shape: `### C-YYYYMMDD-n · date · one-line summary`, then `because:` (ID
 
 Entries before C-20261030-1 were written in the skill-tidy repository (m4bwav/skill-tidy); their paths are relative to that layout (the skill folder was `skills/skill-tidy`).
 
+### C-20261127-1 · 2026-11-27 · Version 0.4.3: parked plugin entries follow plugin updates
+- because: user report (a parked plugin's index pointed at a cache folder two versions old, so a parked read loaded old instructions); 79 of the owner's parked plugin entries were stale.
+- files: scripts/tidy.py (claude_plugin_roots include_disabled, refresh_plugin_paths, reindex, parked_doctor), tests/test_tidy.py.
+- An update leaves the old versioned cache folder in place, so the old "path missing" check never fired, and the lookup skipped disabled plugins, which every parked plugin is. `parked index` now re-points entries to the current installPath, and `parked doctor` reports stale ones.
+
 ### C-20261116-1 · 2026-11-16 · Version 0.3.12: token estimates at the measured 2.3 chars a token; Codex budget keeps bytes / 4
 - because: tokenwright T-20261116-10 (real rate 2.28 chars a token; chars/4 under-counts by ~75%).
 - files: scripts/tidy.py (est_tokens, codex_tokens, budgets, ST016), tests/test_tidy.py, references/rules.md (ST016).
