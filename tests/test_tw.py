@@ -424,6 +424,103 @@ class Window(unittest.TestCase):
             self.assertIn("if compacted at 200K", run("score", str(p), "--window", "200000"))
 
 
+# harvestwright: kevintngo-paper-city-skill https://github.com/kevintngo/paper-city-skill tier - 2026-11-28
+def _png(w, h):
+    return bytes.fromhex("89504e470d0a1a0a0000000d") + b"IHDR" + w.to_bytes(4, "big") + h.to_bytes(4, "big") + bytes(9)
+
+
+def _jpeg(w, h, sof=0xC0):
+    app0 = bytes.fromhex("ffe00010") + b"JFIF" + bytes(10)      # a segment to skip before the frame header
+    quant = bytes.fromhex("ffdb0043") + bytes(65)
+    frame = bytes([0xFF, sof]) + bytes.fromhex("001108") + h.to_bytes(2, "big") + w.to_bytes(2, "big") + bytes(10)
+    return bytes.fromhex("ffd8") + app0 + quant + frame + bytes.fromhex("ffd9")
+
+
+def _gif(w, h):
+    return b"GIF89a" + w.to_bytes(2, "little") + h.to_bytes(2, "little") + bytes(3)
+
+
+def _bmp(w, h):
+    return b"BM" + bytes(16) + w.to_bytes(4, "little") + (-h).to_bytes(4, "little", signed=True) + bytes(28)
+
+
+def _webp(kind, w, h):
+    if kind == "VP8 ":
+        body = bytes(3) + bytes.fromhex("9d012a") + w.to_bytes(2, "little") + h.to_bytes(2, "little")
+    elif kind == "VP8L":
+        body = bytes([0x2F]) + ((w - 1) | ((h - 1) << 14)).to_bytes(4, "little")
+    else:
+        body = bytes(4) + (w - 1).to_bytes(3, "little") + (h - 1).to_bytes(3, "little")
+    body += bytes(8)
+    chunk = kind.encode() + len(body).to_bytes(4, "little") + body
+    return b"RIFF" + (4 + len(chunk)).to_bytes(4, "little") + b"WEBP" + chunk
+
+
+class Images(unittest.TestCase):
+    def _pre(self, path, mode="warn"):
+        os.environ["TOKENWRIGHT_HOOKS"] = mode
+        try:
+            sys.stdin = io.StringIO(json.dumps({"tool_name": "Read", "tool_input": {"file_path": str(path)}}))
+            return run("hook", "pre")
+        finally:
+            os.environ.pop("TOKENWRIGHT_HOOKS", None)
+
+    def test_size_from_each_header(self):
+        made = {"a.png": _png(900, 675), "a.jpg": _jpeg(900, 675), "p.jpeg": _jpeg(900, 675, 0xC2),
+                "a.gif": _gif(900, 675), "a.bmp": _bmp(900, 675), "lossy.webp": _webp("VP8 ", 900, 675),
+                "lossless.webp": _webp("VP8L", 900, 675), "ext.webp": _webp("VP8X", 900, 675)}
+        with tempfile.TemporaryDirectory() as d:
+            for name, data in made.items():
+                f = Path(d, name)
+                f.write_bytes(data + bytes(60000))      # padded so the old byte count would have warned
+                self.assertEqual(tw.image_size(f), (900, 675), name)
+                self.assertEqual(tw.image_tokens(f), 810, name)
+                self.assertEqual(self._pre(f), "", name)
+                self.assertEqual(self._pre(f, "block"), "", name)
+
+    def test_large_image_gets_resize_advice_and_is_never_denied(self):
+        with tempfile.TemporaryDirectory() as d:
+            f = Path(d, "huge.png")
+            f.write_bytes(_png(4000, 3000))
+            for mode in ("warn", "block"):
+                o = json.loads(self._pre(f, mode))["hookSpecificOutput"]
+                self.assertIn("~16000 tokens", o["additionalContext"])
+                self.assertNotIn("Grep", o["additionalContext"])
+                self.assertNotIn("permissionDecision", o)
+
+    def test_corrupt_header_falls_back_to_the_byte_count(self):
+        with tempfile.TemporaryDirectory() as d:
+            for name, data in (("cut.jpg", _jpeg(900, 675)[:30]), ("text.png", b"not a picture"),
+                               ("zero.gif", _gif(0, 675)), ("odd.webp", _webp("VP8 ", 900, 675)[:20])):
+                f = Path(d, name)
+                f.write_bytes(data + b"x" * 100000)
+                self.assertIsNone(tw.image_tokens(f), name)
+                self.assertIn("Grep", self._pre(f), name)
+            self.assertIsNone(tw.image_tokens(Path(d, "missing.png")))
+
+    def test_long_text_file_still_warns(self):
+        with tempfile.TemporaryDirectory() as d:
+            f = Path(d, "long.txt")
+            f.write_bytes(b"a line of text\n" * 12000)
+            self.assertIn("Grep", self._pre(f))
+
+    def test_skill_counts_images_on_demand(self):
+        with tempfile.TemporaryDirectory() as d:
+            s = Path(d, "demo")
+            (s / "images").mkdir(parents=True)
+            (s / "evals").mkdir()
+            s.joinpath("SKILL.md").write_text("---\nname: demo\ndescription: x\n---\nLook at images/good.jpg\n")
+            before = tw.skill_report(s)["on_demand_tokens"]
+            s.joinpath("images", "good.jpg").write_bytes(_jpeg(900, 675) + bytes(60000))
+            s.joinpath("images", "small.PNG").write_bytes(_png(300, 250))
+            s.joinpath("images", "broken.gif").write_bytes(b"nothing")
+            s.joinpath("evals", "fixture.png").write_bytes(_png(3000, 3000))
+            rep = tw.skill_report(s)
+            self.assertEqual(rep["images"], 3)
+            self.assertEqual(rep["image_tokens"], 810 + 100 + tw.IMAGE_TOKENS)
+            self.assertEqual(rep["on_demand_tokens"], before + rep["image_tokens"])
+            self.assertIn("demo: on-demand includes 3 image(s), ~2510 tokens", run("skill", str(s)))
+
+
 if __name__ == "__main__":
     unittest.main()
-
