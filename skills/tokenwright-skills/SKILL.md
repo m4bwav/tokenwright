@@ -28,7 +28,7 @@ A skill costs in three tiers. Fix the most-paid tier first.
 - **Description**: what it does and when to use it, with the user's trigger phrases. No history, no feature list, no explanation of how. Aim at 300 to 600 characters; past 1,024 some hosts reject it.
 - **Rarely used skill**: a slash-command-only skill can set `disable-model-invocation: true` (no description cost), or be parked (tokenwright-catalog). Long sections move with its `split` command.
 - **Body**: rules and routing. Procedures, tables and examples move to `references/` with a line saying when to read each. Aim under 200 lines.
-- **Code in prose**: a code block the agent retypes, or a numbered procedure it follows step by step every time, should be a script it runs (tokenwright references/scripting.md). The script's output should be a few lines.
+- **Code in prose**: a code block the agent retypes, or a numbered procedure it follows step by step every time, should be a script it runs (tokenwright references/scripting.md). The script's output should be a few lines. Evidence: SpeedRunner (https://arxiv.org/abs/2608.11338) found skills written as programs gave the best cost cut of the forms it compared. When a harvest keeps a script backlog (harvestwright's per-workdir backlog of adopts still in prose), point the finding at its open rows.
 - **Sweeps**: steps that read many files to produce one answer belong in a subagent or `context: fork`, so the reads never reach the main context.
 - **Findable files**: every reference should be named in SKILL.md or an index it names. An unlinked file is either dead (delete) or unreachable (link it).
 - **Duplication**: text copied from a neighbour skill. Link instead.

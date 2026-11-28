@@ -395,6 +395,11 @@ class SkillPaths(unittest.TestCase):
             self.assertNotIn("python ../tokenwright/scripts/tw.py", body, name)
             self.assertNotIn("`python scripts/tw.py", body, name)
 
+    def test_script_advice_cites_speedrunner(self):
+        root = os.path.join(os.path.dirname(__file__), "..", "skills")
+        for rel in (("tokenwright-skills", "SKILL.md"), ("tokenwright", "references", "scripting.md")):
+            self.assertIn("arxiv.org/abs/2608.11338", open(os.path.join(root, *rel), encoding="utf-8").read(), rel)
+
 
 class Window(unittest.TestCase):
     def test_replay_and_long_share(self):

@@ -2,7 +2,7 @@
 
 Loaded on demand from the hub (habits 'script what repeats' and 'script what you solved once'). Was the tokenwright-script skill until 0.4.0; cut after two A/B runs showed no gain (T-20261117-8).
 
-A script pays when a job will run again. The agent's part shrinks to: run it, read a few lines, judge.
+A script pays when a job will run again. The agent's part shrinks to: run it, read a few lines, judge. SpeedRunner (https://arxiv.org/abs/2608.11338) backs this: skills written as programs gave its best cost cut. The authors' numbers, not measured here.
 
 ## Find the candidate
 
